@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ScheduleManagement</string>
+    <string name="PlainTextPlaceholderEventName">Event Name</string>
+</resources>
