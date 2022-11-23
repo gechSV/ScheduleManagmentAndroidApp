@@ -24,5 +24,6 @@ public class ColorForEventList {
 
     public int Length(){
         return this._colorList.size();
+        // Работает?
     }
 }
