@@ -13,25 +13,128 @@
         android:layout_height="60dp"
         android:layout_weight="0.2"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="@string/PlainTextPlaceholderEventName"
-        android:textSize="18dp"
+        android:inputType="textPersonName"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/ButtonLayout"
-        android:layout_width="412dp"
-        android:layout_height="591dp"
-        android:orientation="vertical"
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="400dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextEventName"
         app:layout_constraintVertical_bias="0.0">
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearLayoutRow1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linearLayoutButtonColor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonChoiceColorLime"
+                    style="@style/ButtonChoiceColor"
+                    android:background="@drawable/style_for_choice_button_lime"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <Button
+                    android:id="@+id/buttonChoiceColorCactus"
+                    style="@style/ButtonChoiceColor"
+                    android:background="@drawable/style_for_choice_button_cactus"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <Button
+                    android:id="@+id/buttonChoiceColorBlue"
+                    style="@style/ButtonChoiceColor"
+                    android:background="@drawable/style_for_choice_button_blue"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <Button
+                    android:id="@+id/buttonChoiceColorPurple"
+                    style="@style/ButtonChoiceColor"
+                    android:background="@drawable/style_for_choice_button_purple"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <Button
+                    android:id="@+id/buttonChoiceColorRose"
+                    style="@style/ButtonChoiceColor"
+                    android:background="@drawable/style_for_choice_button_rose"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutButtonColorRow2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonChoiceColorRed"
+                    style="@style/ButtonChoiceColor"
+                    android:background="@drawable/style_for_choice_button_red"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <Button
+                    android:id="@+id/buttonChoiceColorPeach"
+                    style="@style/ButtonChoiceColor"
+                    android:background="@drawable/style_for_choice_button_peach"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <Button
+                    android:id="@+id/buttonChoiceColorGray"
+                    style="@style/ButtonChoiceColor"
+                    android:background="@drawable/style_for_choice_button_gray"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <Button
+                    android:id="@+id/buttonChoiceColorBlack"
+                    style="@style/ButtonChoiceColor"
+                    android:background="@drawable/style_for_choice_button_black"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <Button
+                    android:id="@+id/buttonChoiceColorBrown"
+                    style="@style/ButtonChoiceColor"
+                    android:background="@drawable/style_for_choice_button_brown"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutChoiceWeeks"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spinnerChoiceWeeks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_weight="1"
+                    android:entries="@array/catNames"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
