@@ -150,15 +150,40 @@
                     android:hint="@string/PlainTextPlaceholderNameOfTheEventHost"
                     android:inputType="textPersonName"/>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:orientation="horizontal">
 
+                    <Button
+                        android:id="@+id/buttonStartTime"
+                        android:background="@null"
+                        style="@style/ButtonPickTime"
+                        android:text="@string/PlainTextPlaceholderChoiceTime" />
+
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <Button
+                        android:id="@+id/buttonEndTime"
+                        android:background="@null"
+                        style="@style/ButtonPickTime"
+                        android:text="@string/PlainTextPlaceholderChoiceTime" />
+
+                </LinearLayout>
+
+
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Button"
+                    android:layout_gravity="bottom"/>
             </LinearLayout>
 
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Button"
-                android:layout_gravity="bottom"/>
 
         </LinearLayout>
 

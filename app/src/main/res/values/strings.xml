@@ -3,5 +3,6 @@
     <string name="PlainTextPlaceholderEventName">Event Name</string>
     <string name="PlainTextPlaceholderEventType">Type of event</string>
     <string name="PlainTextPlaceholderEventLocation">Event location</string>
-    <string name="PlainTextPlaceholderNameOfTheEventHost"> Name of the event host</string>
+    <string name="PlainTextPlaceholderNameOfTheEventHost">Name of the event host</string>
+    <string name="PlainTextPlaceholderChoiceTime">0:00</string>
 </resources>

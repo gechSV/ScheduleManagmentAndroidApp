@@ -3,14 +3,19 @@ package ScheduleManagement.AndroidApp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.res.Resources;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TimePicker;
+
+import java.util.Calendar;
 
 
 public class ActivityAddScheduleItem extends AppCompatActivity implements View.OnClickListener{
@@ -29,9 +34,16 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
     private Button _buttonChoiceColorBlack;
     private Button _buttonChoiceColorBrown;
 
+    private Button _buttonStartTime;
+    private Button _buttonEndTime;
+
     private LinearLayout _LL_TypeOfEvent;
 
+    // запоминает выбранный цвет
     private int _saveColor;
+    // запоминает выбранное время
+    private Calendar _startTime;
+    private Calendar _endTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +51,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_add_schedule_item);
 
         _ET_EventName = (EditText)findViewById(R.id.editTextEventName);
+        _LL_TypeOfEvent = (LinearLayout)findViewById(R.id.linearLayoutTypeOfEvent);
 
         _buttonChoiceColorLime = (Button) findViewById(R.id.buttonChoiceColorLime);
         _buttonChoiceColorCactus = (Button) findViewById(R.id.buttonChoiceColorCactus);
@@ -50,6 +63,10 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _buttonChoiceColorGray = (Button) findViewById(R.id.buttonChoiceColorGray);
         _buttonChoiceColorBlack = (Button) findViewById(R.id.buttonChoiceColorBlack);
         _buttonChoiceColorBrown = (Button) findViewById(R.id.buttonChoiceColorBrown);
+
+        // Кнопки открытия TimePicker
+        _buttonStartTime = (Button) findViewById(R.id.buttonStartTime);
+        _buttonEndTime = (Button) findViewById(R.id.buttonEndTime);
 
         // Добавляем кнопки к прослушиванию для метода onClick()
         _buttonChoiceColorLime.setOnClickListener(this);
@@ -63,7 +80,8 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _buttonChoiceColorBlack.setOnClickListener(this);
         _buttonChoiceColorBrown.setOnClickListener(this);
 
-        _LL_TypeOfEvent = (LinearLayout)findViewById(R.id.linearLayoutTypeOfEvent);
+        _buttonStartTime.setOnClickListener(this);
+        _buttonEndTime.setOnClickListener(this);
 
 
         // Рабочий пример кнопок
@@ -78,7 +96,8 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 //            row2.addView(ivBowl);
 //        }
 
-
+        _startTime = Calendar.getInstance();
+        _endTime = Calendar.getInstance();
     }
 
     public static int getPixelValue(Context context, int dimenId) {
@@ -124,11 +143,48 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             case (R.id.buttonChoiceColorBrown):
                 SetSaveColor(0xFF603a16);
                 break;
+            case (R.id.buttonStartTime):
+                SetTime(_buttonStartTime, _startTime);
+                break;
+            case (R.id.buttonEndTime):
+                SetTime(_buttonEndTime, _endTime);
+                break;
         }
     }
 
     private void SetSaveColor(int color){
         _saveColor = color;
         _ET_EventName.setText(Integer.toString(color));
+    }
+
+    private void SetTime(Button button, Calendar time){
+
+        final Calendar currentTime = Calendar.getInstance();
+        int hour = currentTime.get(Calendar.HOUR_OF_DAY);
+        int minute = currentTime.get(Calendar.MINUTE);
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+
+        TimePickerDialog.OnTimeSetListener myTimeListener = new TimePickerDialog.OnTimeSetListener() {
+
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                if (view.isShown()) {
+                    currentTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                    currentTime.set(Calendar.MINUTE, minute);
+                    button.setText(simpleDateFormat.format(currentTime.getTime()));
+                    time.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                    time.set(Calendar.MINUTE, minute);
+                }
+            }
+        };
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(ActivityAddScheduleItem.this,
+                android.R.style.Theme_Holo_Light_Dialog_NoActionBar, myTimeListener, hour,
+                minute, true);
+
+        timePickerDialog.setTitle("Choose time:");
+        timePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        timePickerDialog.show();
     }
 }
