@@ -1,18 +1,16 @@
 package ScheduleManagement.AndroidApp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
-import android.graphics.Color;
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.widget.LinearLayout;
 
 
 public class ActivityAddScheduleItem extends AppCompatActivity implements View.OnClickListener{
@@ -31,8 +29,9 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
     private Button _buttonChoiceColorBlack;
     private Button _buttonChoiceColorBrown;
 
+    private LinearLayout _LL_TypeOfEvent;
 
-    int _saveColor;
+    private int _saveColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,15 +39,6 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_add_schedule_item);
 
         _ET_EventName = (EditText)findViewById(R.id.editTextEventName);
-
-        Spinner spinner =  (Spinner) findViewById(R.id.spinnerChoiceWeeks);
-
-        List<String> list = new ArrayList<String>();
-        list.add("12121");
-        list.add("32423432");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.spinner_list,list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
 
         _buttonChoiceColorLime = (Button) findViewById(R.id.buttonChoiceColorLime);
         _buttonChoiceColorCactus = (Button) findViewById(R.id.buttonChoiceColorCactus);
@@ -72,6 +62,32 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _buttonChoiceColorGray.setOnClickListener(this);
         _buttonChoiceColorBlack.setOnClickListener(this);
         _buttonChoiceColorBrown.setOnClickListener(this);
+
+        _LL_TypeOfEvent = (LinearLayout)findViewById(R.id.linearLayoutTypeOfEvent);
+
+
+        // Рабочий пример кнопок
+//        for(int i = 0; i < 2; i++){
+//            LinearLayout row2 = (LinearLayout) findViewById(R.id.linearLayoutTypeOfEvent);
+//            Button ivBowl = new Button(this);
+//            ivBowl.setText("hi");
+//            LinearLayout.LayoutParams layoutParams = new  LinearLayout.LayoutParams(getPixelValue(this, 70), getPixelValue(this, 70));
+//            layoutParams.setMargins(5, 3, 0, 0); // left, top, right, bottom
+//            ivBowl.setBackground(ContextCompat.getDrawable(this, R.drawable.style_for_choice_button_black));
+//            ivBowl.setLayoutParams(layoutParams);
+//            row2.addView(ivBowl);
+//        }
+
+
+    }
+
+    public static int getPixelValue(Context context, int dimenId) {
+        Resources resources = context.getResources();
+        return (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                dimenId,
+                resources.getDisplayMetrics()
+        );
     }
 
     @Override

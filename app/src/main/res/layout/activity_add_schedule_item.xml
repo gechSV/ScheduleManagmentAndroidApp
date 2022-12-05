@@ -24,6 +24,7 @@
         android:id="@+id/scrollView"
         android:layout_width="400dp"
         android:layout_height="0dp"
+        android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.454"
@@ -34,7 +35,7 @@
         <LinearLayout
             android:id="@+id/linearLayoutRow1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:orientation="vertical">
 
             <LinearLayout
@@ -117,20 +118,47 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/linearLayoutChoiceWeeks"
+                android:id="@+id/linearLayoutTypeOfEvent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <Spinner
-                    android:id="@+id/spinnerChoiceWeeks"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true"
-                    android:layout_weight="1"
-                    android:entries="@array/catNames"
-                    android:textSize="18sp" />
+                <EditText
+                    android:id="@+id/editTextTypeOfEvent"
+                    android:layout_width="413dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="0.2"
+                    android:ems="10"
+                    android:hint="@string/PlainTextPlaceholderEventType"
+                    android:inputType="textPersonName"/>
+
+                <EditText
+                    android:id="@+id/editTextEventLocation"
+                    android:layout_width="413dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="0.2"
+                    android:ems="10"
+                    android:hint="@string/PlainTextPlaceholderEventLocation"
+                    android:inputType="textPersonName"/>
+
+                <EditText
+                    android:id="@+id/editTextNameOfTheEventHost"
+                    android:layout_width="413dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="0.2"
+                    android:ems="10"
+                    android:hint="@string/PlainTextPlaceholderNameOfTheEventHost"
+                    android:inputType="textPersonName"/>
+
+
             </LinearLayout>
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Button"
+                android:layout_gravity="bottom"/>
 
         </LinearLayout>
 
