@@ -1,11 +1,12 @@
 package ScheduleManagement.AndroidApp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -15,12 +16,17 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
 
+import com.google.gson.Gson;
+
 import java.util.Calendar;
 
 
 public class ActivityAddScheduleItem extends AppCompatActivity implements View.OnClickListener{
     // _ET_EventName - текстовое поле для ввода названия события
     private EditText _ET_EventName;
+    private EditText _ET_TypeOfEvent;
+    private EditText _ET_EventLocation;
+    private EditText _ET_NameOfTheEventHost;
 
     // Кнопки для выбора цвета
     private Button _buttonChoiceColorLime;
@@ -34,16 +40,25 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
     private Button _buttonChoiceColorBlack;
     private Button _buttonChoiceColorBrown;
 
+    // Кнопки открытия TimePicker
     private Button _buttonStartTime;
     private Button _buttonEndTime;
+
+    // Кнопка сохранения события
+    private Button _buttonSaveEvent;
 
     private LinearLayout _LL_TypeOfEvent;
 
     // запоминает выбранный цвет
     private int _saveColor;
+
     // запоминает выбранное время
     private Calendar _startTime;
     private Calendar _endTime;
+
+    private EventSchedule _eventSchedule;
+
+    EditText test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +66,10 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_add_schedule_item);
 
         _ET_EventName = (EditText)findViewById(R.id.editTextEventName);
+        _ET_TypeOfEvent = (EditText)findViewById(R.id.editTextTypeOfEvent);
+        _ET_EventLocation = (EditText)findViewById(R.id.editTextEventLocation);
+        _ET_NameOfTheEventHost = (EditText)findViewById(R.id.editTextNameOfTheEventHost);
+
         _LL_TypeOfEvent = (LinearLayout)findViewById(R.id.linearLayoutTypeOfEvent);
 
         _buttonChoiceColorLime = (Button) findViewById(R.id.buttonChoiceColorLime);
@@ -64,9 +83,10 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _buttonChoiceColorBlack = (Button) findViewById(R.id.buttonChoiceColorBlack);
         _buttonChoiceColorBrown = (Button) findViewById(R.id.buttonChoiceColorBrown);
 
-        // Кнопки открытия TimePicker
         _buttonStartTime = (Button) findViewById(R.id.buttonStartTime);
         _buttonEndTime = (Button) findViewById(R.id.buttonEndTime);
+
+        _buttonSaveEvent = (Button) findViewById(R.id.buttonSaveEvent);
 
         // Добавляем кнопки к прослушиванию для метода onClick()
         _buttonChoiceColorLime.setOnClickListener(this);
@@ -83,6 +103,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _buttonStartTime.setOnClickListener(this);
         _buttonEndTime.setOnClickListener(this);
 
+        _buttonSaveEvent.setOnClickListener(this);
 
         // Рабочий пример кнопок
 //        for(int i = 0; i < 2; i++){
@@ -96,8 +117,12 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 //            row2.addView(ivBowl);
 //        }
 
+        test = (EditText) findViewById(R.id.editTextTextMultiLine);
+
         _startTime = Calendar.getInstance();
         _endTime = Calendar.getInstance();
+
+        _eventSchedule = new EventSchedule();
     }
 
     public static int getPixelValue(Context context, int dimenId) {
@@ -149,6 +174,10 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             case (R.id.buttonEndTime):
                 SetTime(_buttonEndTime, _endTime);
                 break;
+            case (R.id.buttonSaveEvent):
+                SaveEvent();
+
+                break;
         }
     }
 
@@ -186,5 +215,49 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         timePickerDialog.setTitle("Choose time:");
         timePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         timePickerDialog.show();
+    }
+
+    private Boolean SaveEvent(){
+        ColorStateList colorStateList = ColorStateList.valueOf(0xFFFF9494);
+        Boolean checkErrorFlag = false;
+
+        // Event name
+        if (_ET_EventName.getText().toString().length() != 0) {
+            _eventSchedule.SetNameEvent(_ET_EventName.getText().toString());
+        }
+        else{
+            _ET_EventName.setBackgroundTintList(colorStateList);
+            return false;
+        }
+
+        // Type Event
+        if (_ET_TypeOfEvent.getText().toString().length() != 0) {
+            _eventSchedule.SetTypeEvent(_ET_EventName.getText().toString());
+        }
+
+        // Event Location
+        if (_ET_EventLocation.getText().toString().length() != 0) {
+            _eventSchedule.SetEventLocation(_ET_EventName.getText().toString());
+        }
+
+        // Event Host
+        if (_ET_NameOfTheEventHost.getText().toString().length() != 0) {
+            _eventSchedule.SetEventHost(_ET_EventName.getText().toString());
+        }
+
+        // Time start and End
+        _eventSchedule.SetTimeEventStart(_startTime);
+        _eventSchedule.SetTimeEventEnd(_endTime);
+
+        // Event for Color
+//        Color saveColor = new Color.valueOf(0xFFFFFFFF);
+//        _eventSchedule.SetColorForEvent();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(_eventSchedule);
+
+        test.setText(json);
+
+        return true;
     }
 }

@@ -1,6 +1,8 @@
 package ScheduleManagement.AndroidApp;
 
-import java.util.Date;
+import android.graphics.Color;
+
+import java.util.Calendar;
 
 /**
  * Класс для управления событием расписания
@@ -9,17 +11,18 @@ public class EventSchedule implements Comparable<EventSchedule>{
 
     private String _nameEvent; // Имя события (низвание пары, урока и т.п.)
     private String _typeEvent; // Тип события (лекция, практика, собрание, концерт и т.д.)
-    private String _placeEvent; // Место проведения мероприятия (аудитория, улица, корпус)
-    private String _teacherName; // Имя руководителя мероприятия
-    private Date _timeEventBegin; // Время начала события
-    private Date _timeEventEnd; // Время окончания события
+    private String _EventLocation; // Место проведения мероприятия (аудитория, улица, корпус)
+    private String _EventHost; // Имя руководителя мероприятия
+    private Calendar _timeEventStart; // Время начала события
+    private Calendar _timeEventEnd; // Время окончания события
+    private Color _colorForEvent; // Цвет для отображения расписания
 
     /**
      * Конструктор без параметров
      */
     public EventSchedule(){
-        this._timeEventBegin = new Date();
-        this._timeEventEnd = new Date();
+        this._timeEventStart = Calendar.getInstance();
+        this._timeEventEnd = Calendar.getInstance();
     }
 
     /**
@@ -29,13 +32,19 @@ public class EventSchedule implements Comparable<EventSchedule>{
      */
     @Override
     public int compareTo(EventSchedule o){
-        return (int)(this.GetTimeEventBeginLong() - o.GetTimeEventBeginLong());
+        return (int)(this.GetTimeEventBeginMs() - o.GetTimeEventBeginMs());
     }
 
     // Методы
     // Имя события
     public void SetNameEvent(String _nameEvent) {
-        this._nameEvent = _nameEvent;
+        if (_nameEvent != null){
+            this._nameEvent = _nameEvent;
+        }
+        else
+        {
+            throw new Error("The argument _nameEvent cannot be null.");
+        }
     }
     public String GetNameEvent() {
         return _nameEvent;
@@ -43,26 +52,46 @@ public class EventSchedule implements Comparable<EventSchedule>{
 
     // Тип мероприятия
     public void SetTypeEvent(String _typeEvent) {
-        this._typeEvent = _typeEvent;
+        if (_typeEvent != null){
+            this._typeEvent = _typeEvent;
+        }
+        else
+        {
+            throw new Error("The argument _typeEvent cannot be null.");
+        }
     }
+
     public String GetTypeEvent() {
         return _typeEvent;
     }
 
     // Место проведения события
-    public void SetPlaceEvent(String _placeEvent) {
-        this._placeEvent = _placeEvent;
+    public void SetEventLocation(String _placeEvent) {
+        if (_placeEvent != null){
+            this._EventLocation = _placeEvent;
+        }
+        else
+        {
+            throw new Error("The argument _placeEvent cannot be null.");
+        }
     }
+
     public String GetPlaceEvent() {
-        return _placeEvent;
+        return _EventLocation;
     }
 
     /**
      * Присвоение имени руководителя
      * @param name имя
      */
-    public void SetTeacherName(String name){
-        this._teacherName = name;
+    public void SetEventHost(String name){
+        if (name != null){
+            this._EventHost = name;
+        }
+        else
+        {
+            throw new Error("The argument name cannot be null.");
+        }
     }
 
     /**
@@ -70,20 +99,20 @@ public class EventSchedule implements Comparable<EventSchedule>{
      * @return String
      */
     public String GetTeacherName(){
-        return this._teacherName;
+        return this._EventHost;
     }
 
     // Время начала событитя
     /**
      * Установка времени начала события
-     * @param timeEventBegin type Date
+     * @param timeEventStart type Calendar
      */
-    public void SetTimeEventBegin(Date timeEventBegin) {
-        if (timeEventBegin.getTime() > 86399999L){
-            throw new Error("Incorrect format of the number _timeEventBegin");
+    public void SetTimeEventStart(Calendar timeEventStart) {
+        if (timeEventStart == null){
+            throw new Error("The argument timeEventStart cannot be null.");
         }
         else {
-            this._timeEventBegin = timeEventBegin;
+            this._timeEventStart = timeEventStart;
         }
     }
 
@@ -92,7 +121,7 @@ public class EventSchedule implements Comparable<EventSchedule>{
      * @param h Часы
      * @param m Минуты
      */
-    public void SetTimeEventBegin(int h, int m) {
+    public void SetTimeEventStart(int h, int m) {
         if ((h < 0) || (h > 23)){
             throw new Error("Incorrect format of the number h");
         }
@@ -100,42 +129,34 @@ public class EventSchedule implements Comparable<EventSchedule>{
             throw new Error("Incorrect format of the number m");
         }
         else{
-            this._timeEventBegin.setTime(h * 3600000 + m * 60000);
-        }
-    }
-
-    /**
-     * Установка времени начала события
-     * @param t количество миллисекунд
-     */
-    public void SetTimeEventBegin(long t){
-        if( (t < 0L) || (t > 86399999L) ){
-            throw new Error("Incorrect format of the number t");
-        }
-        else{
-            this._timeEventBegin.setTime(t);
+            this._timeEventStart.set(Calendar.HOUR_OF_DAY, h);
+            this._timeEventStart.set(Calendar.MINUTE, m);
         }
     }
 
     /**
      * Возвращает время начала события
-     * @return Экземпляр класса Date
+     * @return Экземпляр класса Calendar
      */
-    public Date GetTimeEventBegin() {
-        return _timeEventBegin;
+    public Calendar GetTimeEventBegin() {
+        return _timeEventStart;
     }
 
-    public long GetTimeEventBeginLong(){
-        return _timeEventBegin.getTime();
+    /**
+     * Получить Миллисекунды
+     * @return Long
+     */
+    public long GetTimeEventBeginMs(){
+        return _timeEventStart.getTimeInMillis();
     }
 
     // Время окончания события
-    public void SetTimeEventEnd(Date timeEventEnd) {
-        if (timeEventEnd.getTime() > 86399999L){
-            throw new Error("Incorrect format of the number timeEventEnd");
+    public void SetTimeEventEnd(Calendar timeEventEnd) {
+        if (timeEventEnd == null){
+            throw new Error("The argument timeEventEnd cannot be null.");
         }
         else {
-            this._timeEventBegin = timeEventEnd;
+            this._timeEventStart = timeEventEnd;
         }
     }
 
@@ -152,20 +173,8 @@ public class EventSchedule implements Comparable<EventSchedule>{
             throw new Error("Incorrect format of the number m");
         }
         else{
-            this._timeEventEnd.setTime(h * 3600000 + m * 60000);
-        }
-    }
-
-    /**
-     * Установка времени окончания события
-     * @param t количество миллисекунд
-     */
-    public void SetTimeEventEnd(long t){
-        if( (t < 0L) || (t > 86399999L) ){
-            throw new Error("Incorrect format of the number t");
-        }
-        else{
-            this._timeEventEnd.setTime(t);
+            this._timeEventEnd.set(Calendar.HOUR_OF_DAY, h);
+            this._timeEventEnd.set(Calendar.MINUTE, m);
         }
     }
 
@@ -173,7 +182,28 @@ public class EventSchedule implements Comparable<EventSchedule>{
      * Возврвщает время окончания события
      * @return Экземпляр класса Date
      */
-    public Date GetTimeEventEnd() {
+    public Calendar GetTimeEventEnd() {
         return _timeEventEnd;
+    }
+
+    /**
+     * Получить Миллисекунды
+     * @return Long
+     */
+    public long GetTimeEventEndMs(){
+        return _timeEventEnd.getTimeInMillis();
+    }
+
+    public void SetColorForEvent(Color _colorForEvent) {
+        if (_colorForEvent != null){
+            this._colorForEvent = _colorForEvent;
+        }
+        else{
+            throw new Error("The argument _colorForEvent cannot be null.");
+        }
+    }
+
+    public Color GetColorForEvent() {
+        return _colorForEvent;
     }
 }
