@@ -6,7 +6,6 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -15,13 +14,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
-
-import com.google.gson.Gson;
-
+import android.widget.Toast;
 import java.util.Calendar;
+
+import es.dmoral.toasty.Toasty;
 
 
 public class ActivityAddScheduleItem extends AppCompatActivity implements View.OnClickListener{
+
     // _ET_EventName - текстовое поле для ввода названия события
     private EditText _ET_EventName;
     private EditText _ET_TypeOfEvent;
@@ -57,6 +57,8 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
     private Calendar _endTime;
 
     private EventSchedule _eventSchedule;
+
+    private final static String FILE_NAME = "NewEvent.bin";
 
     EditText test;
 
@@ -217,7 +219,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         timePickerDialog.show();
     }
 
-    private Boolean SaveEvent(){
+    private void SaveEvent(){
         ColorStateList colorStateList = ColorStateList.valueOf(0xFFFF9494);
         Boolean checkErrorFlag = false;
 
@@ -227,7 +229,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         }
         else{
             _ET_EventName.setBackgroundTintList(colorStateList);
-            return false;
+            return;
         }
 
         // Type Event
@@ -250,14 +252,22 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _eventSchedule.SetTimeEventEnd(_endTime);
 
         // Event for Color
-//        Color saveColor = new Color.valueOf(0xFFFFFFFF);
-//        _eventSchedule.SetColorForEvent();
+        // Color saveColor = new Color.valueOf(0xFFFFFFFF);
+        // _eventSchedule.SetColorForEvent();
+//
+//        Gson gson = new Gson();
+//        String json = gson.toJson(_eventSchedule);
 
-        Gson gson = new Gson();
-        String json = gson.toJson(_eventSchedule);
+        // Сохранение данных в файл
+        // FILE_NAME = "NewEvent.bin"
+        try {
+            FileIO.WriteNewSchedule(_eventSchedule, FILE_NAME, ActivityAddScheduleItem.this);
+            Toasty.success(this, R.string.SaveGood, Toast.LENGTH_SHORT, true).show();
+        }
+        catch (Error err){
+            Toasty.error(this, err.getMessage(), Toast.LENGTH_SHORT, true).show();
+        }
 
-        test.setText(json);
 
-        return true;
     }
 }
