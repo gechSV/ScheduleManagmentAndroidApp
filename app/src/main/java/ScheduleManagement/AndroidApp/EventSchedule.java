@@ -2,12 +2,16 @@ package ScheduleManagement.AndroidApp;
 
 import android.graphics.Color;
 
+import java.io.ByteArrayInputStream;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.util.Calendar;
 
 /**
  * Класс для управления событием расписания
  */
-public class EventSchedule implements Comparable<EventSchedule>{
+public class EventSchedule implements Comparable<EventSchedule>, Serializable {
 
     private String _nameEvent; // Имя события (низвание пары, урока и т.п.)
     private String _typeEvent; // Тип события (лекция, практика, собрание, концерт и т.д.)
@@ -24,6 +28,7 @@ public class EventSchedule implements Comparable<EventSchedule>{
         this._timeEventStart = Calendar.getInstance();
         this._timeEventEnd = Calendar.getInstance();
     }
+
 
     /**
      * Метод интерфейса Comparable для сортировки списка

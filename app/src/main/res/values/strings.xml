@@ -6,5 +6,5 @@
     <string name="PlainTextPlaceholderNameOfTheEventHost">Name of the event host</string>
     <string name="PlainTextPlaceholderChoiceTime">0:00</string>
     <string name="SaveGood">Event saved</string>
-
+    <string name="WriteNameError">You need to fill in the name of the event :3</string>
 </resources>

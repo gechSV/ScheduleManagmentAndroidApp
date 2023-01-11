@@ -15,6 +15,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+
 import java.util.Calendar;
 
 import es.dmoral.toasty.Toasty;
@@ -220,7 +223,8 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
     }
 
     private void SaveEvent(){
-        ColorStateList colorStateList = ColorStateList.valueOf(0xFFFF9494);
+        ColorStateList colorStateListRed = ColorStateList.valueOf(0xFFFF9494);
+
         Boolean checkErrorFlag = false;
 
         // Event name
@@ -228,7 +232,8 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             _eventSchedule.SetNameEvent(_ET_EventName.getText().toString());
         }
         else{
-            _ET_EventName.setBackgroundTintList(colorStateList);
+            _ET_EventName.setBackgroundTintList(colorStateListRed);
+            Toasty.error(this, R.string.WriteNameError, Toast.LENGTH_SHORT, true).show();
             return;
         }
 
@@ -261,13 +266,28 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         // Сохранение данных в файл
         // FILE_NAME = "NewEvent.bin"
         try {
-            FileIO.WriteNewSchedule(_eventSchedule, FILE_NAME, ActivityAddScheduleItem.this);
+            FileIO.WriteScheduleEventInFile(_eventSchedule, FILE_NAME, ActivityAddScheduleItem.this);
             Toasty.success(this, R.string.SaveGood, Toast.LENGTH_SHORT, true).show();
         }
         catch (Error err){
             Toasty.error(this, err.getMessage(), Toast.LENGTH_SHORT, true).show();
         }
 
+
+        // Пример чтения данных из файла
+//        try{
+//            EventSchedule testEvent = FileIO.ReadScheduleEventInFile(FILE_NAME, ActivityAddScheduleItem.this);
+//            Gson gson = new Gson();
+//            String json = gson.toJson(testEvent);
+//            test.setText(json);
+//            Toasty.success(this, "ReadGood", Toast.LENGTH_SHORT, true).show();
+//        }
+//        catch (Error err){
+//            Toasty.error(this, err.getMessage(), Toast.LENGTH_SHORT, true).show();
+//        }
+
+        //TODO: Записывать все данные в список. При чтении распределять по нужным местам календаря
+        //TODO: Соответственно создать класс списка
 
     }
 }
