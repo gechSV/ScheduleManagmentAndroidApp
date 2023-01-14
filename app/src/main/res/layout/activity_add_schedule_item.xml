@@ -176,11 +176,63 @@
                 </LinearLayout>
 
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+
+                    <Button
+                        android:id="@+id/buttonMon"
+                        style="@style/ButtonPickWeekDay"
+                        android:text="@string/Mon"
+                        android:background="@drawable/style_for_week_day_button"/>
+
+                    <Button
+                        android:id="@+id/buttonTue"
+                        style="@style/ButtonPickWeekDay"
+                        android:text="@string/Tue"
+                        android:background="@drawable/style_for_week_day_button"/>
+
+                    <Button
+                        android:id="@+id/buttonWed"
+                        style="@style/ButtonPickWeekDay"
+                        android:text="@string/Wed"
+                        android:background="@drawable/style_for_week_day_button"/>
+
+                    <Button
+                        android:id="@+id/buttonThu"
+                        style="@style/ButtonPickWeekDay"
+                        android:text="@string/Thu"
+                        android:background="@drawable/style_for_week_day_button"/>
+
+                    <Button
+                        android:id="@+id/buttonFri"
+                        style="@style/ButtonPickWeekDay"
+                        android:text="@string/Fri"
+                        android:background="@drawable/style_for_week_day_button"/>
+
+                    <Button
+                        android:id="@+id/buttonSat"
+                        style="@style/ButtonPickWeekDay"
+                        android:text="@string/Sat"
+                        android:background="@drawable/style_for_week_day_button"/>
+
+                    <Button
+                        android:id="@+id/buttonSun"
+                        style="@style/ButtonPickWeekDay"
+                        android:text="@string/Sun"
+                        android:background="@drawable/style_for_week_day_button"/>
+                </LinearLayout>
+
                 <Button
                     android:id="@+id/buttonSaveEvent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Button"
+                    android:text="@string/save"
                     android:layout_gravity="bottom"/>
 
                 <EditText

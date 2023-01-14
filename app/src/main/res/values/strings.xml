@@ -7,4 +7,14 @@
     <string name="PlainTextPlaceholderChoiceTime">0:00</string>
     <string name="SaveGood">Event saved</string>
     <string name="WriteNameError">You need to fill in the name of the event :3</string>
+
+    <string name="Mon"> mo </string>
+    <string name="Tue"> tu </string>
+    <string name="Wed"> we </string>
+    <string name="Thu"> th </string>
+    <string name="Fri"> fr </string>
+    <string name="Sat"> sa </string>
+    <string name="Sun"> su </string>
+
+    <string name="save">Save</string>
 </resources>

@@ -3,12 +3,9 @@ package ScheduleManagement.AndroidApp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.res.ColorStateList;
-import android.content.res.Resources;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +15,9 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Objects;
 
 import es.dmoral.toasty.Toasty;
 
@@ -43,6 +42,15 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
     private Button _buttonChoiceColorBlack;
     private Button _buttonChoiceColorBrown;
 
+    // Кнопки для выбора дня недели
+    private Button _buttonChoiceWeekDayMon;
+    private Button _buttonChoiceWeekDayTue;
+    private Button _buttonChoiceWeekDayWed;
+    private Button _buttonChoiceWeekDayThu;
+    private Button _buttonChoiceWeekDayFri;
+    private Button _buttonChoiceWeekDaySat;
+    private Button _buttonChoiceWeekDaySun;
+
     // Кнопки открытия TimePicker
     private Button _buttonStartTime;
     private Button _buttonEndTime;
@@ -58,6 +66,8 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
     // запоминает выбранное время
     private Calendar _startTime;
     private Calendar _endTime;
+
+    boolean[] _weekClick;
 
     private EventSchedule _eventSchedule;
 
@@ -91,6 +101,14 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _buttonStartTime = (Button) findViewById(R.id.buttonStartTime);
         _buttonEndTime = (Button) findViewById(R.id.buttonEndTime);
 
+        _buttonChoiceWeekDayMon = (Button) findViewById(R.id.buttonMon);
+        _buttonChoiceWeekDayTue = (Button) findViewById(R.id.buttonTue);
+        _buttonChoiceWeekDayWed = (Button) findViewById(R.id.buttonWed);
+        _buttonChoiceWeekDayThu = (Button) findViewById(R.id.buttonThu);
+        _buttonChoiceWeekDayFri = (Button) findViewById(R.id.buttonFri);
+        _buttonChoiceWeekDaySat = (Button) findViewById(R.id.buttonSat);
+        _buttonChoiceWeekDaySun = (Button) findViewById(R.id.buttonSun);
+
         _buttonSaveEvent = (Button) findViewById(R.id.buttonSaveEvent);
 
         // Добавляем кнопки к прослушиванию для метода onClick()
@@ -107,6 +125,14 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
         _buttonStartTime.setOnClickListener(this);
         _buttonEndTime.setOnClickListener(this);
+
+        _buttonChoiceWeekDayMon.setOnClickListener(this);
+        _buttonChoiceWeekDayTue.setOnClickListener(this);
+        _buttonChoiceWeekDayWed.setOnClickListener(this);
+        _buttonChoiceWeekDayThu.setOnClickListener(this);
+        _buttonChoiceWeekDayFri.setOnClickListener(this);
+        _buttonChoiceWeekDaySat.setOnClickListener(this);
+        _buttonChoiceWeekDaySun.setOnClickListener(this);
 
         _buttonSaveEvent.setOnClickListener(this);
 
@@ -127,17 +153,21 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _startTime = Calendar.getInstance();
         _endTime = Calendar.getInstance();
 
+        _weekClick = new boolean[7];
+
+        Arrays.fill(_weekClick, false);
+
         _eventSchedule = new EventSchedule();
     }
 
-    public static int getPixelValue(Context context, int dimenId) {
-        Resources resources = context.getResources();
-        return (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                dimenId,
-                resources.getDisplayMetrics()
-        );
-    }
+//    public static int getPixelValue(Context context, int dimenId) {
+//        Resources resources = context.getResources();
+//        return (int) TypedValue.applyDimension(
+//                TypedValue.COMPLEX_UNIT_DIP,
+//                dimenId,
+//                resources.getDisplayMetrics()
+//        );
+//    }
 
     @Override
     public void onClick(View v){
@@ -145,40 +175,139 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             // Прослушивание кнопок выбора цвета
             case (R.id.buttonChoiceColorLime):
                 SetSaveColor(0xFF8DC643);
+                UpdColorImage(0);
                 break;
+
             case (R.id.buttonChoiceColorCactus):
                 SetSaveColor(0xFF009144);
+                UpdColorImage(1);
                 break;
+
             case (R.id.buttonChoiceColorBlue):
                 SetSaveColor(0xFF00b2d6);
+                UpdColorImage(2);
                 break;
+
             case (R.id.buttonChoiceColorPurple):
                 SetSaveColor(0xFF683093);
+                UpdColorImage(3);
                 break;
+
             case (R.id.buttonChoiceColorRose):
                 SetSaveColor(0xFFd61e5e);
+                UpdColorImage(4);
                 break;
+
             case (R.id.buttonChoiceColorRed):
                 SetSaveColor(0xFFed2528);
+                UpdColorImage(5);
                 break;
+
             case (R.id.buttonChoiceColorPeach):
                 SetSaveColor(0xFFe63b43);
+                UpdColorImage(6);
                 break;
+
             case (R.id.buttonChoiceColorGray):
                 SetSaveColor(0xFF999);
+                UpdColorImage(7);
                 break;
+
             case (R.id.buttonChoiceColorBlack):
                 SetSaveColor(0xFF191919);
+                UpdColorImage(8);
                 break;
+
             case (R.id.buttonChoiceColorBrown):
                 SetSaveColor(0xFF603a16);
+                UpdColorImage(9);
                 break;
+
             case (R.id.buttonStartTime):
                 SetTime(_buttonStartTime, _startTime);
                 break;
+
             case (R.id.buttonEndTime):
                 SetTime(_buttonEndTime, _endTime);
                 break;
+
+            case (R.id.buttonMon):
+                if (_weekClick[0]){
+                    _buttonChoiceWeekDayMon.setBackgroundResource(R.drawable.style_for_week_day_button);
+                }
+                else
+                {
+                    _buttonChoiceWeekDayMon.setBackgroundResource(R.drawable.style_for_week_day_button_click);
+                }
+                _weekClick[0] = !_weekClick[0];
+                break;
+
+            case (R.id.buttonTue):
+                if (_weekClick[1]){
+                    _buttonChoiceWeekDayTue.setBackgroundResource(R.drawable.style_for_week_day_button);
+                }
+                else
+                {
+                    _buttonChoiceWeekDayTue.setBackgroundResource(R.drawable.style_for_week_day_button_click);
+                }
+                _weekClick[1] = !_weekClick[1];
+                break;
+
+            case (R.id.buttonWed):
+                if (_weekClick[2]){
+                    _buttonChoiceWeekDayWed.setBackgroundResource(R.drawable.style_for_week_day_button);
+                }
+                else
+                {
+                    _buttonChoiceWeekDayWed.setBackgroundResource(R.drawable.style_for_week_day_button_click);
+                }
+                _weekClick[2] = !_weekClick[2];
+                break;
+
+            case (R.id.buttonThu):
+                if (_weekClick[3]){
+                    _buttonChoiceWeekDayThu.setBackgroundResource(R.drawable.style_for_week_day_button);
+                }
+                else
+                {
+                    _buttonChoiceWeekDayThu.setBackgroundResource(R.drawable.style_for_week_day_button_click);
+                }
+                _weekClick[3] = !_weekClick[3];
+                break;
+
+            case (R.id.buttonFri):
+                if (_weekClick[4]){
+                    _buttonChoiceWeekDayFri.setBackgroundResource(R.drawable.style_for_week_day_button);
+                }
+                else
+                {
+                    _buttonChoiceWeekDayFri.setBackgroundResource(R.drawable.style_for_week_day_button_click);
+                }
+                _weekClick[4] = !_weekClick[4];
+                break;
+
+            case (R.id.buttonSat):
+                if (_weekClick[5]){
+                    _buttonChoiceWeekDaySat.setBackgroundResource(R.drawable.style_for_week_day_button);
+                }
+                else
+                {
+                    _buttonChoiceWeekDaySat.setBackgroundResource(R.drawable.style_for_week_day_button_click);
+                }
+                _weekClick[5] = !_weekClick[5];
+                break;
+
+            case (R.id.buttonSun):
+                if (_weekClick[6]){
+                    _buttonChoiceWeekDaySun.setBackgroundResource(R.drawable.style_for_week_day_button);
+                }
+                else
+                {
+                    _buttonChoiceWeekDaySun.setBackgroundResource(R.drawable.style_for_week_day_button_click);
+                }
+                _weekClick[6] = !_weekClick[6];
+                break;
+
             case (R.id.buttonSaveEvent):
                 SaveEvent();
 
@@ -189,6 +318,52 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
     private void SetSaveColor(int color){
         _saveColor = color;
         _ET_EventName.setText(Integer.toString(color));
+    }
+
+    private void UpdColorImage(int colorButtonId){
+        _buttonChoiceColorLime.setBackgroundResource(R.drawable.style_for_choice_button_lime);
+        _buttonChoiceColorCactus.setBackgroundResource(R.drawable.style_for_choice_button_cactus);
+        _buttonChoiceColorBlue.setBackgroundResource(R.drawable.style_for_choice_button_blue);
+        _buttonChoiceColorPurple.setBackgroundResource(R.drawable.style_for_choice_button_purple);
+        _buttonChoiceColorRose.setBackgroundResource(R.drawable.style_for_choice_button_rose);
+        _buttonChoiceColorRed.setBackgroundResource(R.drawable.style_for_choice_button_red);
+        _buttonChoiceColorPeach.setBackgroundResource(R.drawable.style_for_choice_button_peach);
+        _buttonChoiceColorGray.setBackgroundResource(R.drawable.style_for_choice_button_gray);
+        _buttonChoiceColorBlack.setBackgroundResource(R.drawable.style_for_choice_button_black);
+        _buttonChoiceColorBrown.setBackgroundResource(R.drawable.style_for_choice_button_brown);
+
+        switch (colorButtonId){
+            case 0:
+                _buttonChoiceColorLime.setBackgroundResource(R.drawable.style_for_choice_button_lime_click);
+                break;
+            case 1:
+                _buttonChoiceColorCactus.setBackgroundResource(R.drawable.style_for_choice_button_cactus_click);
+                break;
+            case 2:
+                _buttonChoiceColorBlue.setBackgroundResource(R.drawable.style_for_choice_button_blue_click);
+                break;
+            case 3:
+                _buttonChoiceColorPurple.setBackgroundResource(R.drawable.style_for_choice_button_purple_click);
+                break;
+            case 4:
+                _buttonChoiceColorRose.setBackgroundResource(R.drawable.style_for_choice_button_rose_click);
+                break;
+            case 5:
+                _buttonChoiceColorRed.setBackgroundResource(R.drawable.style_for_choice_button_red_click);
+                break;
+            case 6:
+                _buttonChoiceColorPeach.setBackgroundResource(R.drawable.style_for_choice_button_peach_click);
+                break;
+            case 7:
+                _buttonChoiceColorGray.setBackgroundResource(R.drawable.style_for_choice_button_gray_click);
+                break;
+            case 8:
+                _buttonChoiceColorBlack.setBackgroundResource(R.drawable.style_for_choice_button_black_click);
+                break;
+            case 9:
+                _buttonChoiceColorBrown.setBackgroundResource(R.drawable.style_for_choice_button_brown_click);
+                break;
+        }
     }
 
     private void SetTime(Button button, Calendar time){
@@ -270,21 +445,20 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             Toasty.success(this, R.string.SaveGood, Toast.LENGTH_SHORT, true).show();
         }
         catch (Error err){
-            Toasty.error(this, err.getMessage(), Toast.LENGTH_SHORT, true).show();
+            Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT, true).show();
         }
 
-
         // Пример чтения данных из файла
-//        try{
-//            EventSchedule testEvent = FileIO.ReadScheduleEventInFile(FILE_NAME, ActivityAddScheduleItem.this);
-//            Gson gson = new Gson();
-//            String json = gson.toJson(testEvent);
-//            test.setText(json);
-//            Toasty.success(this, "ReadGood", Toast.LENGTH_SHORT, true).show();
-//        }
-//        catch (Error err){
-//            Toasty.error(this, err.getMessage(), Toast.LENGTH_SHORT, true).show();
-//        }
+        try{
+            EventSchedule testEvent = FileIO.ReadScheduleEventInFile(FILE_NAME, ActivityAddScheduleItem.this);
+            Gson gson = new Gson();
+            String json = gson.toJson(testEvent);
+            test.setText(json);
+            Toasty.success(this, "ReadGood", Toast.LENGTH_SHORT, true).show();
+        }
+        catch (Error err){
+            Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT, true).show();
+        }
 
         //TODO: Записывать все данные в список. При чтении распределять по нужным местам календаря
         //TODO: Соответственно создать класс списка

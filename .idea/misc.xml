@@ -7,18 +7,30 @@
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2875" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_choice_button.xml" value="0.1495" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_choice_button_black.xml" value="0.207" />
+        <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_choice_button_black_click.xml" value="0.2825" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_choice_button_blue.xml" value="0.207" />
+        <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_choice_button_blue_click.xml" value="0.2825" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_choice_button_brown.xml" value="0.207" />
+        <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_choice_button_brown_click.xml" value="0.2825" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_choice_button_cactus.xml" value="0.207" />
+        <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_choice_button_cactus_click.xml" value="0.2825" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_choice_button_catus.xml" value="0.207" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_choice_button_gray.xml" value="0.207" />
+        <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_choice_button_gray_click.xml" value="0.2825" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_choice_button_lime.xml" value="0.207" />
+        <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_choice_button_lime_click.xml" value="0.2825" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_choice_button_peach.xml" value="0.207" />
+        <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_choice_button_peach_click.xml" value="0.2825" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_choice_button_purple.xml" value="0.207" />
+        <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_choice_button_purple_click.xml" value="0.2825" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_choice_button_red.xml" value="0.207" />
+        <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_choice_button_red_click.xml" value="0.2825" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_choice_button_rose.xml" value="0.207" />
+        <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_choice_button_rose_click.xml" value="0.2825" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_choise_button.xml" value="0.2535" />
-        <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/layout/activity_add_schedule_item.xml" value="0.5" />
+        <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_week_day_button.xml" value="0.196" />
+        <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_week_day_button_click.xml" value="0.196" />
+        <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/layout/activity_add_schedule_item.xml" value="0.33" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/layout/button_color.xml" value="0.20153985507246377" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/layout/button_custom.xml" value="0.2828125" />
