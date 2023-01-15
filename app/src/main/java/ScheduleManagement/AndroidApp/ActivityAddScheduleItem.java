@@ -174,52 +174,52 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         switch (v.getId()) {
             // Прослушивание кнопок выбора цвета
             case (R.id.buttonChoiceColorLime):
-                SetSaveColor(0xFF8DC643);
+                _saveColor = 0xFF8DC643;
                 UpdColorImage(0);
                 break;
 
             case (R.id.buttonChoiceColorCactus):
-                SetSaveColor(0xFF009144);
+                _saveColor = 0xFF009144;
                 UpdColorImage(1);
                 break;
 
             case (R.id.buttonChoiceColorBlue):
-                SetSaveColor(0xFF00b2d6);
+                _saveColor = 0xFF00b2d6;
                 UpdColorImage(2);
                 break;
 
             case (R.id.buttonChoiceColorPurple):
-                SetSaveColor(0xFF683093);
+                _saveColor = 0xFF683093;
                 UpdColorImage(3);
                 break;
 
             case (R.id.buttonChoiceColorRose):
-                SetSaveColor(0xFFd61e5e);
+                _saveColor = 0xFFd61e5e;
                 UpdColorImage(4);
                 break;
 
             case (R.id.buttonChoiceColorRed):
-                SetSaveColor(0xFFed2528);
+                _saveColor = 0xFFed2528;
                 UpdColorImage(5);
                 break;
 
             case (R.id.buttonChoiceColorPeach):
-                SetSaveColor(0xFFe63b43);
+                _saveColor = 0xFFe63b43;
                 UpdColorImage(6);
                 break;
 
             case (R.id.buttonChoiceColorGray):
-                SetSaveColor(0xFF999);
+                _saveColor = 0xFF999;
                 UpdColorImage(7);
                 break;
 
             case (R.id.buttonChoiceColorBlack):
-                SetSaveColor(0xFF191919);
+                _saveColor = 0xFF191919;
                 UpdColorImage(8);
                 break;
 
             case (R.id.buttonChoiceColorBrown):
-                SetSaveColor(0xFF603a16);
+                _saveColor = 0xFF603a16;
                 UpdColorImage(9);
                 break;
 
@@ -317,7 +317,6 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
     private void SetSaveColor(int color){
         _saveColor = color;
-        _ET_EventName.setText(Integer.toString(color));
     }
 
     private void UpdColorImage(int colorButtonId){
@@ -431,12 +430,11 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _eventSchedule.SetTimeEventStart(_startTime);
         _eventSchedule.SetTimeEventEnd(_endTime);
 
-        // Event for Color
-        // Color saveColor = new Color.valueOf(0xFFFFFFFF);
-        // _eventSchedule.SetColorForEvent();
-//
-//        Gson gson = new Gson();
-//        String json = gson.toJson(_eventSchedule);
+         // Event add Color
+         _eventSchedule.SetColorForEvent(_saveColor);
+
+         // Event add WeekDay
+        _eventSchedule.SetWeekDayPeek(_weekClick);
 
         // Сохранение данных в файл
         // FILE_NAME = "NewEvent.bin"
@@ -459,6 +457,10 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         catch (Error err){
             Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT, true).show();
         }
+
+
+//        String hexColor = String.format("#%06X", (0xFFFFFF & _saveColor));
+//        test.setText(hexColor);
 
         //TODO: Записывать все данные в список. При чтении распределять по нужным местам календаря
         //TODO: Соответственно создать класс списка

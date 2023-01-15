@@ -6,6 +6,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Calendar;
 
 /**
@@ -19,7 +20,9 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
     private String _EventHost; // Имя руководителя мероприятия
     private Calendar _timeEventStart; // Время начала события
     private Calendar _timeEventEnd; // Время окончания события
-    private Color _colorForEvent; // Цвет для отображения расписания
+    // Массив флагов для хранения выбранного дня недели
+    private boolean[] _weekDayPeek; // 0-пн, 1-вт, 2-ср, 3-чт, 4-пт, 5-сб, 6-вт
+    private int _colorForEvent; // Цвет для отображения расписания
 
     /**
      * Конструктор без параметров
@@ -27,6 +30,8 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
     public EventSchedule(){
         this._timeEventStart = Calendar.getInstance();
         this._timeEventEnd = Calendar.getInstance();
+        _weekDayPeek = new boolean[7];
+        Arrays.fill(_weekDayPeek, false);
     }
 
 
@@ -199,16 +204,39 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
         return _timeEventEnd.getTimeInMillis();
     }
 
-    public void SetColorForEvent(Color _colorForEvent) {
-        if (_colorForEvent != null){
+    /**
+     * Установить цвет
+     * @param _colorForEvent RGB переведённое в integer
+     */
+    public void SetColorForEvent(int _colorForEvent) {
             this._colorForEvent = _colorForEvent;
-        }
-        else{
-            throw new Error("The argument _colorForEvent cannot be null.");
+    }
+
+    /**
+     * Получить цвет события
+     * @return RGB переведённое в integer
+     */
+    public int GetColorForEvent() {
+        return _colorForEvent;
+    }
+
+    /**
+     * Установка флагов дней недели 0-пн, 1-вт, 2-ср, 3-чт, 4-пт, 5-сб, 6-вт
+     * @param weekDayPeek массив из 7 объектов boolean
+     */
+    public void SetWeekDayPeek(boolean[] weekDayPeek){
+        if(weekDayPeek != null){
+            this._weekDayPeek = weekDayPeek;
+        }else {
+            throw new Error("The argument weekDayPeek cannot be null.");
         }
     }
 
-    public Color GetColorForEvent() {
-        return _colorForEvent;
+    /**
+     * Получить массив флагов
+     * @return массив из 7 объектов boolean
+     */
+    public boolean[] getWeekDayPeek(){
+        return this._weekDayPeek;
     }
 }
