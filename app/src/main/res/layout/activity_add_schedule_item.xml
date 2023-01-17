@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -123,18 +124,18 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <EditText
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/editTextTypeOfEvent"
-                    android:layout_width="413dp"
+                    android:layout_width="400dp"
                     android:layout_height="60dp"
                     android:layout_weight="0.2"
                     android:ems="10"
                     android:hint="@string/PlainTextPlaceholderEventType"
                     android:inputType="textPersonName"/>
 
-                <EditText
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/editTextEventLocation"
-                    android:layout_width="413dp"
+                    android:layout_width="400dp"
                     android:layout_height="60dp"
                     android:layout_weight="0.2"
                     android:ems="10"
@@ -143,7 +144,7 @@
 
                 <EditText
                     android:id="@+id/editTextNameOfTheEventHost"
-                    android:layout_width="413dp"
+                    android:layout_width="400dp"
                     android:layout_height="60dp"
                     android:layout_weight="0.2"
                     android:ems="10"
@@ -228,23 +229,15 @@
                         android:background="@drawable/style_for_week_day_button"/>
                 </LinearLayout>
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/buttonSaveEvent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/save"
-                    android:layout_gravity="bottom"/>
+                    android:layout_gravity="bottom"
+                    app:cornerRadius="25dp"/>
 
-                <EditText
-                    android:id="@+id/editTextTextMultiLine"
-                    android:layout_width="match_parent"
-                    android:layout_height="280dp"
-                    android:layout_weight="0.2"
-                    android:ems="10"
-                    android:gravity="start|top"
-                    android:inputType="textMultiLine" />
             </LinearLayout>
-
 
         </LinearLayout>
 

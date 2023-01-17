@@ -21,4 +21,13 @@
         <item name="android:layout_margin">3dp</item>
         <item name="android:textSize">15sp</item>
     </style>
+
+    <style name="TimePickerTheme" parent="@style/ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="title">false</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorSecondary">@color/deep_orange_300</item>
+        <item name="android:timePickerMode">clock</item>
+        <item name="background">@drawable/time_picker_layout</item>
+        <item name="colorAccent">@color/deep_orange_300</item>
+    </style>
 </resources>

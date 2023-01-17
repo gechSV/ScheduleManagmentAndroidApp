@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Инициализация активити для добавления события
         _IntentAddEvent = new Intent(MainActivity.this, ActivityAddScheduleItem.class);
-        _IntentAddEvent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 
         // Настройка viewPager2
         _viewPager2 = findViewById(R.id.viewpager);

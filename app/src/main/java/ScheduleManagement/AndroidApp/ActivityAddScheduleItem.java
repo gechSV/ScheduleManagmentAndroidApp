@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.view.View;
@@ -148,7 +149,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 //            row2.addView(ivBowl);
 //        }
 
-        test = (EditText) findViewById(R.id.editTextTextMultiLine);
+//        test = (EditText) findViewById(R.id.editTextTextMultiLine);
 
         _startTime = Calendar.getInstance();
         _endTime = Calendar.getInstance();
@@ -234,10 +235,12 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             case (R.id.buttonMon):
                 if (_weekClick[0]){
                     _buttonChoiceWeekDayMon.setBackgroundResource(R.drawable.style_for_week_day_button);
+                    _buttonChoiceWeekDayMon.setTextColor(getResources().getColor(R.color.black));
                 }
                 else
                 {
                     _buttonChoiceWeekDayMon.setBackgroundResource(R.drawable.style_for_week_day_button_click);
+                    _buttonChoiceWeekDayMon.setTextColor(getResources().getColor(R.color.white));
                 }
                 _weekClick[0] = !_weekClick[0];
                 break;
@@ -245,10 +248,12 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             case (R.id.buttonTue):
                 if (_weekClick[1]){
                     _buttonChoiceWeekDayTue.setBackgroundResource(R.drawable.style_for_week_day_button);
+                    _buttonChoiceWeekDayTue.setTextColor(getResources().getColor(R.color.black));
                 }
                 else
                 {
                     _buttonChoiceWeekDayTue.setBackgroundResource(R.drawable.style_for_week_day_button_click);
+                    _buttonChoiceWeekDayTue.setTextColor(getResources().getColor(R.color.white));
                 }
                 _weekClick[1] = !_weekClick[1];
                 break;
@@ -256,10 +261,12 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             case (R.id.buttonWed):
                 if (_weekClick[2]){
                     _buttonChoiceWeekDayWed.setBackgroundResource(R.drawable.style_for_week_day_button);
+                    _buttonChoiceWeekDayWed.setTextColor(getResources().getColor(R.color.black));
                 }
                 else
                 {
                     _buttonChoiceWeekDayWed.setBackgroundResource(R.drawable.style_for_week_day_button_click);
+                    _buttonChoiceWeekDayWed.setTextColor(getResources().getColor(R.color.white));
                 }
                 _weekClick[2] = !_weekClick[2];
                 break;
@@ -267,10 +274,12 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             case (R.id.buttonThu):
                 if (_weekClick[3]){
                     _buttonChoiceWeekDayThu.setBackgroundResource(R.drawable.style_for_week_day_button);
+                    _buttonChoiceWeekDayThu.setTextColor(getResources().getColor(R.color.black));
                 }
                 else
                 {
                     _buttonChoiceWeekDayThu.setBackgroundResource(R.drawable.style_for_week_day_button_click);
+                    _buttonChoiceWeekDayThu.setTextColor(getResources().getColor(R.color.white));
                 }
                 _weekClick[3] = !_weekClick[3];
                 break;
@@ -278,10 +287,12 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             case (R.id.buttonFri):
                 if (_weekClick[4]){
                     _buttonChoiceWeekDayFri.setBackgroundResource(R.drawable.style_for_week_day_button);
+                    _buttonChoiceWeekDayFri.setTextColor(getResources().getColor(R.color.black));
                 }
                 else
                 {
                     _buttonChoiceWeekDayFri.setBackgroundResource(R.drawable.style_for_week_day_button_click);
+                    _buttonChoiceWeekDayFri.setTextColor(getResources().getColor(R.color.white));
                 }
                 _weekClick[4] = !_weekClick[4];
                 break;
@@ -289,10 +300,12 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             case (R.id.buttonSat):
                 if (_weekClick[5]){
                     _buttonChoiceWeekDaySat.setBackgroundResource(R.drawable.style_for_week_day_button);
+                    _buttonChoiceWeekDaySat.setTextColor(getResources().getColor(R.color.black));
                 }
                 else
                 {
                     _buttonChoiceWeekDaySat.setBackgroundResource(R.drawable.style_for_week_day_button_click);
+                    _buttonChoiceWeekDaySat.setTextColor(getResources().getColor(R.color.white));
                 }
                 _weekClick[5] = !_weekClick[5];
                 break;
@@ -300,10 +313,12 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             case (R.id.buttonSun):
                 if (_weekClick[6]){
                     _buttonChoiceWeekDaySun.setBackgroundResource(R.drawable.style_for_week_day_button);
+                    _buttonChoiceWeekDaySun.setTextColor(getResources().getColor(R.color.black));
                 }
                 else
                 {
                     _buttonChoiceWeekDaySun.setBackgroundResource(R.drawable.style_for_week_day_button_click);
+                    _buttonChoiceWeekDaySun.setTextColor(getResources().getColor(R.color.white));
                 }
                 _weekClick[6] = !_weekClick[6];
                 break;
@@ -312,6 +327,8 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
                 SaveEvent();
 
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + v.getId());
         }
     }
 
@@ -387,12 +404,11 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             }
         };
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(ActivityAddScheduleItem.this,
-                android.R.style.Theme_Holo_Light_Dialog_NoActionBar, myTimeListener, hour,
-                minute, true);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(ActivityAddScheduleItem.this, R.style.TimePickerTheme,
+                myTimeListener, hour, minute, true);
 
-        timePickerDialog.setTitle("Choose time:");
-        timePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+//        timePickerDialog.setTitle("Choose time:");
+//        timePickerDialog.getWindow().setBackgroundDrawableResource(R.color.deep_orange_50);
         timePickerDialog.show();
     }
 
@@ -446,24 +462,20 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT, true).show();
         }
 
-        // Пример чтения данных из файла
-        try{
-            EventSchedule testEvent = FileIO.ReadScheduleEventInFile(FILE_NAME, ActivityAddScheduleItem.this);
-            Gson gson = new Gson();
-            String json = gson.toJson(testEvent);
-            test.setText(json);
-            Toasty.success(this, "ReadGood", Toast.LENGTH_SHORT, true).show();
-        }
-        catch (Error err){
-            Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT, true).show();
-        }
+//        // Пример чтения данных из файла
+//        try{
+//            EventSchedule testEvent = FileIO.ReadScheduleEventInFile(FILE_NAME, ActivityAddScheduleItem.this);
+//            Gson gson = new Gson();
+//            String json = gson.toJson(testEvent);
+//            test.setText(json);
+//            Toasty.success(this, "ReadGood", Toast.LENGTH_SHORT, true).show();
+//        }
+//        catch (Error err){
+//            Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT, true).show();
+//        }
 
 
 //        String hexColor = String.format("#%06X", (0xFFFFFF & _saveColor));
 //        test.setText(hexColor);
-
-        //TODO: Записывать все данные в список. При чтении распределять по нужным местам календаря
-        //TODO: Соответственно создать класс списка
-
     }
 }
