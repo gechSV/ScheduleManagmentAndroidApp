@@ -14,6 +14,8 @@ import java.util.Calendar;
  */
 public class EventSchedule implements Comparable<EventSchedule>, Serializable {
 
+    private static final long serialVersionUID = 6024437629835836202L;
+
     private String _nameEvent; // Имя события (низвание пары, урока и т.п.)
     private String _typeEvent; // Тип события (лекция, практика, собрание, концерт и т.д.)
     private String _EventLocation; // Место проведения мероприятия (аудитория, улица, корпус)

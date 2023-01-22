@@ -1,12 +1,15 @@
 package ScheduleManagement.AndroidApp;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
 /**
  * Класс-список для хранения объектов EventSchedule
  */
-public class EventScheduleList{
+public class EventScheduleList implements Serializable {
+
+    private static final long serialVersionUID = -5971595872135145203L;
 
     private ArrayList<EventSchedule> _eventScheduleList; // Список объектов EventSchedule
 
@@ -38,7 +41,7 @@ public class EventScheduleList{
      * Добавить элемент в список eventsDayList
      * @param _EventSchedule Событие
      */
-    public void AppendEventSchedule(EventSchedule _EventSchedule){
+    public void AppendEvent(EventSchedule _EventSchedule){
         this._eventScheduleList.add(_EventSchedule);
     }
 

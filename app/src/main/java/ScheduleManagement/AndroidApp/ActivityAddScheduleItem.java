@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.view.View;
@@ -13,8 +12,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -72,7 +69,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
     private EventSchedule _eventSchedule;
 
-    private final static String FILE_NAME = "NewEvent.bin";
+    private final static String FILE_NAME = "Event_Schedule_List.bin";
 
     EditText test;
 
@@ -452,15 +449,55 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
          // Event add WeekDay
         _eventSchedule.SetWeekDayPeek(_weekClick);
 
-        // Сохранение данных в файл
-        // FILE_NAME = "NewEvent.bin"
+        // Пример чтения данных из файла
+//        try{
+//            EventSchedule testEvent = FileIO.ReadScheduleEventInFile(FILE_NAME, ActivityAddScheduleItem.this);
+//            Gson gson = new Gson();
+//            String json = gson.toJson(testEvent);
+//            test.setText(json);
+//            Toasty.success(this, "ReadGood", Toast.LENGTH_SHORT, true).show();
+//        }
+//        catch (Error err){
+//            Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT, true).show();
+//        }
+
+
+        // Сохранение данных в файл (Подразумевается, что файл уже существует, но ...)
+        // FILE_NAME = "Event_Schedule_List.bin"
         try {
-            FileIO.WriteScheduleEventInFile(_eventSchedule, FILE_NAME, ActivityAddScheduleItem.this);
-            Toasty.success(this, R.string.SaveGood, Toast.LENGTH_SHORT, true).show();
+            // Читаем объект из файла
+            EventScheduleList eventScheduleList = FileIO.ReadScheduleEventListInFile(FILE_NAME, this);
+            // Добавляем в конец списка событие
+            eventScheduleList.AppendEvent(_eventSchedule);
         }
         catch (Error err){
-            Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT, true).show();
+            Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT,
+                    true).show();
         }
+
+
+
+
+
+
+//        try {
+//            FileIO.WriteScheduleEventInFile(_eventSchedule, FILE_NAME, ActivityAddScheduleItem.this);
+//            Toasty.success(this, R.string.SaveGood, Toast.LENGTH_SHORT, true).show();
+//        }
+//        catch (Error err){
+//            Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT, true).show();
+//        }
+
+
+//        // Сохранение данных в файл
+//        // FILE_NAME = "NewEvent.bin"
+//        try {
+//            FileIO.WriteScheduleEventInFile(_eventSchedule, FILE_NAME, ActivityAddScheduleItem.this);
+//            Toasty.success(this, R.string.SaveGood, Toast.LENGTH_SHORT, true).show();
+//        }
+//        catch (Error err){
+//            Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT, true).show();
+//        }
 
 //        // Пример чтения данных из файла
 //        try{
