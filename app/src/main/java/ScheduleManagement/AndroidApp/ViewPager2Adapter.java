@@ -3,16 +3,21 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolder> {
 
     // Массив ресурсов для отображения
-    private int[] images = {R.drawable.style_for_choice_button_black, R.drawable.style_for_choice_button_brown_click, R.drawable.style_for_choice_button_cactus,
-            R.drawable.style_for_choice_button_blue, R.drawable.style_for_choice_button_lime_click};
+    private int[] _weekDay = {R.string.Monday, R.string.Tuesday, R.string.Wednesday,
+            R.string.Thursday, R.string.Friday, R.string.Saturday, R.string.Sunday};
 
     private Context _context;
 
@@ -25,7 +30,9 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(_context).inflate(R.layout.page_holder_for_main_activity, parent, false);
+        View view = LayoutInflater.from(_context).inflate(R.layout.page_holder_for_main_activity,
+                parent, false);
+
         return new ViewHolder(view);
     }
 
@@ -33,22 +40,37 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // This will set the images in imageview
-        holder.images.setImageResource(images[position]);
+        holder.textView.setText(_weekDay[position]);
     }
 
     // Метод возвращает длину массива компонентов
     @Override
     public int getItemCount() {
-        return images.length;
+        return _weekDay.length;
     }
+
+
 
     // The ViewHolder class holds the view
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView images;
+        TextView textView;
+        LinearLayout linearLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            images = itemView.findViewById(R.id.images);
+
+            textView = itemView.findViewById(R.id.textViewPage);
+            linearLayout = itemView.findViewById((R.id.linear_layout_for_card));
+
+            LinearLayout buffView = (LinearLayout)LayoutInflater.from(itemView.getContext())
+                    .inflate(R.layout.card_pattern_for_page, null);
+
+            LinearLayout buffView2 = (LinearLayout)LayoutInflater.from(itemView.getContext())
+                    .inflate(R.layout.card_pattern_for_page, null);
+
+
+            linearLayout.addView(buffView);
+            linearLayout.addView(buffView2);
         }
     }
 }
