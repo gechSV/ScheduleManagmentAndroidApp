@@ -172,52 +172,52 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         switch (v.getId()) {
             // Прослушивание кнопок выбора цвета
             case (R.id.buttonChoiceColorLime):
-                _saveColor = 0xFF8DC643;
+                _saveColor = 1;
                 UpdColorImage(0);
                 break;
 
             case (R.id.buttonChoiceColorCactus):
-                _saveColor = 0xFF009144;
+                _saveColor = 2;
                 UpdColorImage(1);
                 break;
 
             case (R.id.buttonChoiceColorBlue):
-                _saveColor = 0xFF00b2d6;
+                _saveColor = 3;
                 UpdColorImage(2);
                 break;
 
             case (R.id.buttonChoiceColorPurple):
-                _saveColor = 0xFF683093;
+                _saveColor = 4;
                 UpdColorImage(3);
                 break;
 
             case (R.id.buttonChoiceColorRose):
-                _saveColor = 0xFFd61e5e;
+                _saveColor = 5;
                 UpdColorImage(4);
                 break;
 
             case (R.id.buttonChoiceColorRed):
-                _saveColor = 0xFFed2528;
+                _saveColor = 6;
                 UpdColorImage(5);
                 break;
 
             case (R.id.buttonChoiceColorPeach):
-                _saveColor = 0xFFe63b43;
+                _saveColor = 7;
                 UpdColorImage(6);
                 break;
 
             case (R.id.buttonChoiceColorGray):
-                _saveColor = 0xFF999;
+                _saveColor = 8;
                 UpdColorImage(7);
                 break;
 
             case (R.id.buttonChoiceColorBlack):
-                _saveColor = 0xFF191919;
+                _saveColor = 9;
                 UpdColorImage(8);
                 break;
 
             case (R.id.buttonChoiceColorBrown):
-                _saveColor = 0xFF603a16;
+                _saveColor = 10;
                 UpdColorImage(9);
                 break;
 

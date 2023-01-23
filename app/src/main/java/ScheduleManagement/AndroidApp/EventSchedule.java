@@ -24,7 +24,7 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
     private Calendar _timeEventEnd; // Время окончания события
     // Массив флагов для хранения выбранного дня недели
     private boolean[] _weekDayPeek; // 0-пн, 1-вт, 2-ср, 3-чт, 4-пт, 5-сб, 6-вт
-    private int _colorForEvent; // Цвет для отображения расписания
+    private int _colorForEvent = 0; // Цвет для отображения расписания
 
     /**
      * Конструктор без параметров
@@ -208,7 +208,8 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
 
     /**
      * Установить цвет
-     * @param _colorForEvent RGB переведённое в integer
+     * @param _colorForEvent 1 - Lime, 2 - Green, 3 - Blue, 4 - purple, 5 - pink, 6 - red, 7 - orange
+     *                       8 - gray, 9 - black, 10 - brown
      */
     public void SetColorForEvent(int _colorForEvent) {
             this._colorForEvent = _colorForEvent;
@@ -216,7 +217,7 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
 
     /**
      * Получить цвет события
-     * @return RGB переведённое в integer
+     * @return id цвета
      */
     public int GetColorForEvent() {
         return _colorForEvent;

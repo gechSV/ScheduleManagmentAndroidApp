@@ -1,5 +1,8 @@
 package ScheduleManagement.AndroidApp;
+
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.cardview.widget.CardView;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -110,16 +116,61 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
         public ViewHolder(@NonNull View itemView, ArrayList<EventSchedule> dayEvent, int n) {
             super(itemView);
 
+            int i = 0; //счётчик для массива
             textView = itemView.findViewById(R.id.textViewPage);
             linearLayout = itemView.findViewById((R.id.linear_layout_for_card));
 
+            // для хранения карточек в памяти
             LinearLayout[] buffView = new LinearLayout[dayEvent.size()];
 
-            for(int i = 0; i < dayEvent.size(); i++){
+            // перебор списка событий и вывод на экран карточек
+            for(EventSchedule event: dayEvent){
+                // копируем макет
                 buffView[i] = (LinearLayout)LayoutInflater.from(itemView.getContext())
                         .inflate(R.layout.card_pattern_for_page, null);
 
+                // Получаем объект карточки
+                CardView cardView = buffView[i].findViewById(R.id.event_card);
+
+                // Установка цвета катрочки
+                switch (event.GetColorForEvent()){
+                    case 1:
+                        cardView.setBackgroundResource(R.drawable.style_for_card_lime);
+                        break;
+                    case 2:
+                        cardView.setBackgroundResource(R.drawable.style_for_card_green);
+                        break;
+                    case 3:
+                        cardView.setBackgroundResource(R.drawable.style_for_card_blue);
+                        break;
+                    case 4:
+                        cardView.setBackgroundResource(R.drawable.style_for_card_purple);
+                        break;
+                    case 5:
+                        cardView.setBackgroundResource(R.drawable.style_for_card_pink);
+                        break;
+                    case 6:
+                        cardView.setBackgroundResource(R.drawable.style_for_card_red);
+                        break;
+                    case 7:
+                        cardView.setBackgroundResource(R.drawable.style_for_card_orange);
+                        break;
+                    case 8:
+                        cardView.setBackgroundResource(R.drawable.style_for_card_gray);
+                        break;
+                    case 9:
+                        cardView.setBackgroundResource(R.drawable.style_for_card_black);
+                        break;
+                    case 10:
+                        cardView.setBackgroundResource(R.drawable.style_for_card_brown);
+                        break;
+                    default:
+                        cardView.setBackgroundResource(R.drawable.style_for_card_gray);
+                        break;
+                }
+
                 linearLayout.addView(buffView[i]);
+                i++;
             }
         }
     }
