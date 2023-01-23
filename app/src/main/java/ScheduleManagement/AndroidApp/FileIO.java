@@ -60,7 +60,7 @@ public class FileIO {
      * @param fileName имя файла
      * @param context контекст (this)
      */
-    public static void WriteScheduleEventListInFile(EventScheduleList eventScheduleList, String fileName, Context context){
+    public static void WriteScheduleEventListInFile(ArrayList<EventSchedule> eventScheduleList, String fileName, Context context){
         try{
             FileOutputStream fos = context.openFileOutput(fileName, context.MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -84,10 +84,11 @@ public class FileIO {
         try{
             FileInputStream fis = context.openFileInput(fileName);
             ObjectInputStream is = new ObjectInputStream(fis);
-            EventScheduleList eventSchedule = (EventScheduleList) is.readObject();
+            ArrayList<EventSchedule> EventList = (ArrayList<EventSchedule>)is.readObject();
+            EventScheduleList eventScheduleList = new EventScheduleList(EventList);
             is.close();
             fis.close();
-            return eventSchedule;
+            return eventScheduleList;
         }
         catch (IOException | ClassNotFoundException ex){
             throw new Error(ex.getMessage());

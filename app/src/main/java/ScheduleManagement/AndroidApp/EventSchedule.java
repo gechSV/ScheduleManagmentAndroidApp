@@ -238,7 +238,7 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
      * Получить массив флагов
      * @return массив из 7 объектов boolean
      */
-    public boolean[] getWeekDayPeek(){
+    public boolean[] GetWeekDayPeek(){
         return this._weekDayPeek;
     }
 }

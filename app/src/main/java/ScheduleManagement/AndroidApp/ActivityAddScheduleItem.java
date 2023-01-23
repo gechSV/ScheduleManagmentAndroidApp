@@ -469,6 +469,8 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             EventScheduleList eventScheduleList = FileIO.ReadScheduleEventListInFile(FILE_NAME, this);
             // Добавляем в конец списка событие
             eventScheduleList.AppendEvent(_eventSchedule);
+            FileIO.WriteScheduleEventListInFile(eventScheduleList.GetEventsDayList(), FILE_NAME, this);
+            Toasty.success(this, "Save", Toast.LENGTH_SHORT, true).show();
         }
         catch (Error err){
             Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT,

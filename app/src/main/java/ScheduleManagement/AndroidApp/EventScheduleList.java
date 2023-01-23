@@ -74,6 +74,23 @@ public class EventScheduleList implements Serializable {
         return true;
     }
 
+    /**
+     * Возвращает список событий по индексу дня недели
+     * @param i - 0-пн, 1-вт, 2-ср, 3-чт, 4-пт, 5-сб, 6-вт
+     * @return Список событий
+     */
+    public ArrayList<EventSchedule> GetEventByDayWeek(int i){
+        ArrayList<EventSchedule> returnEvent = new ArrayList<>();
+        boolean[] weekDay;
+        for(EventSchedule event : _eventScheduleList){
+            weekDay = event.GetWeekDayPeek();
+            if(weekDay[i]){
+                returnEvent.add(event);
+            }
+        }
+        return returnEvent;
+    }
+
     // TODO: удаление элемента, отчистка списка, сортировка по датам класса EventSchedule
     //  и добавить день недели или иную дату. ПРОТЕСТИРОВАТЬ РАБОТУ!!!!!
 }

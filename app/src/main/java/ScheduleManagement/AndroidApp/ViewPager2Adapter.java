@@ -1,29 +1,30 @@
 package ScheduleManagement.AndroidApp;
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolder> {
 
-    // Массив ресурсов для отображения
+    // Дни недели - массив ресурсов для отображения
     private int[] _weekDay = {R.string.Monday, R.string.Tuesday, R.string.Wednesday,
             R.string.Thursday, R.string.Friday, R.string.Saturday, R.string.Sunday};
+
+    // Список событий
+    EventScheduleList _eventScheduleList;
 
     private Context _context;
 
     // Конструктор ViewPager2Adapter класса
-    ViewPager2Adapter(Context ctx) {
+    ViewPager2Adapter(Context ctx, EventScheduleList eventScheduleList) {
+        this._eventScheduleList = eventScheduleList;
         this._context = ctx;
     }
 
@@ -37,9 +38,14 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
 //        return new ViewHolder(view);
 
         switch (viewType) {
-            case 0: return new ViewHolder(view, 1);
-            case 2: return new ViewHolder(view, 2);
-            default: return new ViewHolder(view, 0);
+            case 0: return new ViewHolder(view, _eventScheduleList.GetEventByDayWeek(0) ,0);
+            case 1: return new ViewHolder(view, _eventScheduleList.GetEventByDayWeek(1) ,1);
+            case 2: return new ViewHolder(view, _eventScheduleList.GetEventByDayWeek(2) ,2);
+            case 3: return new ViewHolder(view, _eventScheduleList.GetEventByDayWeek(3) ,3);
+            case 4: return new ViewHolder(view, _eventScheduleList.GetEventByDayWeek(4) ,4);
+            case 5: return new ViewHolder(view, _eventScheduleList.GetEventByDayWeek(5) ,5);
+            case 6: return new ViewHolder(view, _eventScheduleList.GetEventByDayWeek(6) ,6);
+            default: return new ViewHolder(view, _eventScheduleList.GetEventByDayWeek(0) ,-1);
         }
     }
 
@@ -59,12 +65,31 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
         switch (holder.getItemViewType()) {
             case 0:
                 ViewHolder viewHolder0 = (ViewHolder)holder;
-                viewHolder0.textView.setText("1");
+                viewHolder0.textView.setText(_weekDay[0]);
                 break;
-
+            case 1:
+                ViewHolder viewHolder1 = (ViewHolder)holder;
+                viewHolder1.textView.setText(_weekDay[1]);
+                break;
             case 2:
                 ViewHolder viewHolder2 = (ViewHolder)holder;
-                viewHolder2.textView.setText("2");
+                viewHolder2.textView.setText(_weekDay[2]);
+                break;
+            case 3:
+                ViewHolder viewHolder3 = (ViewHolder)holder;
+                viewHolder3.textView.setText(_weekDay[3]);
+                break;
+            case 4:
+                ViewHolder viewHolder4 = (ViewHolder)holder;
+                viewHolder4.textView.setText(_weekDay[4]);
+                break;
+            case 5:
+                ViewHolder viewHolder5 = (ViewHolder)holder;
+                viewHolder5.textView.setText(_weekDay[5]);
+                break;
+            case 6:
+                ViewHolder viewHolder6 = (ViewHolder)holder;
+                viewHolder6.textView.setText(_weekDay[6]);
                 break;
         }
     }
@@ -82,17 +107,15 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
         TextView textView;
         LinearLayout linearLayout;
 
-        public ViewHolder(@NonNull View itemView, int n) {
+        public ViewHolder(@NonNull View itemView, ArrayList<EventSchedule> dayEvent, int n) {
             super(itemView);
 
-//            int n = 10;
             textView = itemView.findViewById(R.id.textViewPage);
             linearLayout = itemView.findViewById((R.id.linear_layout_for_card));
-//            linearLayout = new LinearLayout[n];
 
-            LinearLayout[] buffView = new LinearLayout[n];
+            LinearLayout[] buffView = new LinearLayout[dayEvent.size()];
 
-            for(int i = 0; i<n; i++){
+            for(int i = 0; i < dayEvent.size(); i++){
                 buffView[i] = (LinearLayout)LayoutInflater.from(itemView.getContext())
                         .inflate(R.layout.card_pattern_for_page, null);
 

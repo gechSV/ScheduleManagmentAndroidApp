@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="411dp"
+        android:layout_height="183dp"
+        android:text="TextView" />
+
     <androidx.viewpager2.widget.ViewPager2
     android:id="@+id/viewpager"
     android:layout_width="match_parent"
