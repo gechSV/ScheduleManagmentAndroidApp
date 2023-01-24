@@ -12,6 +12,7 @@
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_card_green.xml" value="0.2825" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_card_lime.xml" value="0.2825" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_card_orange.xml" value="0.2825" />
+        <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_card_pink.xml" value="0.257" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_card_purple.xml" value="0.2825" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_card_red.xml" value="0.2825" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_choice_button.xml" value="0.1495" />
@@ -41,7 +42,7 @@
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/style_for_week_day_button_click.xml" value="0.196" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/drawable/time_picker_layout.xml" value="0.349" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/layout/activity_add_schedule_item.xml" value="0.33" />
-        <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/layout/activity_main.xml" value="0.5" />
+        <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/layout/button_color.xml" value="0.20153985507246377" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/layout/button_custom.xml" value="0.2828125" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/layout/card_pattern_for_page.xml" value="0.36666666666666664" />
@@ -49,12 +50,13 @@
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/layout/spinner_item.xml" value="0.18802083333333333" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/layout/spinner_list.xml" value="0.18802083333333333" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/layout/time_picker.xml" value="0.36666666666666664" />
+        <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2705" />
         <entry key="..\:/ScheduleManagement/ScheduleManagement_AndroidApplication/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2705" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

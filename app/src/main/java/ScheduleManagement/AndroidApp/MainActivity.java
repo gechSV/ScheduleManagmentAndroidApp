@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        test =  (TextView) findViewById(R.id.textView3);
+//        test =  (TextView) findViewById(R.id.textView3);
 
         // Инициализация активити для добавления события
         _IntentAddEvent = new Intent(MainActivity.this, ActivityAddScheduleItem.class);
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 Toasty.success(this, "Список был создан", Toast.LENGTH_SHORT, true).show();
                 Gson gson = new Gson();
                 String json = gson.toJson(_eventScheduleList);
-                test.setText(json);
+//                test.setText("");
             }
             else
             {

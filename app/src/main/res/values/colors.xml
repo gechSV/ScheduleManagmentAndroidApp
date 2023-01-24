@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="red_400">#EF5350</color>
-    <color name="blue_400">#42A5F5</color>
-    <color name="brown_400">#8D6E63</color>
-    <color name="cactus_400">#66BB6A</color>
-    <color name="gray_400">#BDBDBD</color>
-    <color name="lime_400">#D4E157</color>
-    <color name="deep_orange_400">#FF7043</color>
-    <color name="purple_400">#AB47BC</color>
-    <color name="pink_400">#EC407A</color>
+    <color name="red_100">#FFCDD2</color>
+    <color name="blue_100">#BBDEFB</color>
+    <color name="brown_100">#D7CCC8</color>
+    <color name="green_100">#C8E6C9</color>
+    <color name="gray_100">#F5F5F5</color>
+    <color name="lime_100">#F0F4C3</color>
+    <color name="deep_orange_100">#FFCCBC</color>
+    <color name="purple_100">#E1BEE7</color>
+    <color name="pink_100">#F8BBD0</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
