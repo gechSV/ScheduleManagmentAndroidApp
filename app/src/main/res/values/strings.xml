@@ -25,4 +25,5 @@
     <string name="Sunday"> Sunday </string>
 
     <string name="save">Save</string>
+    <string name="add_event">Add Event</string>
 </resources>
