@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private  FloatingActionButton _fabAddEvent, _fabTest;
 
     // Отображение текста у пездюков
-    private TextView _textForFabEvent, _textForTest;
+//    private TextView _textForFabEvent, _textForTest;
 
     private  Boolean _isAllFabsVisible;
 
@@ -55,14 +55,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         _fabTest = findViewById(R.id.add_test);
 
         // TextView for FAB
-        _textForFabEvent = findViewById(R.id.add_event_action_text);
-        _textForTest = findViewById(R.id.add_test_text);
+//        _textForFabEvent = findViewById(R.id.add_event_action_text);
+//        _textForTest = findViewById(R.id.add_test_text);
 
         // Настройка FAB
         _fabAddEvent.setVisibility(View.GONE);
         _fabTest.setVisibility(View.GONE);
-        _textForFabEvent.setVisibility(View.GONE);
-        _textForTest.setVisibility(View.GONE);
+//        _textForFabEvent.setVisibility(View.GONE);
+//        _textForTest.setVisibility(View.GONE);
 
         _isAllFabsVisible = false;
 
@@ -75,9 +75,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if (!_isAllFabsVisible){
                             _fabAddEvent.show();
                             _fabTest.show();
-                            _textForFabEvent.setVisibility(View.VISIBLE);
-                            _textForTest.setVisibility(View.VISIBLE);
-
+//                            _textForFabEvent.setVisibility(View.VISIBLE);
+//                            _textForTest.setVisibility(View.VISIBLE);
+                            _fabButton.setIcon(getDrawable(R.drawable.baseline_arrow_downward_24));
                             _fabButton.extend();
 
                             _isAllFabsVisible = true;
@@ -86,9 +86,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         {
                             _fabAddEvent.hide();
                             _fabTest.hide();
-                            _textForFabEvent.setVisibility(View.GONE);
-                            _textForTest.setVisibility(View.GONE);
-
+//                            _textForFabEvent.setVisibility(View.GONE);
+//                            _textForTest.setVisibility(View.GONE);
+                            _fabButton.setIcon(getDrawable(R.drawable.baseline_arrow_upward_24));
                             _fabButton.shrink();
 
                             _isAllFabsVisible = false;
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(MainActivity.this, "Person Added", Toast.LENGTH_SHORT).show();
+                        startActivity(_IntentAddEvent);
                     }
                 });
 
@@ -185,10 +185,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 throw new IllegalStateException("Unexpected value: " + v.getId());
         }
-    }
-
-    // Запуск activity _IntentAddEvent (добавление события в расписание)
-    public void OpenIntentAddAnEvent(View view) {
-        startActivity(_IntentAddEvent);
     }
 }
