@@ -11,8 +11,8 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_marginStart="6dp"
         android:layout_marginEnd="6dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,33 +25,124 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <TableLayout
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_gravity="center">
 
-                <TableRow
+                <TextView
+                    android:id="@+id/event_name"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="38dp"
+                    android:textSize="30dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginStart="9dp" />
 
-                    <TextView
-                        android:id="@+id/textView2"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="9dp">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/icon_event_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
-                </TableRow>
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="3dp">
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_margin="1.5dp"
+                            android:src="@drawable/baseline_grade_24"
+                            android:layout_gravity="center" />
+
+                    </androidx.cardview.widget.CardView>
 
                     <TextView
-                        android:id="@+id/textViewTimeStart"
-                        android:layout_width="53dp"
+                        android:id="@+id/event_type"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="start" />
-                </TableRow>
-            </TableLayout>
+                        android:textSize="18sp"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="9dp">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/icon_event_host"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="3dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_margin="1.5dp"
+                            android:src="@drawable/baseline_person_24"
+                            android:layout_gravity="center" />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:id="@+id/event_host"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="9dp">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/icon_event_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="3dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_margin="1.5dp"
+                            android:src="@drawable/baseline_location_on_24"
+                            android:layout_gravity="center" />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:id="@+id/event_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <com.google.android.material.circularreveal.cardview.CircularRevealCardView
                 android:id="@+id/card_time"
@@ -87,12 +178,10 @@
                         android:layout_gravity="bottom"
                         android:gravity="center"
                         android:textSize="30sp"
-                        android:textColor="#455A64"
-                        android:fontFamily=""/>
+                        android:textColor="#455A64"/>
                 </LinearLayout>
 
             </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
-
 
         </LinearLayout>
 

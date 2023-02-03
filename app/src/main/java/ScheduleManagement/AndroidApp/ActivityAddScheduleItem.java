@@ -159,14 +159,6 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _eventSchedule = new EventSchedule();
     }
 
-//    public static int getPixelValue(Context context, int dimenId) {
-//        Resources resources = context.getResources();
-//        return (int) TypedValue.applyDimension(
-//                TypedValue.COMPLEX_UNIT_DIP,
-//                dimenId,
-//                resources.getDisplayMetrics()
-//        );
-//    }
 
     @Override
     public void onClick(View v){
@@ -393,11 +385,12 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 if (view.isShown()) {
-                    currentTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                    currentTime.set(Calendar.MINUTE, minute);
-                    button.setText(simpleDateFormat.format(currentTime.getTime()));
+//                    currentTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+//                    currentTime.set(Calendar.MINUTE, minute);
+
                     time.set(Calendar.HOUR_OF_DAY, hourOfDay);
                     time.set(Calendar.MINUTE, minute);
+                    button.setText(simpleDateFormat.format(time.getTime()));
                 }
             }
         };
@@ -425,17 +418,17 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
         // Type Event
         if (_ET_TypeOfEvent.getText().toString().length() != 0) {
-            _eventSchedule.SetTypeEvent(_ET_EventName.getText().toString());
+            _eventSchedule.SetTypeEvent(_ET_TypeOfEvent.getText().toString());
         }
 
         // Event Location
         if (_ET_EventLocation.getText().toString().length() != 0) {
-            _eventSchedule.SetEventLocation(_ET_EventName.getText().toString());
+            _eventSchedule.SetEventLocation(_ET_EventLocation.getText().toString());
         }
 
         // Event Host
         if (_ET_NameOfTheEventHost.getText().toString().length() != 0) {
-            _eventSchedule.SetEventHost(_ET_EventName.getText().toString());
+            _eventSchedule.SetEventHost(_ET_NameOfTheEventHost.getText().toString());
         }
 
         // Time start and End
@@ -446,19 +439,20 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
          _eventSchedule.SetColorForEvent(_saveColor);
 
          // Event add WeekDay
-        _eventSchedule.SetWeekDayPeek(_weekClick);
-
-        // Пример чтения данных из файла
-//        try{
-//            EventSchedule testEvent = FileIO.ReadScheduleEventInFile(FILE_NAME, ActivityAddScheduleItem.this);
-//            Gson gson = new Gson();
-//            String json = gson.toJson(testEvent);
-//            test.setText(json);
-//            Toasty.success(this, "ReadGood", Toast.LENGTH_SHORT, true).show();
-//        }
-//        catch (Error err){
-//            Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT, true).show();
-//        }
+        boolean checkWeekChoice = false;
+        for (boolean click: _weekClick){
+            if (click){
+                checkWeekChoice = true;
+                break;
+            }
+        }
+        // Если не выбран день недели, выводим ошибку
+        if (!checkWeekChoice) {
+            Toasty.error(this, R.string.error_choice_week_day, Toast.LENGTH_SHORT,
+                true).show();
+        } else {
+            _eventSchedule.SetWeekDayPeek(_weekClick);
+        }
 
 
         // Сохранение данных в файл (Подразумевается, что файл уже существует, но ...)
@@ -477,40 +471,5 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT,
                     true).show();
         }
-
-//        try {
-//            FileIO.WriteScheduleEventInFile(_eventSchedule, FILE_NAME, ActivityAddScheduleItem.this);
-//            Toasty.success(this, R.string.SaveGood, Toast.LENGTH_SHORT, true).show();
-//        }
-//        catch (Error err){
-//            Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT, true).show();
-//        }
-
-
-//        // Сохранение данных в файл
-//        // FILE_NAME = "NewEvent.bin"
-//        try {
-//            FileIO.WriteScheduleEventInFile(_eventSchedule, FILE_NAME, ActivityAddScheduleItem.this);
-//            Toasty.success(this, R.string.SaveGood, Toast.LENGTH_SHORT, true).show();
-//        }
-//        catch (Error err){
-//            Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT, true).show();
-//        }
-
-//        // Пример чтения данных из файла
-//        try{
-//            EventSchedule testEvent = FileIO.ReadScheduleEventInFile(FILE_NAME, ActivityAddScheduleItem.this);
-//            Gson gson = new Gson();
-//            String json = gson.toJson(testEvent);
-//            test.setText(json);
-//            Toasty.success(this, "ReadGood", Toast.LENGTH_SHORT, true).show();
-//        }
-//        catch (Error err){
-//            Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT, true).show();
-//        }
-
-
-//        String hexColor = String.format("#%06X", (0xFFFFFF & _saveColor));
-//        test.setText(hexColor);
     }
 }

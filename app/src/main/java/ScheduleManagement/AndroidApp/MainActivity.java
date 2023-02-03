@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity{
 
         _fabButton.shrink();
 
+        // TODO: Убрать иконки,
         // Конструкция для отлова закрытия активити
         ActivityResultLauncher<Intent> finishActivityAddEvent = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),

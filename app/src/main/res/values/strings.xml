@@ -26,4 +26,5 @@
 
     <string name="save">Save</string>
     <string name="add_event">Add Event</string>
+    <string name="error_choice_week_day">Choose a day of the week</string>
 </resources>

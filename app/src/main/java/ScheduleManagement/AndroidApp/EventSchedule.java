@@ -1,10 +1,5 @@
 package ScheduleManagement.AndroidApp;
 
-import android.graphics.Color;
-
-import java.io.ByteArrayInputStream;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -111,7 +106,7 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
      * Получить имя руководителя мероприятия
      * @return String
      */
-    public String GetTeacherName(){
+    public String GetHost(){
         return this._EventHost;
     }
 
@@ -169,7 +164,7 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
             throw new Error("The argument timeEventEnd cannot be null.");
         }
         else {
-            this._timeEventStart = timeEventEnd;
+            this._timeEventEnd = timeEventEnd;
         }
     }
 
