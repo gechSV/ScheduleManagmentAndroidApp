@@ -6,6 +6,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 
@@ -204,6 +205,16 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
      */
     public long GetTimeEventEndMs(){
         return _timeEventEnd.getTimeInMillis();
+    }
+
+    public String GetStartTimeEvent(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+        return  (simpleDateFormat.format(_timeEventStart.getTime()));
+    }
+
+    public String GetEndTimeEvent(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+        return  (simpleDateFormat.format(_timeEventEnd.getTime()));
     }
 
     /**

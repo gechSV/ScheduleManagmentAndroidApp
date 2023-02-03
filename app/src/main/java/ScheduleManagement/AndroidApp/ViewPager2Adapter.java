@@ -1,8 +1,6 @@
 package ScheduleManagement.AndroidApp;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -26,7 +22,7 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
     // Список событий
     EventScheduleList _eventScheduleList;
 
-    private Context _context;
+    private final Context _context;
 
     // Конструктор ViewPager2Adapter класса
     ViewPager2Adapter(Context ctx, EventScheduleList eventScheduleList) {
@@ -131,41 +127,75 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
 
                 // Получаем объект карточки
                 CardView cardView = buffView[i].findViewById(R.id.event_card);
+                CardView cardTime = cardView.findViewById(R.id.card_time);
+                TextView textViewStartTime = cardView.findViewById(R.id.textViewCardTimeStart);
+                TextView textViewEndTime = cardView.findViewById(R.id.textViewCardTimeEnd);
 
                 // Установка цвета катрочки
                 switch (event.GetColorForEvent()){
                     case 1:
+                        textViewStartTime.setText(event.GetStartTimeEvent());
+                        textViewEndTime.setText(event.GetEndTimeEvent());
                         cardView.setBackgroundResource(R.drawable.style_for_card_lime);
+                        cardTime.setBackgroundResource(R.drawable.style_for_card_time_lime);
                         break;
                     case 2:
+                        textViewStartTime.setText(event.GetStartTimeEvent());
+                        textViewEndTime.setText(event.GetEndTimeEvent());
                         cardView.setBackgroundResource(R.drawable.style_for_card_green);
+                        cardTime.setBackgroundResource(R.drawable.style_for_card_time_green);
                         break;
                     case 3:
+                        textViewStartTime.setText(event.GetStartTimeEvent());
+                        textViewEndTime.setText(event.GetEndTimeEvent());
                         cardView.setBackgroundResource(R.drawable.style_for_card_blue);
+                        cardTime.setBackgroundResource(R.drawable.style_for_card_time_blue);
                         break;
                     case 4:
+                        textViewStartTime.setText(event.GetStartTimeEvent());
+                        textViewEndTime.setText(event.GetEndTimeEvent());
                         cardView.setBackgroundResource(R.drawable.style_for_card_purple);
+                        cardTime.setBackgroundResource(R.drawable.style_for_card_time_purple);
                         break;
                     case 5:
+                        textViewStartTime.setText(event.GetStartTimeEvent());
+                        textViewEndTime.setText(event.GetEndTimeEvent());
                         cardView.setBackgroundResource(R.drawable.style_for_card_pink);
+                        cardTime.setBackgroundResource(R.drawable.style_for_card_time_pink);
                         break;
                     case 6:
+                        textViewStartTime.setText(event.GetStartTimeEvent());
+                        textViewEndTime.setText(event.GetEndTimeEvent());
                         cardView.setBackgroundResource(R.drawable.style_for_card_red);
+                        cardTime.setBackgroundResource(R.drawable.style_for_card_time_red);
                         break;
                     case 7:
+                        textViewStartTime.setText(event.GetStartTimeEvent());
+                        textViewEndTime.setText(event.GetEndTimeEvent());
                         cardView.setBackgroundResource(R.drawable.style_for_card_orange);
+                        cardTime.setBackgroundResource(R.drawable.style_for_card_time_orange);
                         break;
                     case 8:
+                        textViewStartTime.setText(event.GetStartTimeEvent());
+                        textViewEndTime.setText(event.GetEndTimeEvent());
                         cardView.setBackgroundResource(R.drawable.style_for_card_gray);
+                        cardTime.setBackgroundResource(R.drawable.style_for_card_time_gray);
                         break;
                     case 9:
-                        cardView.setBackgroundResource(R.drawable.style_for_card_black);
+                        textViewStartTime.setText(event.GetStartTimeEvent());
+                        textViewEndTime.setText(event.GetEndTimeEvent());
+                        cardView.setBackgroundResource(R.drawable.style_for_card_teal);
+                        cardTime.setBackgroundResource(R.drawable.style_for_card_time_teal);
                         break;
                     case 10:
+                        textViewStartTime.setText(event.GetStartTimeEvent());
+                        textViewEndTime.setText(event.GetEndTimeEvent());
                         cardView.setBackgroundResource(R.drawable.style_for_card_brown);
+                        cardTime.setBackgroundResource(R.drawable.style_for_card_time_brown);
                         break;
                     default:
                         cardView.setBackgroundResource(R.drawable.style_for_card_gray);
+                        cardTime.setBackgroundResource(R.drawable.style_for_card_time_gray);
                         break;
                 }
 

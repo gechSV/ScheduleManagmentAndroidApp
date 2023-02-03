@@ -28,6 +28,7 @@
 
     <!--  Расширяющаяся кнопка  -->
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        style="@style/Widget.Material3.FloatingActionButton.Large.Secondary"
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -74,7 +74,7 @@
                 <Button
                     android:id="@+id/buttonChoiceColorRose"
                     style="@style/ButtonChoiceColor"
-                    android:background="@drawable/style_for_choice_button_rose"
+                    android:background="@drawable/style_for_choice_button_pink"
                     tools:ignore="SpeakableTextPresentCheck" />
 
             </LinearLayout>
@@ -108,7 +108,7 @@
                 <Button
                     android:id="@+id/buttonChoiceColorBlack"
                     style="@style/ButtonChoiceColor"
-                    android:background="@drawable/style_for_choice_button_black"
+                    android:background="@drawable/style_for_choice_button_teal"
                     tools:ignore="SpeakableTextPresentCheck" />
 
                 <Button

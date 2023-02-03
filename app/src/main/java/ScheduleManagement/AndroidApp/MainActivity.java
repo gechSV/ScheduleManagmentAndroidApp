@@ -1,8 +1,13 @@
 package ScheduleManagement.AndroidApp;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +23,7 @@ import java.util.Objects;
 
 import es.dmoral.toasty.Toasty;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity{
     // _IntentAddEvent - окно добавления события
     private Intent _IntentAddEvent;
 
@@ -28,20 +33,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // FAB - кнопки пездюки
     private  FloatingActionButton _fabAddEvent, _fabTest;
 
-    // Отображение текста у пездюков
-//    private TextView _textForFabEvent, _textForTest;
-
-    private  Boolean _isAllFabsVisible;
+    private  Boolean _isAllFabVisible;
 
     // _viewPager2 - что бы странички листались
     private ViewPager2 _viewPager2;
 
-    // _eventScheduleList - объeкт содержащий список событий
+    ViewPager2Adapter _viewPager2Adapter;
+
+    // _eventScheduleList - объект содержащий список событий
     private  EventScheduleList _eventScheduleList;
 
     private final String FILE_NAME_EVENT_LIST = "Event_Schedule_List.bin";
 
     private TextView test;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,43 +69,63 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        _textForFabEvent.setVisibility(View.GONE);
 //        _textForTest.setVisibility(View.GONE);
 
-        _isAllFabsVisible = false;
+        _isAllFabVisible = false;
 
         _fabButton.shrink();
+
+        // Конструкция для отлова закрытия активити
+        ActivityResultLauncher<Intent> finishActivityAddEvent = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            // Обновляем данные отображаемые в ViewPager2
+                            // Читаем список событий из файла
+                            WriteEventListInFile();
+                            // Настройка viewPager2
+                            _viewPager2 = findViewById(R.id.viewpager);
+
+                            _viewPager2Adapter = new ViewPager2Adapter(MainActivity.this, _eventScheduleList);
+
+                            _viewPager2.setAdapter(_viewPager2Adapter);
+                        }
+                    }
+                });
 
         _fabButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (!_isAllFabsVisible){
+                        if (!_isAllFabVisible){
                             _fabAddEvent.show();
                             _fabTest.show();
-//                            _textForFabEvent.setVisibility(View.VISIBLE);
-//                            _textForTest.setVisibility(View.VISIBLE);
+
                             _fabButton.setIcon(getDrawable(R.drawable.baseline_arrow_downward_24));
                             _fabButton.extend();
 
-                            _isAllFabsVisible = true;
+                            _isAllFabVisible = true;
                         }
                         else
                         {
                             _fabAddEvent.hide();
                             _fabTest.hide();
-//                            _textForFabEvent.setVisibility(View.GONE);
-//                            _textForTest.setVisibility(View.GONE);
+
                             _fabButton.setIcon(getDrawable(R.drawable.baseline_arrow_upward_24));
                             _fabButton.shrink();
 
-                            _isAllFabsVisible = false;
+                            _isAllFabVisible = false;
                         }
                     }
                 });
 
+        // onClick для кнопки открытия активити для добавления события
         _fabAddEvent.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(_IntentAddEvent);
+                        // Запуск активити для добавления события
+                        finishActivityAddEvent.launch(_IntentAddEvent);
                     }
                 });
 
@@ -120,40 +145,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Инициализация активити для добавления события
         _IntentAddEvent = new Intent(MainActivity.this, ActivityAddScheduleItem.class);
 
-        try {
-            // Проверка существования файла содержащего список событий
-            File file = new File(getApplicationContext().getFilesDir(), FILE_NAME_EVENT_LIST);
-
-            // Проверка на существование файла
-            if(file.exists()){
-                // Файл существует (был создан ранее)
-
-                // Читаем список из файла и записываем в новый объект
-                _eventScheduleList = FileIO.ReadScheduleEventListInFile(FILE_NAME_EVENT_LIST, this);
-                Toasty.success(this, "Список был создан", Toast.LENGTH_SHORT, true).show();
-                Gson gson = new Gson();
-                String json = gson.toJson(_eventScheduleList);
-//                test.setText("");
-            }
-            else
-            {
-                // Файл не существует (не был создан)
-
-                // Cоздаём новый пустой объект и записываем его в файл
-                _eventScheduleList = new EventScheduleList();
-                FileIO.WriteScheduleEventListInFile(_eventScheduleList.GetEventsDayList(), FILE_NAME_EVENT_LIST, this);
-                Toasty.error(this, "Не существ", Toast.LENGTH_SHORT, true).show();
-            }
-        }
-        catch (Error err){
-            Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT, true).show();
-        }
-
+        // Читаем список событий из файла
+        WriteEventListInFile();
 
         // Настройка viewPager2
         _viewPager2 = findViewById(R.id.viewpager);
 
-        ViewPager2Adapter _viewPager2Adapter = new ViewPager2Adapter(this, _eventScheduleList);
+        _viewPager2Adapter = new ViewPager2Adapter(this, _eventScheduleList);
 
         _viewPager2.setAdapter(_viewPager2Adapter);
 
@@ -176,14 +174,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    @Override
-    public void onClick(View v){
-        switch (v.getId()){
-//            case (R.id.fab):
-//                startActivity(_IntentAddEvent);
-//                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + v.getId());
+    /**
+     * Чтение файла содержащего список событий расписания и последующая
+     * его запись в переменную - _eventScheduleList
+     */
+    private void WriteEventListInFile(){
+        try {
+            // Проверка существования файла содержащего список событий
+            File file = new File(getApplicationContext().getFilesDir(), FILE_NAME_EVENT_LIST);
+
+            // Проверка на существование файла
+            if(file.exists()){
+                // Файл существует (был создан ранее)
+
+                // Читаем список из файла и записываем в новый объект
+                _eventScheduleList = FileIO.ReadScheduleEventListInFile(FILE_NAME_EVENT_LIST, this);
+                Toasty.success(this, "Список был создан", Toast.LENGTH_SHORT, true).show();
+                Gson gson = new Gson();
+                String json = gson.toJson(_eventScheduleList);
+            }
+            else
+            {
+                // Файл не существует (не был создан)
+
+                // Cоздаём новый пустой объект и записываем его в файл
+                _eventScheduleList = new EventScheduleList();
+                FileIO.WriteScheduleEventListInFile(_eventScheduleList.GetEventsDayList(), FILE_NAME_EVENT_LIST, this);
+                Toasty.error(this, "Не существ", Toast.LENGTH_SHORT, true).show();
+            }
+        }
+        catch (Error err){
+            Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT, true).show();
         }
     }
 }

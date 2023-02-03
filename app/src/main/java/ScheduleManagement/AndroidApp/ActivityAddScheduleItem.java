@@ -2,6 +2,7 @@ package ScheduleManagement.AndroidApp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.res.ColorStateList;
 import android.icu.text.SimpleDateFormat;
@@ -338,11 +339,11 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _buttonChoiceColorCactus.setBackgroundResource(R.drawable.style_for_choice_button_cactus);
         _buttonChoiceColorBlue.setBackgroundResource(R.drawable.style_for_choice_button_blue);
         _buttonChoiceColorPurple.setBackgroundResource(R.drawable.style_for_choice_button_purple);
-        _buttonChoiceColorRose.setBackgroundResource(R.drawable.style_for_choice_button_rose);
+        _buttonChoiceColorRose.setBackgroundResource(R.drawable.style_for_choice_button_pink);
         _buttonChoiceColorRed.setBackgroundResource(R.drawable.style_for_choice_button_red);
         _buttonChoiceColorPeach.setBackgroundResource(R.drawable.style_for_choice_button_peach);
         _buttonChoiceColorGray.setBackgroundResource(R.drawable.style_for_choice_button_gray);
-        _buttonChoiceColorBlack.setBackgroundResource(R.drawable.style_for_choice_button_black);
+        _buttonChoiceColorBlack.setBackgroundResource(R.drawable.style_for_choice_button_teal);
         _buttonChoiceColorBrown.setBackgroundResource(R.drawable.style_for_choice_button_brown);
 
         switch (colorButtonId){
@@ -359,7 +360,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
                 _buttonChoiceColorPurple.setBackgroundResource(R.drawable.style_for_choice_button_purple_click);
                 break;
             case 4:
-                _buttonChoiceColorRose.setBackgroundResource(R.drawable.style_for_choice_button_rose_click);
+                _buttonChoiceColorRose.setBackgroundResource(R.drawable.style_for_choice_button_pink_click);
                 break;
             case 5:
                 _buttonChoiceColorRed.setBackgroundResource(R.drawable.style_for_choice_button_red_click);
@@ -371,7 +372,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
                 _buttonChoiceColorGray.setBackgroundResource(R.drawable.style_for_choice_button_gray_click);
                 break;
             case 8:
-                _buttonChoiceColorBlack.setBackgroundResource(R.drawable.style_for_choice_button_black_click);
+                _buttonChoiceColorBlack.setBackgroundResource(R.drawable.style_for_choice_button_teal_click);
                 break;
             case 9:
                 _buttonChoiceColorBrown.setBackgroundResource(R.drawable.style_for_choice_button_brown_click);
@@ -411,8 +412,6 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
     private void SaveEvent(){
         ColorStateList colorStateListRed = ColorStateList.valueOf(0xFFFF9494);
-
-        Boolean checkErrorFlag = false;
 
         // Event name
         if (_ET_EventName.getText().toString().length() != 0) {
@@ -471,16 +470,13 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             eventScheduleList.AppendEvent(_eventSchedule);
             FileIO.WriteScheduleEventListInFile(eventScheduleList.GetEventsDayList(), FILE_NAME, this);
             Toasty.success(this, "Save", Toast.LENGTH_SHORT, true).show();
+            setResult(Activity.RESULT_OK);
+            finish();
         }
         catch (Error err){
             Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT,
                     true).show();
         }
-
-
-
-
-
 
 //        try {
 //            FileIO.WriteScheduleEventInFile(_eventSchedule, FILE_NAME, ActivityAddScheduleItem.this);

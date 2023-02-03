@@ -18,15 +18,26 @@
     <color name="white">#FAFAFA</color>
     <color name="deep_orange_50">#FBE9E7</color>
     <color name="deep_orange_300">#FF8A65</color>
-    <color name="choice_black_button">#424242</color>
-    <color name="choice_blue_button">#1565C0</color>
-    <color name="choice_brown_button">#4E342E</color>
-    <color name="choice_cactus_button">#558B2F</color>
-    <color name="choice_gray_button">#37474F</color>
-    <color name="choice_lime_button">#9E9D24</color>
-    <color name="choice_peach_button">#FF6E40</color>
-    <color name="choice_purple_button">#4527A0</color>
-    <color name="choice_red_button">#C62828</color>
-    <color name="choice_rose_button">#d61e5e</color>
+    <color name="choice_teal_400_button">#26A69A</color>
+    <color name="choice_blue_400_button">#42A5F5</color>
+    <color name="choice_brown_400_button">#8D6E63</color>
+    <color name="choice_green_400_button">#66BB6A</color>
+    <color name="choice_blue_gray_400_button">#78909C</color>
+    <color name="choice_lime_400_button">#D4E157</color>
+    <color name="choice_orange_400_button">#FFA726</color>
+    <color name="choice_deep_purple_400_button">#7E57C2</color>
+    <color name="choice_red_400_button">#EF5350</color>
+    <color name="choice_pink_400_button">#EC407A</color>
+    <color name="teal_100">#B2DFDB</color>
+    <color name="orange_100">#FFE0B2</color>
+    <color name="blue_gray_100">#CFD8DC</color>
+    <color name="lime_200">#E6EE9C</color>
+    <color name="blue_200">#90CAF9</color>
+    <color name="brown_200">#BCAAA4</color>
+    <color name="blue_gray_200">#B0BEC5</color>
+    <color name="green_200">#A5D6A7</color>
+    <color name="orange_200">#FFCC80</color>
+    <color name="pink_200">#F48FB1</color>
+    <color name="red_200">#EF9A9A</color>
 
 </resources>

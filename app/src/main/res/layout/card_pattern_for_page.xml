@@ -8,41 +8,93 @@
 
     <com.google.android.material.circularreveal.cardview.CircularRevealCardView
         android:id="@+id/event_card"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="3dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
-        <TableLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+            <TableLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="TextView" />
-            </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TextView" />
+                </TableRow>
 
-                <TextView
-                    android:id="@+id/textViewTimeStart"
-                    android:layout_width="53dp"
-                    android:layout_height="wrap_content"
-                    android:text="start" />
-            </TableRow>
-        </TableLayout>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textViewTimeStart"
+                        android:layout_width="53dp"
+                        android:layout_height="wrap_content"
+                        android:text="start" />
+                </TableRow>
+            </TableLayout>
+
+            <com.google.android.material.circularreveal.cardview.CircularRevealCardView
+                android:id="@+id/card_time"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="end|center"
+                android:layout_margin="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textViewCardTimeStart"
+                        android:layout_width="match_parent"
+                        android:layout_weight="0.5"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="00꞉00"
+                        android:layout_gravity="top"
+                        android:gravity="center"
+                        android:textSize="30sp"
+                        android:textColor="#455A64"/>
+
+                    <TextView
+                        android:id="@+id/textViewCardTimeEnd"
+                        android:layout_width="match_parent"
+                        android:layout_weight="0.5"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:text="00꞉00"
+                        android:layout_gravity="bottom"
+                        android:gravity="center"
+                        android:textSize="30sp"
+                        android:textColor="#455A64"
+                        android:fontFamily=""/>
+                </LinearLayout>
+
+            </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
+
+
+        </LinearLayout>
 
     </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
 
