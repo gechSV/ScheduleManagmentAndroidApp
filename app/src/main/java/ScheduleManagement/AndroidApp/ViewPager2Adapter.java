@@ -6,12 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+
+import es.dmoral.toasty.Toasty;
 
 class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolder> {
 
@@ -23,6 +26,7 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
     EventScheduleList _eventScheduleList;
 
     private final Context _context;
+
 
     // Конструктор ViewPager2Adapter класса
     ViewPager2Adapter(Context ctx, EventScheduleList eventScheduleList) {
@@ -64,29 +68,29 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
         // This will set the images in imageview
 //        holder.textView.setText(_weekDay[position]);
 
-        switch (holder.getItemViewType()) {
-            case 0:
-                ((ViewHolder)holder).textView.setText(_weekDay[0]);
-                break;
-            case 1:
-                ((ViewHolder)holder).textView.setText(_weekDay[1]);
-                break;
-            case 2:
-                ((ViewHolder)holder).textView.setText(_weekDay[2]);
-                break;
-            case 3:
-                ((ViewHolder)holder).textView.setText(_weekDay[3]);
-                break;
-            case 4:
-                ((ViewHolder)holder).textView.setText(_weekDay[4]);
-                break;
-            case 5:
-                ((ViewHolder)holder).textView.setText(_weekDay[5]);
-                break;
-            case 6:
-                ((ViewHolder)holder).textView.setText(_weekDay[6]);
-                break;
-        }
+//        switch (holder.getItemViewType()) {
+//            case 0:
+//                ((ViewHolder)holder);
+//                break;
+//            case 1:
+//                ((ViewHolder)holder).textView.setText(_weekDay[1]);
+//                break;
+//            case 2:
+//                ((ViewHolder)holder).textView.setText(_weekDay[2]);
+//                break;
+//            case 3:
+//                ((ViewHolder)holder).textView.setText(_weekDay[3]);
+//                break;
+//            case 4:
+//                ((ViewHolder)holder).textView.setText(_weekDay[4]);
+//                break;
+//            case 5:
+//                ((ViewHolder)holder).textView.setText(_weekDay[5]);
+//                break;
+//            case 6:
+//                ((ViewHolder)holder).textView.setText(_weekDay[6]);
+//                break;
+//        }
     }
 
     // Метод возвращает длину массива компонентов
@@ -95,35 +99,18 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
         return _weekDay.length;
     }
 
-
-
     // The ViewHolder class holds the view
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
         LinearLayout linearLayout;
 
-        void SetTextData(EventSchedule event, CardView cardView){
-            CardView cardTime = cardView.findViewById(R.id.card_time);
-            TextView textViewStartTime = cardView.findViewById(R.id.textViewCardTimeStart);
-            TextView textViewEndTime = cardView.findViewById(R.id.textViewCardTimeEnd);
-            TextView textViewName = cardView.findViewById(R.id.event_name);
-            TextView textViewType = cardView.findViewById(R.id.event_type);
-            TextView textViewHost = cardView.findViewById(R.id.event_host);
-            TextView textViewLocation = cardView.findViewById(R.id.event_location);
-
-            textViewStartTime.setText(event.GetStartTimeEvent());
-            textViewEndTime.setText(event.GetEndTimeEvent());
-            textViewName.setText(event.GetNameEvent());
-            textViewType.setText(event.GetTypeEvent());
-            textViewHost.setText(event.GetHost());
-            textViewLocation.setText(event.GetPlaceEvent());
-        }
-
+        /**
+         * Конструктор холдера
+         **/
         public ViewHolder(@NonNull View itemView, ArrayList<EventSchedule> dayEvent, int n) {
             super(itemView);
 
             int i = 0; //счётчик для массива
-            textView = itemView.findViewById(R.id.textViewPage);
             linearLayout = itemView.findViewById((R.id.linear_layout_for_card));
 
             // для хранения карточек в памяти
@@ -138,105 +125,107 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
                 // Получаем объект карточки
                 CardView cardView = buffView[i].findViewById(R.id.event_card);
                 CardView cardTime = cardView.findViewById(R.id.card_time);
-                CardView iconType = cardView.findViewById(R.id.icon_event_type);
-                CardView iconHost = cardView.findViewById(R.id.icon_event_host);
-                CardView iconLocation = cardView.findViewById(R.id.icon_event_location);
+
+                // Нажатие
+                cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+
+                // Долгое нажатие
+                cardView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        Toasty.success(itemView.getContext(), "Долгое нажатие", Toast.LENGTH_SHORT, true).show();
+                        return false;
+                    }
+                });
+
 
                 // Установка цвета катрочки
                 switch (event.GetColorForEvent()){
                     case 1:
                         SetTextData(event, cardView);
-                        cardView.setBackgroundResource(R.drawable.style_for_card_lime);
+                        cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_lime);
-                        iconType.setBackgroundResource(R.drawable.style_for_card_time_lime);
-                        iconHost.setBackgroundResource(R.drawable.style_for_card_time_lime);
-                        iconLocation.setBackgroundResource(R.drawable.style_for_card_time_lime);
                         break;
                     case 2:
                         SetTextData(event, cardView);
-                        cardView.setBackgroundResource(R.drawable.style_for_card_green);
+                        cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_green);
-                        iconType.setBackgroundResource(R.drawable.style_for_card_time_green);
-                        iconHost.setBackgroundResource(R.drawable.style_for_card_time_green);
-                        iconLocation.setBackgroundResource(R.drawable.style_for_card_time_green);
                         break;
                     case 3:
                         SetTextData(event, cardView);
-                        cardView.setBackgroundResource(R.drawable.style_for_card_blue);
+                        cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_blue);
-                        iconType.setBackgroundResource(R.drawable.style_for_card_time_blue);
-                        iconHost.setBackgroundResource(R.drawable.style_for_card_time_blue);
-                        iconLocation.setBackgroundResource(R.drawable.style_for_card_time_blue);
                         break;
                     case 4:
                         SetTextData(event, cardView);
-                        cardView.setBackgroundResource(R.drawable.style_for_card_purple);
+                        cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_purple);
-                        iconType.setBackgroundResource(R.drawable.style_for_card_time_purple);
-                        iconHost.setBackgroundResource(R.drawable.style_for_card_time_purple);
-                        iconLocation.setBackgroundResource(R.drawable.style_for_card_time_purple);
                         break;
                     case 5:
                         SetTextData(event, cardView);
-                        cardView.setBackgroundResource(R.drawable.style_for_card_pink);
+                        cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_pink);
-                        iconType.setBackgroundResource(R.drawable.style_for_card_time_pink);
-                        iconHost.setBackgroundResource(R.drawable.style_for_card_time_pink);
-                        iconLocation.setBackgroundResource(R.drawable.style_for_card_time_pink);
                         break;
                     case 6:
                         SetTextData(event, cardView);
-                        cardView.setBackgroundResource(R.drawable.style_for_card_red);
+                        cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_red);
-                        iconType.setBackgroundResource(R.drawable.style_for_card_time_red);
-                        iconHost.setBackgroundResource(R.drawable.style_for_card_time_red);
-                        iconLocation.setBackgroundResource(R.drawable.style_for_card_time_red);
                         break;
                     case 7:
                         SetTextData(event, cardView);
-                        cardView.setBackgroundResource(R.drawable.style_for_card_orange);
+                        cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_orange);
-                        iconType.setBackgroundResource(R.drawable.style_for_card_time_orange);
-                        iconHost.setBackgroundResource(R.drawable.style_for_card_time_orange);
-                        iconLocation.setBackgroundResource(R.drawable.style_for_card_time_orange);
                         break;
                     case 8:
                         SetTextData(event, cardView);
                         cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_gray);
-                        iconType.setBackgroundResource(R.drawable.style_for_card_time_gray);
-                        iconHost.setBackgroundResource(R.drawable.style_for_card_time_gray);
-                        iconLocation.setBackgroundResource(R.drawable.style_for_card_time_gray);
                         break;
                     case 9:
                         SetTextData(event, cardView);
-                        cardView.setBackgroundResource(R.drawable.style_for_card_teal);
+                        cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_teal);
-                        iconType.setBackgroundResource(R.drawable.style_for_card_time_teal);
-                        iconHost.setBackgroundResource(R.drawable.style_for_card_time_teal);
-                        iconLocation.setBackgroundResource(R.drawable.style_for_card_time_teal);
                         break;
                     case 10:
                         SetTextData(event, cardView);
-                        cardView.setBackgroundResource(R.drawable.style_for_card_brown);
+                        cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_brown);
-                        iconType.setBackgroundResource(R.drawable.style_for_card_time_brown);
-                        iconHost.setBackgroundResource(R.drawable.style_for_card_time_brown);
-                        iconLocation.setBackgroundResource(R.drawable.style_for_card_time_brown);
                         break;
                     default:
                         SetTextData(event, cardView);
                         cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_gray);
-                        iconType.setBackgroundResource(R.drawable.style_for_card_time_gray);
-                        iconHost.setBackgroundResource(R.drawable.style_for_card_time_gray);
-                        iconLocation.setBackgroundResource(R.drawable.style_for_card_time_gray);
                         break;
                 }
 
                 linearLayout.addView(buffView[i]);
                 i++;
             }
+
+
+        }
+
+
+        void SetTextData(EventSchedule event, CardView cardView){
+            CardView cardTime = cardView.findViewById(R.id.card_time);
+            TextView textViewStartTime = cardView.findViewById(R.id.textViewCardTimeStart);
+            TextView textViewEndTime = cardView.findViewById(R.id.textViewCardTimeEnd);
+            TextView textViewName = cardView.findViewById(R.id.event_name);
+            TextView textViewType = cardView.findViewById(R.id.event_type);
+            TextView textViewHost = cardView.findViewById(R.id.event_host);
+            TextView textViewLocation = cardView.findViewById(R.id.event_location);
+
+            textViewStartTime.setText(event.GetStartTimeEvent().replace(':', '꞉'));
+            textViewEndTime.setText(event.GetEndTimeEvent().replace(':', '꞉'));
+            textViewName.setText(event.GetNameEvent());
+            textViewType.setText(event.GetTypeEvent());
+            textViewHost.setText(event.GetHost());
+            textViewLocation.setText(event.GetPlaceEvent());
         }
     }
 }

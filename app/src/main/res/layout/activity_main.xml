@@ -7,11 +7,13 @@
     tools:context=".MainActivity">
 
 
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
+        android:layout_marginTop="35dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,5 +79,20 @@
         app:layout_constraintStart_toStartOf="@+id/add_schedule_event"
         app:srcCompat="@drawable/baseline_adb_24"
         android:layout_gravity="bottom|end"/>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            style="@style/Widget.Material3.TabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            app:tabSelectedTextColor="@color/deep_orange_300"
+            app:tabBackground="@color/white"
+            app:tabTextColor="#455A64"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

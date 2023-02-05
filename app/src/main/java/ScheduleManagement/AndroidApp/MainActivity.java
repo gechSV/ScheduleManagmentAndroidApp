@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -11,11 +12,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -39,6 +43,8 @@ public class MainActivity extends AppCompatActivity{
     private ViewPager2 _viewPager2;
 
     ViewPager2Adapter _viewPager2Adapter;
+
+    TabLayout headerForPage;
 
     // _eventScheduleList - объект содержащий список событий
     private  EventScheduleList _eventScheduleList;
@@ -151,10 +157,24 @@ public class MainActivity extends AppCompatActivity{
 
         // Настройка viewPager2
         _viewPager2 = findViewById(R.id.viewpager);
+        headerForPage = findViewById(R.id.tab_layout);
 
         _viewPager2Adapter = new ViewPager2Adapter(this, _eventScheduleList);
 
         _viewPager2.setAdapter(_viewPager2Adapter);
+
+        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(headerForPage, _viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                String[] weekDay = {getString(R.string.Mon), getString(R.string.Tue),
+                        getString(R.string.Wed), getString(R.string.Thu), getString(R.string.Fri),
+                        getString(R.string.Sat), getString(R.string.Sun)};
+
+                tab.setText(weekDay[position]);
+            }
+        });
+        tabLayoutMediator.attach();
+
 
         _viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback(){
 
