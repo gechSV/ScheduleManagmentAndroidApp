@@ -40,5 +40,7 @@
     <color name="orange_200">#FFCC80</color>
     <color name="pink_200">#F48FB1</color>
     <color name="red_200">#EF9A9A</color>
+    <color name="red_400">#EF5350</color>
+    <color name="blue_400">#42A5F5</color>
 
 </resources>

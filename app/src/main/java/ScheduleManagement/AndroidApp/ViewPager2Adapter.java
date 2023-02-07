@@ -1,20 +1,20 @@
 package ScheduleManagement.AndroidApp;
 
+import static android.app.PendingIntent.getActivity;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-
-import es.dmoral.toasty.Toasty;
 
 class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolder> {
 
@@ -100,7 +100,7 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
     }
 
     // The ViewHolder class holds the view
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements ScheduleManagement.AndroidApp.ViewHolder {
         TextView textView;
         LinearLayout linearLayout;
 
@@ -125,26 +125,70 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
                 // Получаем объект карточки
                 CardView cardView = buffView[i].findViewById(R.id.event_card);
                 CardView cardTime = cardView.findViewById(R.id.card_time);
+                CardView editCard = cardView.findViewById(R.id.edit_event);
+                CardView deleteCard = cardView.findViewById(R.id.delete_event);
+                LinearLayout LinerLayoutActionForCard = buffView[i].findViewById(R.id.EditButton);
 
                 // Нажатие
                 cardView.setOnClickListener(new View.OnClickListener() {
+
                     @Override
                     public void onClick(View view) {
-
+                        // Вывод диалогового окна с выбором действия
                     }
                 });
 
                 // Долгое нажатие
                 cardView.setOnLongClickListener(new View.OnLongClickListener() {
+                    final String[] catNamesArray = {"Васька", "Рыжик", "Мурзик"};
+                    boolean flag = false;
                     @Override
                     public boolean onLongClick(View view) {
-                        Toasty.success(itemView.getContext(), "Долгое нажатие", Toast.LENGTH_SHORT, true).show();
+//                        new AlertDialog.Builder(itemView.getContext(), R.style.AlertDialogCustom)
+//                                // Specifying a listener allows you to take an action before dismissing the dialog.
+//                                // The dialog is automatically dismissed when a dialog button is clicked.
+//                                .setItems(catNamesArray, new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialogInterface, int i) {
+//                                        Toasty.success(itemView.getContext(), "Num" + i,
+//                                                Toast.LENGTH_SHORT, true).show();
+//                                    }
+//                                })
+//                                // A null listener allows the button to dismiss the dialog and take no further action.
+//                                .show();
+
+                        if(flag){
+                            LinerLayoutActionForCard.setVisibility(View.GONE);
+                            editCard.setVisibility(View.GONE);
+                            deleteCard.setVisibility(View.GONE);
+                            TranslateAnimation animation = new TranslateAnimation(DpInPxDisplay.ConvertDpToPixels(view.getContext(), -64), DpInPxDisplay.ConvertDpToPixels(view.getContext(), 0), 0, 0);
+                            animation.setDuration(100);
+                            animation.setFillAfter(true);
+                            LinerLayoutActionForCard.startAnimation(animation);
+                            cardTime.startAnimation(animation);
+                        }
+                        else{
+                            LinerLayoutActionForCard.setVisibility(View.VISIBLE);
+                            editCard.setVisibility(View.VISIBLE);
+                            deleteCard.setVisibility(View.VISIBLE);
+                            TranslateAnimation animation = new TranslateAnimation(DpInPxDisplay.ConvertDpToPixels(view.getContext(), 64), DpInPxDisplay.ConvertDpToPixels(view.getContext(), 0), 0, 0);
+                            animation.setDuration(100);
+                            animation.setFillAfter(true);
+                            LinerLayoutActionForCard.startAnimation(animation);
+                            cardTime.startAnimation(animation);
+                        }
+
+                        flag = !flag;
                         return false;
+
                     }
                 });
 
 
-                // Установка цвета катрочки
+                editCard.setBackgroundResource(R.drawable.style_for_edit_card);
+                deleteCard.setBackgroundResource(R.drawable.style_for_delete_card);
+
+                // Установка цвета карточки
                 switch (event.GetColorForEvent()){
                     case 1:
                         SetTextData(event, cardView);
@@ -207,9 +251,7 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
                 i++;
             }
 
-
         }
-
 
         void SetTextData(EventSchedule event, CardView cardView){
             CardView cardTime = cardView.findViewById(R.id.card_time);
@@ -224,8 +266,11 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
             textViewEndTime.setText(event.GetEndTimeEvent().replace(':', '꞉'));
             textViewName.setText(event.GetNameEvent());
             textViewType.setText(event.GetTypeEvent());
-            textViewHost.setText(event.GetHost());
-            textViewLocation.setText(event.GetPlaceEvent());
+            textViewHost.setText(event.GetEventHost());
+            textViewLocation.setText(event.GetLocationEvent());
         }
+
+
+
     }
 }

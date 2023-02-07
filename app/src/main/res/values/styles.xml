@@ -30,4 +30,12 @@
         <item name="background">@drawable/time_picker_layout</item>
         <item name="colorAccent">@color/deep_orange_300</item>
     </style>
+
+    <style name="AlertDialogCustom" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="android:windowBackground">@drawable/style_for_dialog_alert</item>
+    </style>
+
+
+
+
 </resources>

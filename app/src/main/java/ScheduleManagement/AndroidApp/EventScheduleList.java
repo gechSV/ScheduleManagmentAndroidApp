@@ -14,6 +14,7 @@ public class EventScheduleList implements Serializable {
     private ArrayList<EventSchedule> _eventScheduleList; // Список объектов EventSchedule
 
     // Конструкторы
+
     /**
      * Конструктор без параметров
      */
@@ -91,6 +92,34 @@ public class EventScheduleList implements Serializable {
         return returnEvent;
     }
 
-    // TODO: удаление элемента, отчистка списка, сортировка по датам класса EventSchedule
-    //  и добавить день недели или иную дату. ПРОТЕСТИРОВАТЬ РАБОТУ!!!!!
+    /**
+     * Получить размер списка событий
+     * @return размер списка
+     */
+    public int size(){
+        return _eventScheduleList.size();
+    }
+
+    /**
+     * Метод определяющий следующий идентификатор
+     */
+//    private void initialId(){
+//        int i = 0;
+//
+//        if (_eventScheduleList.size() == 0){
+//            _nextId = 0;
+//            return;
+//        }
+//
+//        int newId = this.size();
+//
+//        for(EventSchedule event: _eventScheduleList){
+//            if(event.GetId() > newId){
+//                newId = event.GetId() + 1;
+//            }
+//        }
+//
+//        _nextId = newId;
+//    }
+
 }

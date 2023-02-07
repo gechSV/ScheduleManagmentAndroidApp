@@ -12,15 +12,15 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
 
     private static final long serialVersionUID = 6024437629835836202L;
 
-    private String _nameEvent; // Имя события (низвание пары, урока и т.п.)
+    private String _nameEvent; // Имя события (название пары, урока и т.п.)
     private String _typeEvent; // Тип события (лекция, практика, собрание, концерт и т.д.)
     private String _EventLocation; // Место проведения мероприятия (аудитория, улица, корпус)
     private String _EventHost; // Имя руководителя мероприятия
-    private Calendar _timeEventStart; // Время начала события
-    private Calendar _timeEventEnd; // Время окончания события
+    private Calendar _timeEventStart; // Время начала мероприятия
+    private Calendar _timeEventEnd; // Время окончания мероприятия
     // Массив флагов для хранения выбранного дня недели
     private boolean[] _weekDayPeek; // 0-пн, 1-вт, 2-ср, 3-чт, 4-пт, 5-сб, 6-вт
-    private int _colorForEvent = 0; // Цвет для отображения расписания
+    private int _colorForEvent = 0; // Цвет для отображения в расписании
 
     /**
      * Конструктор без параметров
@@ -35,13 +35,36 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
 
     /**
      * Метод интерфейса Comparable для сортировки списка
-     * @param o обьект EventSchedule
+     * @param o объект класса EventSchedule
      * @return > 0, < 0, = 0
      */
     @Override
     public int compareTo(EventSchedule o){
-        return (int)(this.GetTimeEventBeginMs() - o.GetTimeEventBeginMs());
+        return (int)(this.GetTimeEventStartMs() - o.GetTimeEventStartMs());
     }
+
+//    //  Индивидуальный идентификатор события
+//    /**
+//     * Установить id
+//     * @param id - индивидуальный идентификатор события
+//     */
+//    public void SetId(int id){
+//        if(id <= 0){
+//            this._id = id;
+//        }
+//        else
+//        {
+//            throw new Error("Error: _id < 0");
+//        }
+//    }
+//
+//    /**
+//     * Получить id
+//     * @return индивидуальный идентификатор события
+//     */
+//    public int GetId(){
+//        return this._id;
+//    }
 
     // Методы
     // Имя события
@@ -74,7 +97,7 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
     }
 
     // Место проведения события
-    public void SetEventLocation(String _placeEvent) {
+    public void SetLocationEvent(String _placeEvent) {
         if (_placeEvent != null){
             this._EventLocation = _placeEvent;
         }
@@ -84,7 +107,7 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
         }
     }
 
-    public String GetPlaceEvent() {
+    public String GetLocationEvent() {
         return _EventLocation;
     }
 
@@ -106,11 +129,11 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
      * Получить имя руководителя мероприятия
      * @return String
      */
-    public String GetHost(){
+    public String GetEventHost(){
         return this._EventHost;
     }
 
-    // Время начала событитя
+    // Время начала события
     /**
      * Установка времени начала события
      * @param timeEventStart type Calendar
@@ -146,7 +169,7 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
      * Возвращает время начала события
      * @return Экземпляр класса Calendar
      */
-    public Calendar GetTimeEventBegin() {
+    public Calendar GetTimeEventStart() {
         return _timeEventStart;
     }
 
@@ -154,7 +177,7 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
      * Получить Миллисекунды
      * @return Long
      */
-    public long GetTimeEventBeginMs(){
+    public long GetTimeEventStartMs(){
         return _timeEventStart.getTimeInMillis();
     }
 

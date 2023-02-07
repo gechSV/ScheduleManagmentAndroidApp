@@ -423,7 +423,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
         // Event Location
         if (_ET_EventLocation.getText().toString().length() != 0) {
-            _eventSchedule.SetEventLocation(_ET_EventLocation.getText().toString());
+            _eventSchedule.SetLocationEvent(_ET_EventLocation.getText().toString());
         }
 
         // Event Host
