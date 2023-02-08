@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+// Класс-адаптер для компонента ViewPager2
 class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolder> {
 
     // Дни недели - массив ресурсов для отображения
@@ -26,7 +27,6 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
     EventScheduleList _eventScheduleList;
 
     private final Context _context;
-
 
     // Конструктор ViewPager2Adapter класса
     ViewPager2Adapter(Context ctx, EventScheduleList eventScheduleList) {
@@ -99,9 +99,8 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
         return _weekDay.length;
     }
 
-    // The ViewHolder class holds the view
+    // Класс для создания и заполнения макета для отображения на каждой странице ViewPager2
     public static class ViewHolder extends RecyclerView.ViewHolder implements ScheduleManagement.AndroidApp.ViewHolder {
-        TextView textView;
         LinearLayout linearLayout;
 
         /**
@@ -129,7 +128,7 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
                 CardView deleteCard = cardView.findViewById(R.id.delete_event);
                 LinearLayout LinerLayoutActionForCard = buffView[i].findViewById(R.id.EditButton);
 
-                // Нажатие
+                // ------- Нажатие на карточку -------
                 cardView.setOnClickListener(new View.OnClickListener() {
 
                     @Override
@@ -138,57 +137,70 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
                     }
                 });
 
-                // Долгое нажатие
+
+                // ------- Долгое нажатие на карточку -------
                 cardView.setOnLongClickListener(new View.OnLongClickListener() {
-                    final String[] catNamesArray = {"Васька", "Рыжик", "Мурзик"};
                     boolean flag = false;
                     @Override
                     public boolean onLongClick(View view) {
-//                        new AlertDialog.Builder(itemView.getContext(), R.style.AlertDialogCustom)
-//                                // Specifying a listener allows you to take an action before dismissing the dialog.
-//                                // The dialog is automatically dismissed when a dialog button is clicked.
-//                                .setItems(catNamesArray, new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialogInterface, int i) {
-//                                        Toasty.success(itemView.getContext(), "Num" + i,
-//                                                Toast.LENGTH_SHORT, true).show();
-//                                    }
-//                                })
-//                                // A null listener allows the button to dismiss the dialog and take no further action.
-//                                .show();
-
+                        final int timeForAnimation = 300;
+                        // Логика работы выезжающих кнопок карточек
                         if(flag){
-                            LinerLayoutActionForCard.setVisibility(View.GONE);
-                            editCard.setVisibility(View.GONE);
-                            deleteCard.setVisibility(View.GONE);
-                            TranslateAnimation animation = new TranslateAnimation(DpInPxDisplay.ConvertDpToPixels(view.getContext(), -64), DpInPxDisplay.ConvertDpToPixels(view.getContext(), 0), 0, 0);
-                            animation.setDuration(100);
+                            // Убрать кнопки
+
+                            // Задаём параметры анимации
+                            // Анимация для Карточки времени
+                            TranslateAnimation animation = new TranslateAnimation
+                                    (DpInPxDisplay.ConvertDpToPixels(
+                                            view.getContext(), -64), DpInPxDisplay.ConvertDpToPixels(
+                                                    view.getContext(), 0), 0, 0);
+
+                            animation.setDuration(200);
                             animation.setFillAfter(true);
-                            LinerLayoutActionForCard.startAnimation(animation);
+
+                            // Анимация для кнопок: edit и delete
+                            TranslateAnimation animation2 = new TranslateAnimation(
+                                    DpInPxDisplay.ConvertDpToPixels(view.getContext(), 0),
+                                    DpInPxDisplay.ConvertDpToPixels(view.getContext(), 64),
+                                    0, 0);
+
+                            animation2.setDuration(200);
+                            animation2.setFillAfter(true);
+
+                            // Запуск анимации
                             cardTime.startAnimation(animation);
+                            LinerLayoutActionForCard.startAnimation(animation2);
+
+                            // Скрываем компонент
+                            LinerLayoutActionForCard.setVisibility(View.GONE);
                         }
                         else{
+                            // ____ Показать кнопки
+                            // Включаем отображение компонентов
                             LinerLayoutActionForCard.setVisibility(View.VISIBLE);
                             editCard.setVisibility(View.VISIBLE);
                             deleteCard.setVisibility(View.VISIBLE);
-                            TranslateAnimation animation = new TranslateAnimation(DpInPxDisplay.ConvertDpToPixels(view.getContext(), 64), DpInPxDisplay.ConvertDpToPixels(view.getContext(), 0), 0, 0);
-                            animation.setDuration(100);
+
+                            // Задаём параметры анимации
+                            TranslateAnimation animation = new TranslateAnimation(
+                                    DpInPxDisplay.ConvertDpToPixels(view.getContext(), 64),
+                                    DpInPxDisplay.ConvertDpToPixels(view.getContext(), 0),
+                                    0, 0);
+
+                            animation.setDuration(200);
                             animation.setFillAfter(true);
+
+                            // Запуск анимации
                             LinerLayoutActionForCard.startAnimation(animation);
                             cardTime.startAnimation(animation);
                         }
 
                         flag = !flag;
                         return false;
-
                     }
                 });
 
-
-                editCard.setBackgroundResource(R.drawable.style_for_edit_card);
-                deleteCard.setBackgroundResource(R.drawable.style_for_delete_card);
-
-                // Установка цвета карточки
+                // Установка цвета карточки. По умолчанию (если не выбран цвет) - серый
                 switch (event.GetColorForEvent()){
                     case 1:
                         SetTextData(event, cardView);
@@ -247,6 +259,10 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
                         break;
                 }
 
+                // Фон кнопок редактирования и удаления у всех карточек одинаковы
+                editCard.setBackgroundResource(R.drawable.style_for_edit_card);
+                deleteCard.setBackgroundResource(R.drawable.style_for_delete_card);
+
                 linearLayout.addView(buffView[i]);
                 i++;
             }
@@ -269,8 +285,19 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
             textViewHost.setText(event.GetEventHost());
             textViewLocation.setText(event.GetLocationEvent());
         }
-
-
-
     }
 }
+
+
+//new AlertDialog.Builder(itemView.getContext(), R.style.AlertDialogCustom)
+//                                // Specifying a listener allows you to take an action before dismissing the dialog.
+//                                // The dialog is automatically dismissed when a dialog button is clicked.
+//                                .setItems(catNamesArray, new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialogInterface, int i) {
+//                                        Toasty.success(itemView.getContext(), "Num" + i,
+//                                                Toast.LENGTH_SHORT, true).show();
+//                                    }
+//                                })
+//                                // A null listener allows the button to dismiss the dialog and take no further action.
+//                                .show();
