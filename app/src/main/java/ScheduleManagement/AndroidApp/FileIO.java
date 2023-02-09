@@ -94,4 +94,18 @@ public class FileIO {
             throw new Error(ex.getMessage());
         }
     }
+
+    /**
+     * Удаление элемента списка хранящегося в файле
+     * @param fileName имя файла
+     * @param context контекст
+     * @param index индекс удаляемого элемента
+     */
+    public  static void DeleteItemInFileByIndex(String fileName, Context context, int index){
+        if(index >= 0){
+            EventScheduleList list = FileIO.ReadScheduleEventListInFile(fileName, context);
+            list.RemoveEventsDayByIndex(index);
+            FileIO.WriteScheduleEventListInFile(list.GetEventsDayList(), fileName, context);
+        }
+    }
 }

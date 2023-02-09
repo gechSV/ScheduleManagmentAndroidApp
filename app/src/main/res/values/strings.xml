@@ -27,4 +27,8 @@
     <string name="save">Save</string>
     <string name="add_event">Add Event</string>
     <string name="error_choice_week_day">Choose a day of the week</string>
+    <string name="decline">Cancle</string>
+    <string name="confirmation_of_deletion">Do you really want to delete the event ?</string>
+    <string name="cancel">cancel</string>
+    <string name="delete">Delete</string>
 </resources>

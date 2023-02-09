@@ -134,7 +134,8 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="end|center"
                     android:layout_marginStart="0dp"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    android:clickable="false">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/edit_event"
@@ -142,7 +143,9 @@
                         android:layout_height="56dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="8dp">
+                        android:layout_marginBottom="8dp"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -157,7 +160,9 @@
                         android:layout_width="56dp"
                         android:layout_height="56dp"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="8dp">
+                        android:layout_marginBottom="8dp"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground">
 
                         <ImageView
                             android:layout_width="wrap_content"

@@ -11,6 +11,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.FileObserver;
 import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -51,12 +52,17 @@ public class MainActivity extends AppCompatActivity{
 
     private final String FILE_NAME_EVENT_LIST = "Event_Schedule_List.bin";
 
+    // Поле открывающее доступ к функциям этого класса из сторонних классов (Метод getInstance())
+    private static MainActivity instance;
+
     private TextView test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        instance = this;
+
 
         // Объявление компонентов для FAB
         _fabButton = (ExtendedFloatingActionButton) findViewById(R.id.fab);
@@ -88,14 +94,8 @@ public class MainActivity extends AppCompatActivity{
                     public void onActivityResult(ActivityResult result) {
                         if (result.getResultCode() == Activity.RESULT_OK) {
                             // Обновляем данные отображаемые в ViewPager2
-                            // Читаем список событий из файла
-                            WriteEventListInFile();
                             // Настройка viewPager2
-                            _viewPager2 = findViewById(R.id.viewpager);
-
-                            _viewPager2Adapter = new ViewPager2Adapter(MainActivity.this, _eventScheduleList);
-
-                            _viewPager2.setAdapter(_viewPager2Adapter);
+                            ReloadViewPager();
                         }
                     }
                 });
@@ -195,6 +195,10 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
+    public static MainActivity getInstance() {
+        return instance;
+    }
+
     /**
      * Чтение файла содержащего список событий расписания и последующая
      * его запись в переменную - _eventScheduleList
@@ -210,7 +214,7 @@ public class MainActivity extends AppCompatActivity{
 
                 // Читаем список из файла и записываем в новый объект
                 _eventScheduleList = FileIO.ReadScheduleEventListInFile(FILE_NAME_EVENT_LIST, this);
-                Toasty.success(this, "Список был создан", Toast.LENGTH_SHORT, true).show();
+//                Toasty.success(this, "Список был создан", Toast.LENGTH_SHORT, true).show();
                 Gson gson = new Gson();
                 String json = gson.toJson(_eventScheduleList);
             }
@@ -221,11 +225,25 @@ public class MainActivity extends AppCompatActivity{
                 // Cоздаём новый пустой объект и записываем его в файл
                 _eventScheduleList = new EventScheduleList();
                 FileIO.WriteScheduleEventListInFile(_eventScheduleList.GetEventsDayList(), FILE_NAME_EVENT_LIST, this);
-                Toasty.error(this, "Не существ", Toast.LENGTH_SHORT, true).show();
+//                Toasty.error(this, "Не существ", Toast.LENGTH_SHORT, true).show();
             }
         }
         catch (Error err){
             Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT, true).show();
         }
+    }
+
+    /**
+     * Обновление страниц ViewPager2
+     */
+    public void ReloadViewPager(){
+        // Читаем список событий из файла
+        WriteEventListInFile();
+
+        _viewPager2 = findViewById(R.id.viewpager);
+
+        _viewPager2Adapter = new ViewPager2Adapter(MainActivity.this, _eventScheduleList);
+
+        _viewPager2.setAdapter(_viewPager2Adapter);
     }
 }

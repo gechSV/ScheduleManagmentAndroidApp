@@ -450,6 +450,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         if (!checkWeekChoice) {
             Toasty.error(this, R.string.error_choice_week_day, Toast.LENGTH_SHORT,
                 true).show();
+            return;
         } else {
             _eventSchedule.SetWeekDayPeek(_weekClick);
         }

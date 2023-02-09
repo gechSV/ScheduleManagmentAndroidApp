@@ -2,17 +2,25 @@ package ScheduleManagement.AndroidApp;
 
 import static android.app.PendingIntent.getActivity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 
@@ -109,7 +117,7 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
         public ViewHolder(@NonNull View itemView, ArrayList<EventSchedule> dayEvent, int n) {
             super(itemView);
 
-            int i = 0; //счётчик для массива
+            int arrayCounter = 0; //счётчик для массива
             linearLayout = itemView.findViewById((R.id.linear_layout_for_card));
 
             // для хранения карточек в памяти
@@ -118,24 +126,24 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
             // перебор списка событий и вывод на экран карточек
             for(EventSchedule event: dayEvent){
                 // копируем макет
-                buffView[i] = (LinearLayout)LayoutInflater.from(itemView.getContext())
+                buffView[arrayCounter] = (LinearLayout)LayoutInflater.from(itemView.getContext())
                         .inflate(R.layout.card_pattern_for_page, null);
 
                 // Получаем объект карточки
-                CardView cardView = buffView[i].findViewById(R.id.event_card);
+                CardView cardView = buffView[arrayCounter].findViewById(R.id.event_card);
                 CardView cardTime = cardView.findViewById(R.id.card_time);
                 CardView editCard = cardView.findViewById(R.id.edit_event);
                 CardView deleteCard = cardView.findViewById(R.id.delete_event);
-                LinearLayout LinerLayoutActionForCard = buffView[i].findViewById(R.id.EditButton);
+                LinearLayout LinerLayoutActionForCard = buffView[arrayCounter].findViewById(R.id.EditButton);
 
-                // ------- Нажатие на карточку -------
-                cardView.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View view) {
-                        // Вывод диалогового окна с выбором действия
-                    }
-                });
+                 // ------- Нажатие на карточку -------
+//                cardTime.setOnClickListener(new View.OnClickListener() {
+//
+//                    @Override
+//                    public void onClick(View view) {
+//                        // Вывод диалогового окна с выбором действия
+//                    }
+//                });
 
 
                 // ------- Долгое нажатие на карточку -------
@@ -197,6 +205,50 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
 
                         flag = !flag;
                         return false;
+                    }
+                });
+
+                // Нажатие на кнопку удаления эвента
+                int finalArrayCounter = arrayCounter;
+                deleteCard.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // Настройка диалогового окна, предназначенного для подтверждения удаления
+                        AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext(),
+                                R.style.AlertDialogCustom);
+                        builder.setMessage(R.string.confirmation_of_deletion);
+                        builder.setCancelable(false);
+
+                        // Кнопка ОТМЕНИТЬ
+                        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        // Кнопка УДАЛИТЬ
+                        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(itemView.getContext(), "You exit from app",
+                                        Toast.LENGTH_LONG).show();
+
+                                // Удаление события из списка и перезапись списка в файл
+                               FileIO.DeleteItemInFileByIndex("Event_Schedule_List.bin",
+                                       itemView.getContext(), finalArrayCounter);
+
+                               // Вызываем метод MainActivity, который обновляет ViewPager
+                                MainActivity.getInstance().ReloadViewPager();
+                            }
+                        });
+
+                        AlertDialog alert = builder.create();
+                        alert.show();
+
+                        // Настройка внешнего вида кнопок
+                        Button negativeButton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+                        Button pButton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+
+                        pButton.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.deep_orange_300));
                     }
                 });
 
@@ -263,8 +315,8 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
                 editCard.setBackgroundResource(R.drawable.style_for_edit_card);
                 deleteCard.setBackgroundResource(R.drawable.style_for_delete_card);
 
-                linearLayout.addView(buffView[i]);
-                i++;
+                linearLayout.addView(buffView[arrayCounter]);
+                arrayCounter++;
             }
 
         }
