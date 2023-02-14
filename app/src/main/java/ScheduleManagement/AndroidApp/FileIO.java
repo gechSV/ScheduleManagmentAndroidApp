@@ -108,4 +108,18 @@ public class FileIO {
             FileIO.WriteScheduleEventListInFile(list.GetEventsDayList(), fileName, context);
         }
     }
+
+    /**
+     * Удаление элемента списка хранящегося в файле
+     * @param fileName имя файла
+     * @param context контекст
+     * @param id индекс удаляемого элемента
+     */
+    public  static void DeleteItemInFileById(String fileName, Context context, int id){
+        if(id >= 0){
+            EventScheduleList list = FileIO.ReadScheduleEventListInFile(fileName, context);
+            list.RemoveEventsDayById(id);
+            FileIO.WriteScheduleEventListInFile(list.GetEventsDayList(), fileName, context);
+        }
+    }
 }

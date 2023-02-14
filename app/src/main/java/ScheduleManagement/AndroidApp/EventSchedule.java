@@ -12,6 +12,7 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
 
     private static final long serialVersionUID = 6024437629835836202L;
 
+    private int _id;
     private String _nameEvent; // Имя события (название пары, урока и т.п.)
     private String _typeEvent; // Тип события (лекция, практика, собрание, концерт и т.д.)
     private String _EventLocation; // Место проведения мероприятия (аудитория, улица, корпус)
@@ -26,6 +27,7 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
      * Конструктор без параметров
      */
     public EventSchedule(){
+        this._id = 0;
         this._timeEventStart = Calendar.getInstance();
         this._timeEventEnd = Calendar.getInstance();
         _weekDayPeek = new boolean[7];
@@ -43,28 +45,28 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
         return (int)(this.GetTimeEventStartMs() - o.GetTimeEventStartMs());
     }
 
-//    //  Индивидуальный идентификатор события
-//    /**
-//     * Установить id
-//     * @param id - индивидуальный идентификатор события
-//     */
-//    public void SetId(int id){
-//        if(id <= 0){
-//            this._id = id;
-//        }
-//        else
-//        {
-//            throw new Error("Error: _id < 0");
-//        }
-//    }
-//
-//    /**
-//     * Получить id
-//     * @return индивидуальный идентификатор события
-//     */
-//    public int GetId(){
-//        return this._id;
-//    }
+    //  Индивидуальный идентификатор события
+    /**
+     * Установить id
+     * @param id - индивидуальный идентификатор события
+     */
+    public void SetId(int id){
+        if(id >= 0){
+            this._id = id;
+        }
+        else
+        {
+            throw new Error("Error: _id < 0");
+        }
+    }
+
+    /**
+     * Получить id
+     * @return индивидуальный идентификатор события
+     */
+    public int GetId(){
+        return this._id;
+    }
 
     // Методы
     // Имя события
@@ -261,6 +263,16 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
             this._weekDayPeek = weekDayPeek;
         }else {
             throw new Error("The argument weekDayPeek cannot be null.");
+        }
+    }
+
+    /**
+     * Установка флагов дней недели
+     * @param dayNumb 0-пн, 1-вт, 2-ср, 3-чт, 4-пт, 5-сб, 6-вт
+     */
+    public void SetWeekDayPeek(int dayNumb){
+        if((dayNumb >= 0) && (dayNumb < 7)){
+            _weekDayPeek[dayNumb] = true;
         }
     }
 

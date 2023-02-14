@@ -68,7 +68,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
     boolean[] _weekClick;
 
-    private EventSchedule _eventSchedule;
+    private EventSchedule _eventSchedule[];
 
     private final static String FILE_NAME = "Event_Schedule_List.bin";
 
@@ -155,8 +155,6 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _weekClick = new boolean[7];
 
         Arrays.fill(_weekClick, false);
-
-        _eventSchedule = new EventSchedule();
     }
 
 
@@ -406,63 +404,85 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
     private void SaveEvent(){
         ColorStateList colorStateListRed = ColorStateList.valueOf(0xFFFF9494);
 
-        // Event name
-        if (_ET_EventName.getText().toString().length() != 0) {
-            _eventSchedule.SetNameEvent(_ET_EventName.getText().toString());
-        }
-        else{
-            _ET_EventName.setBackgroundTintList(colorStateListRed);
-            Toasty.error(this, R.string.WriteNameError, Toast.LENGTH_SHORT, true).show();
-            return;
-        }
-
-        // Type Event
-        if (_ET_TypeOfEvent.getText().toString().length() != 0) {
-            _eventSchedule.SetTypeEvent(_ET_TypeOfEvent.getText().toString());
-        }
-
-        // Event Location
-        if (_ET_EventLocation.getText().toString().length() != 0) {
-            _eventSchedule.SetLocationEvent(_ET_EventLocation.getText().toString());
-        }
-
-        // Event Host
-        if (_ET_NameOfTheEventHost.getText().toString().length() != 0) {
-            _eventSchedule.SetEventHost(_ET_NameOfTheEventHost.getText().toString());
-        }
-
-        // Time start and End
-        _eventSchedule.SetTimeEventStart(_startTime);
-        _eventSchedule.SetTimeEventEnd(_endTime);
-
-         // Event add Color
-         _eventSchedule.SetColorForEvent(_saveColor);
-
-         // Event add WeekDay
-        boolean checkWeekChoice = false;
+        int checkWeekChoice = 0;
         for (boolean click: _weekClick){
             if (click){
-                checkWeekChoice = true;
-                break;
+                checkWeekChoice++;
             }
         }
+
         // Если не выбран день недели, выводим ошибку
-        if (!checkWeekChoice) {
+        if (checkWeekChoice <= 0) {
             Toasty.error(this, R.string.error_choice_week_day, Toast.LENGTH_SHORT,
-                true).show();
+                    true).show();
             return;
-        } else {
-            _eventSchedule.SetWeekDayPeek(_weekClick);
+        }
+        else
+        {
+            // Если выбрано несколько дней недели то необходимо сохранить несколько экземпляров
+            // класса EventSchedule и записать их, сделано так, что бы при удалении и редактировании
+            // Обрабатывалось только одно событие
+
+            // Выделение памяти для массива
+            _eventSchedule = new EventSchedule[checkWeekChoice];
         }
 
+        // Установка флагов дней недели
+        int weekClickCount = 0;
+        for(int i = 0; i < _weekClick.length; i++){
+            if(_weekClick[i]){
+                _eventSchedule[weekClickCount] = new EventSchedule();
+                _eventSchedule[weekClickCount].SetWeekDayPeek(i);
+                weekClickCount++;
+            }
+        }
+
+        // Цикл для записи данных в объекты EventSchedule
+        for(EventSchedule event: _eventSchedule){
+            // Event name
+            if (_ET_EventName.getText().toString().length() != 0) {
+                event.SetNameEvent(_ET_EventName.getText().toString());
+            }
+            else{
+                _ET_EventName.setBackgroundTintList(colorStateListRed);
+                Toasty.error(this, R.string.WriteNameError, Toast.LENGTH_SHORT, true).show();
+                return;
+            }
+
+            // Type Event
+            if (_ET_TypeOfEvent.getText().toString().length() != 0) {
+                event.SetTypeEvent(_ET_TypeOfEvent.getText().toString());
+            }
+
+            // Event Location
+            if (_ET_EventLocation.getText().toString().length() != 0) {
+                event.SetLocationEvent(_ET_EventLocation.getText().toString());
+            }
+
+            // Event Host
+            if (_ET_NameOfTheEventHost.getText().toString().length() != 0) {
+                event.SetEventHost(_ET_NameOfTheEventHost.getText().toString());
+            }
+
+            // Time start and End
+            event.SetTimeEventStart(_startTime);
+            event.SetTimeEventEnd(_endTime);
+
+            // Event add Color
+            event.SetColorForEvent(_saveColor);
+        }
 
         // Сохранение данных в файл (Подразумевается, что файл уже существует, но ...)
         // FILE_NAME = "Event_Schedule_List.bin"
         try {
             // Читаем объект из файла
             EventScheduleList eventScheduleList = FileIO.ReadScheduleEventListInFile(FILE_NAME, this);
+
             // Добавляем в конец списка событие
-            eventScheduleList.AppendEvent(_eventSchedule);
+            for(EventSchedule event: _eventSchedule){
+                eventScheduleList.AppendEvent(event);
+            }
+
             FileIO.WriteScheduleEventListInFile(eventScheduleList.GetEventsDayList(), FILE_NAME, this);
             Toasty.success(this, "Save", Toast.LENGTH_SHORT, true).show();
             setResult(Activity.RESULT_OK);

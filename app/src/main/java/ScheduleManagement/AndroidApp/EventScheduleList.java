@@ -14,7 +14,6 @@ public class EventScheduleList implements Serializable {
     private ArrayList<EventSchedule> _eventScheduleList; // Список объектов EventSchedule
 
     // Конструкторы
-
     /**
      * Конструктор без параметров
      */
@@ -22,8 +21,15 @@ public class EventScheduleList implements Serializable {
         this._eventScheduleList = new ArrayList<EventSchedule>();
     }
 
+    /**
+     * Конструктор с параметрами
+     * @param ListSchedule список событий
+     */
     public EventScheduleList(ArrayList<EventSchedule> ListSchedule){
         this._eventScheduleList = ListSchedule;
+
+        // проставляем id
+        SetAllId();
     }
 
     // Методы
@@ -33,6 +39,7 @@ public class EventScheduleList implements Serializable {
      */
     public void OverwritingEventDaysList(ArrayList<EventSchedule> _eventsDay) {
         this._eventScheduleList = _eventsDay;
+        SetAllId();
     }
     public ArrayList<EventSchedule> GetEventsDayList() {
         return this._eventScheduleList;
@@ -44,6 +51,7 @@ public class EventScheduleList implements Serializable {
      */
     public void AppendEvent(EventSchedule _EventSchedule){
         this._eventScheduleList.add(_EventSchedule);
+        this._eventScheduleList.get(_eventScheduleList.size()-1).SetId(_eventScheduleList.size());
     }
 
     /**
@@ -64,6 +72,32 @@ public class EventScheduleList implements Serializable {
     }
 
     /**
+     * Удалить событие по id
+     * @param id id события
+     */
+    public void  RemoveEventsDayById(int id){
+        EventSchedule event = _eventScheduleList.get(id);
+        // если id и индекс совпали, то просто удаляем эвент по id
+        if (event.GetId() == id){
+            RemoveEventsDayByIndex(id);
+        }
+        else
+        {
+            // если id и index не совпали то ищем вручную
+            // Я бы мог написать сложный алгоритм поиска, а не просто перебор по порядку
+            // Но не думаю, что в расписании шкило или студентика будет более 30 записей в списке
+            // так что рисуем перебор и не выёбываемся, китайский сяоми справится ещё до того, как
+            // пользователь захочет удалить событие
+            for(int i = 0; i <= this._eventScheduleList.size();  i++){
+                if(this._eventScheduleList.get(i).GetId() == id){
+                    this.RemoveEventsDayByIndex(i);
+                    return;
+                }
+            }
+        }
+    }
+
+    /**
      * Удаление всего списка событий
      */
     public void  ClearEventsDayList(){
@@ -81,14 +115,17 @@ public class EventScheduleList implements Serializable {
      * @return Список событий
      */
     public ArrayList<EventSchedule> GetEventByDayWeek(int i){
+
         ArrayList<EventSchedule> returnEvent = new ArrayList<>();
         boolean[] weekDay;
+
         for(EventSchedule event : _eventScheduleList){
             weekDay = event.GetWeekDayPeek();
             if(weekDay[i]){
                 returnEvent.add(event);
             }
         }
+
         return returnEvent;
     }
 
@@ -100,26 +137,11 @@ public class EventScheduleList implements Serializable {
         return _eventScheduleList.size();
     }
 
-    /**
-     * Метод определяющий следующий идентификатор
-     */
-//    private void initialId(){
-//        int i = 0;
-//
-//        if (_eventScheduleList.size() == 0){
-//            _nextId = 0;
-//            return;
-//        }
-//
-//        int newId = this.size();
-//
-//        for(EventSchedule event: _eventScheduleList){
-//            if(event.GetId() > newId){
-//                newId = event.GetId() + 1;
-//            }
-//        }
-//
-//        _nextId = newId;
-//    }
-
+    private void SetAllId(){
+        int counterId = 0;
+        for (EventSchedule event: this._eventScheduleList){
+            event.SetId(counterId);
+            counterId++;
+        }
+    }
 }

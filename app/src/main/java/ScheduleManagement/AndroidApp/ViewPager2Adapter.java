@@ -25,7 +25,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.util.ArrayList;
 
 // Класс-адаптер для компонента ViewPager2
-class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolder> {
+class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolder>{
 
     // Дни недели - массив ресурсов для отображения
     private int[] _weekDay = {R.string.Monday, R.string.Tuesday, R.string.Wednesday,
@@ -110,7 +110,8 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
     // Класс для создания и заполнения макета для отображения на каждой странице ViewPager2
     public static class ViewHolder extends RecyclerView.ViewHolder implements ScheduleManagement.AndroidApp.ViewHolder {
         LinearLayout linearLayout;
-
+        private int index;
+        private int id;
         /**
          * Конструктор холдера
          **/
@@ -122,9 +123,9 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
 
             // для хранения карточек в памяти
             LinearLayout[] buffView = new LinearLayout[dayEvent.size()];
-
             // перебор списка событий и вывод на экран карточек
-            for(EventSchedule event: dayEvent){
+            for(index = 0; index < dayEvent.size(); index++){
+//                id = dayEvent.get(index).GetId();
                 // копируем макет
                 buffView[arrayCounter] = (LinearLayout)LayoutInflater.from(itemView.getContext())
                         .inflate(R.layout.card_pattern_for_page, null);
@@ -135,12 +136,14 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
                 CardView editCard = cardView.findViewById(R.id.edit_event);
                 CardView deleteCard = cardView.findViewById(R.id.delete_event);
                 LinearLayout LinerLayoutActionForCard = buffView[arrayCounter].findViewById(R.id.EditButton);
+                TextView idEvent = cardView.findViewById(R.id.idEvent);
+                idEvent.setText(Integer.toString(dayEvent.get(index).GetId()));
 
                  // ------- Нажатие на карточку -------
 //                cardTime.setOnClickListener(new View.OnClickListener() {
 //
 //                    @Override
-//                    public void onClick(View view) {
+//                    public void onClick(View view) {= cardViews[index]
 //                        // Вывод диалогового окна с выбором действия
 //                    }
 //                });
@@ -209,8 +212,7 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
                 });
 
                 // Нажатие на кнопку удаления эвента
-                int finalArrayCounter = arrayCounter;
-                deleteCard.setOnClickListener(new View.OnClickListener() {
+                deleteCard.setOnClickListener(new CardView.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         // Настройка диалогового окна, предназначенного для подтверждения удаления
@@ -229,12 +231,15 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
                         // Кнопка УДАЛИТЬ
                         builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(itemView.getContext(), "You exit from app",
+                                Toast.makeText(itemView.getContext(), idEvent.getText(),
                                         Toast.LENGTH_LONG).show();
 
                                 // Удаление события из списка и перезапись списка в файл
-                               FileIO.DeleteItemInFileByIndex("Event_Schedule_List.bin",
-                                       itemView.getContext(), finalArrayCounter);
+                                // В данном методе присутствует товарищ костыль
+                                // id события мы берём из невидемого TextView карточке:))
+                               FileIO.DeleteItemInFileById("Event_Schedule_List.bin",
+                                       cardView.getContext(), Integer.parseInt(String.valueOf(idEvent.getText())));
+
 
                                // Вызываем метод MainActivity, который обновляет ViewPager
                                 MainActivity.getInstance().ReloadViewPager();
@@ -253,59 +258,59 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
                 });
 
                 // Установка цвета карточки. По умолчанию (если не выбран цвет) - серый
-                switch (event.GetColorForEvent()){
+                switch (dayEvent.get(index).GetColorForEvent()){
                     case 1:
-                        SetTextData(event, cardView);
+                        SetTextData(dayEvent.get(index), cardView);
                         cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_lime);
                         break;
                     case 2:
-                        SetTextData(event, cardView);
+                        SetTextData(dayEvent.get(index), cardView);
                         cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_green);
                         break;
                     case 3:
-                        SetTextData(event, cardView);
+                        SetTextData(dayEvent.get(index), cardView);
                         cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_blue);
                         break;
                     case 4:
-                        SetTextData(event, cardView);
+                        SetTextData(dayEvent.get(index), cardView);
                         cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_purple);
                         break;
                     case 5:
-                        SetTextData(event, cardView);
+                        SetTextData(dayEvent.get(index), cardView);
                         cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_pink);
                         break;
                     case 6:
-                        SetTextData(event, cardView);
+                        SetTextData(dayEvent.get(index), cardView);
                         cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_red);
                         break;
                     case 7:
-                        SetTextData(event, cardView);
+                        SetTextData(dayEvent.get(index), cardView);
                         cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_orange);
                         break;
                     case 8:
-                        SetTextData(event, cardView);
+                        SetTextData(dayEvent.get(index), cardView);
                         cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_gray);
                         break;
                     case 9:
-                        SetTextData(event, cardView);
+                        SetTextData(dayEvent.get(index), cardView);
                         cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_teal);
                         break;
                     case 10:
-                        SetTextData(event, cardView);
+                        SetTextData(dayEvent.get(index), cardView);
                         cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_brown);
                         break;
                     default:
-                        SetTextData(event, cardView);
+                        SetTextData(dayEvent.get(index), cardView);
                         cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_gray);
                         break;
@@ -338,6 +343,7 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
             textViewLocation.setText(event.GetLocationEvent());
         }
     }
+
 }
 
 
