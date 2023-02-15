@@ -2,10 +2,13 @@ package ScheduleManagement.AndroidApp;
 
 import static android.app.PendingIntent.getActivity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
@@ -123,6 +130,9 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
 
             // для хранения карточек в памяти
             LinearLayout[] buffView = new LinearLayout[dayEvent.size()];
+
+            Intent _IntentAddEvent = new Intent(itemView.getContext(), ActivityAddScheduleItem.class);
+
             // перебор списка событий и вывод на экран карточек
             for(index = 0; index < dayEvent.size(); index++){
 //                id = dayEvent.get(index).GetId();
@@ -138,16 +148,6 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
                 LinearLayout LinerLayoutActionForCard = buffView[arrayCounter].findViewById(R.id.EditButton);
                 TextView idEvent = cardView.findViewById(R.id.idEvent);
                 idEvent.setText(Integer.toString(dayEvent.get(index).GetId()));
-
-                 // ------- Нажатие на карточку -------
-//                cardTime.setOnClickListener(new View.OnClickListener() {
-//
-//                    @Override
-//                    public void onClick(View view) {= cardViews[index]
-//                        // Вывод диалогового окна с выбором действия
-//                    }
-//                });
-
 
                 // ------- Долгое нажатие на карточку -------
                 cardView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -208,6 +208,13 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
 
                         flag = !flag;
                         return false;
+                    }
+                });
+
+                editCard.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                    MainActivity.getInstance().OnClickEditEvent(Integer.parseInt(String.valueOf(idEvent.getText())));
                     }
                 });
 

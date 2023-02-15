@@ -31,14 +31,14 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
     // Кнопки для выбора цвета
     private Button _buttonChoiceColorLime;
-    private Button _buttonChoiceColorCactus;
+    private Button _buttonChoiceColorGreen;
     private Button _buttonChoiceColorBlue;
     private Button _buttonChoiceColorPurple;
-    private Button _buttonChoiceColorRose;
+    private Button _buttonChoiceColorPink;
     private Button _buttonChoiceColorRed;
-    private Button _buttonChoiceColorPeach;
+    private Button _buttonChoiceColorOrange;
     private Button _buttonChoiceColorGray;
-    private Button _buttonChoiceColorBlack;
+    private Button _buttonChoiceColorTeal;
     private Button _buttonChoiceColorBrown;
 
     // Кнопки для выбора дня недели
@@ -70,9 +70,26 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
     private EventSchedule _eventSchedule[];
 
+    EventSchedule eventScheduleForEdit;
+
     private final static String FILE_NAME = "Event_Schedule_List.bin";
 
     EditText test;
+
+    // Контейнеры для принятия данных от Bundle
+    boolean editFlag = false;
+    int eventId = -1;
+    String eventName = null;
+    int colorId = -1;
+    String eventType = null;
+    String eventLocation = null;
+    String eventHost = null;
+    int weekDayKey = -1;
+    int HHStart = -1;
+    int MMStart = -1;
+    int HHEnd = -1;
+    int MMEnd = -1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,14 +104,14 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _LL_TypeOfEvent = (LinearLayout)findViewById(R.id.linearLayoutTypeOfEvent);
 
         _buttonChoiceColorLime = (Button) findViewById(R.id.buttonChoiceColorLime);
-        _buttonChoiceColorCactus = (Button) findViewById(R.id.buttonChoiceColorCactus);
+        _buttonChoiceColorGreen = (Button) findViewById(R.id.buttonChoiceColorCactus);
         _buttonChoiceColorBlue = (Button) findViewById(R.id.buttonChoiceColorBlue);
         _buttonChoiceColorPurple = (Button) findViewById(R.id.buttonChoiceColorPurple);
-        _buttonChoiceColorRose = (Button) findViewById(R.id.buttonChoiceColorRose);
+        _buttonChoiceColorPink = (Button) findViewById(R.id.buttonChoiceColorRose);
         _buttonChoiceColorRed = (Button) findViewById(R.id.buttonChoiceColorRed);
-        _buttonChoiceColorPeach = (Button) findViewById(R.id.buttonChoiceColorPeach);
+        _buttonChoiceColorOrange = (Button) findViewById(R.id.buttonChoiceColorPeach);
         _buttonChoiceColorGray = (Button) findViewById(R.id.buttonChoiceColorGray);
-        _buttonChoiceColorBlack = (Button) findViewById(R.id.buttonChoiceColorBlack);
+        _buttonChoiceColorTeal = (Button) findViewById(R.id.buttonChoiceColorBlack);
         _buttonChoiceColorBrown = (Button) findViewById(R.id.buttonChoiceColorBrown);
 
         _buttonStartTime = (Button) findViewById(R.id.buttonStartTime);
@@ -112,14 +129,14 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
         // Добавляем кнопки к прослушиванию для метода onClick()
         _buttonChoiceColorLime.setOnClickListener(this);
-        _buttonChoiceColorCactus.setOnClickListener(this);
+        _buttonChoiceColorGreen.setOnClickListener(this);
         _buttonChoiceColorBlue.setOnClickListener(this);
         _buttonChoiceColorPurple.setOnClickListener(this);
-        _buttonChoiceColorRose.setOnClickListener(this);
+        _buttonChoiceColorPink.setOnClickListener(this);
         _buttonChoiceColorRed.setOnClickListener(this);
-        _buttonChoiceColorPeach.setOnClickListener(this);
+        _buttonChoiceColorOrange.setOnClickListener(this);
         _buttonChoiceColorGray.setOnClickListener(this);
-        _buttonChoiceColorBlack.setOnClickListener(this);
+        _buttonChoiceColorTeal.setOnClickListener(this);
         _buttonChoiceColorBrown.setOnClickListener(this);
 
         _buttonStartTime.setOnClickListener(this);
@@ -155,6 +172,133 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _weekClick = new boolean[7];
 
         Arrays.fill(_weekClick, false);
+
+        // Получаем данные при добавлении нового события
+        Bundle bundle = getIntent().getExtras();
+
+        if(bundle != null){
+            editFlag = bundle.getBoolean("editFlag");
+            eventId = bundle.getInt("eventId");
+            eventName = bundle.getString("eventName");
+            colorId = bundle.getInt("colorId");
+            eventType = bundle.getString("eventType");
+            eventLocation = bundle.getString("eventLocation");
+            eventHost = bundle.getString("eventHost");
+            weekDayKey = bundle.getInt("WeekDayKey");
+
+            HHStart = bundle.getInt("HHStart");
+            MMStart = bundle.getInt("MMStart");
+            HHEnd = bundle.getInt("HHEnd");
+            MMEnd = bundle.getInt("MMEnd");
+
+            // Выбор дня недели в зависимости от того на каком
+            // дне недели мы находились на гл. странице
+            switch (weekDayKey){
+                case 0:
+                    _buttonChoiceWeekDayMon.performClick();
+                    break;
+                case 1:
+                    _buttonChoiceWeekDayTue.performClick();
+                    break;
+                case 2:
+                    _buttonChoiceWeekDayWed.performClick();
+                    break;
+                case 3:
+                    _buttonChoiceWeekDayThu.performClick();
+                    break;
+                case 4:
+                    _buttonChoiceWeekDayFri.performClick();
+                    break;
+                case 5:
+                    _buttonChoiceWeekDaySat.performClick();
+                    break;
+                case 6:
+                    _buttonChoiceWeekDaySun.performClick();
+                    break;
+                default:
+                    break;
+            }
+
+            // Если Активити было открыто для редактирования уже существующего
+            // события то editFlag = true
+            if (editFlag){
+                eventScheduleForEdit = new EventSchedule();
+
+                if(eventId != -1){
+                    eventScheduleForEdit.SetId(eventId);
+                }
+                else
+                {
+                    throw new Error("Incorrect ID. id = -1");
+                }
+
+                if(eventName != null){
+                    _ET_EventName.setText(eventName);
+                    eventScheduleForEdit.SetNameEvent(eventName);
+                }
+
+                eventScheduleForEdit.SetColorForEvent(colorId);
+                // Программно эмулируем нажатие на кнопку выбора цвета
+                switch (colorId){
+                    case 1:
+                        _buttonChoiceColorLime.performClick();
+                        break;
+                    case 2:
+                        _buttonChoiceColorGreen.performClick();
+                        break;
+                    case 3:
+                        _buttonChoiceColorBlue.performClick();
+                        break;
+                    case 4:
+                        _buttonChoiceColorPurple.performClick();
+                        break;
+                    case 5:
+                        _buttonChoiceColorPink.performClick();
+                        break;
+                    case 6:
+                        _buttonChoiceColorRed.performClick();
+                        break;
+                    case 7:
+                        _buttonChoiceColorOrange.performClick();
+                        break;
+                    case 8:
+                        _buttonChoiceColorGray.performClick();
+                        break;
+                    case 9:
+                        _buttonChoiceColorTeal.performClick();
+                        break;
+                    case 10:
+                        _buttonChoiceColorBrown.performClick();
+                        break;
+
+                }
+
+                if(eventType != null){
+                    _ET_TypeOfEvent.setText(eventType);
+                    eventScheduleForEdit.SetTypeEvent(eventType);
+                }
+
+                if(eventLocation != null){
+                    _ET_EventLocation.setText(eventLocation);
+                    eventScheduleForEdit.SetLocationEvent(eventLocation);
+                }
+
+                if(eventHost != null){
+                    _ET_NameOfTheEventHost.setText(eventHost);
+                    eventScheduleForEdit.SetEventHost(eventHost);
+                }
+
+                _startTime.set(Calendar.HOUR_OF_DAY, HHStart);
+                _startTime.set(Calendar.MINUTE, MMStart);
+                eventScheduleForEdit.SetTimeEventStart(_startTime);
+                _buttonStartTime.setText(eventScheduleForEdit.GetStartTimeEvent());
+
+                _endTime.set(Calendar.HOUR_OF_DAY, HHEnd);
+                _endTime.set(Calendar.MINUTE, MMEnd);
+                eventScheduleForEdit.SetTimeEventEnd(_endTime);
+                _buttonEndTime.setText(eventScheduleForEdit.GetEndTimeEvent());
+            }
+        }
     }
 
 
@@ -326,14 +470,14 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
     private void UpdColorImage(int colorButtonId){
         _buttonChoiceColorLime.setBackgroundResource(R.drawable.style_for_choice_button_lime);
-        _buttonChoiceColorCactus.setBackgroundResource(R.drawable.style_for_choice_button_cactus);
+        _buttonChoiceColorGreen.setBackgroundResource(R.drawable.style_for_choice_button_cactus);
         _buttonChoiceColorBlue.setBackgroundResource(R.drawable.style_for_choice_button_blue);
         _buttonChoiceColorPurple.setBackgroundResource(R.drawable.style_for_choice_button_purple);
-        _buttonChoiceColorRose.setBackgroundResource(R.drawable.style_for_choice_button_pink);
+        _buttonChoiceColorPink.setBackgroundResource(R.drawable.style_for_choice_button_pink);
         _buttonChoiceColorRed.setBackgroundResource(R.drawable.style_for_choice_button_red);
-        _buttonChoiceColorPeach.setBackgroundResource(R.drawable.style_for_choice_button_peach);
+        _buttonChoiceColorOrange.setBackgroundResource(R.drawable.style_for_choice_button_peach);
         _buttonChoiceColorGray.setBackgroundResource(R.drawable.style_for_choice_button_gray);
-        _buttonChoiceColorBlack.setBackgroundResource(R.drawable.style_for_choice_button_teal);
+        _buttonChoiceColorTeal.setBackgroundResource(R.drawable.style_for_choice_button_teal);
         _buttonChoiceColorBrown.setBackgroundResource(R.drawable.style_for_choice_button_brown);
 
         switch (colorButtonId){
@@ -341,7 +485,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
                 _buttonChoiceColorLime.setBackgroundResource(R.drawable.style_for_choice_button_lime_click);
                 break;
             case 1:
-                _buttonChoiceColorCactus.setBackgroundResource(R.drawable.style_for_choice_button_cactus_click);
+                _buttonChoiceColorGreen.setBackgroundResource(R.drawable.style_for_choice_button_cactus_click);
                 break;
             case 2:
                 _buttonChoiceColorBlue.setBackgroundResource(R.drawable.style_for_choice_button_blue_click);
@@ -350,19 +494,19 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
                 _buttonChoiceColorPurple.setBackgroundResource(R.drawable.style_for_choice_button_purple_click);
                 break;
             case 4:
-                _buttonChoiceColorRose.setBackgroundResource(R.drawable.style_for_choice_button_pink_click);
+                _buttonChoiceColorPink.setBackgroundResource(R.drawable.style_for_choice_button_pink_click);
                 break;
             case 5:
                 _buttonChoiceColorRed.setBackgroundResource(R.drawable.style_for_choice_button_red_click);
                 break;
             case 6:
-                _buttonChoiceColorPeach.setBackgroundResource(R.drawable.style_for_choice_button_peach_click);
+                _buttonChoiceColorOrange.setBackgroundResource(R.drawable.style_for_choice_button_peach_click);
                 break;
             case 7:
                 _buttonChoiceColorGray.setBackgroundResource(R.drawable.style_for_choice_button_gray_click);
                 break;
             case 8:
-                _buttonChoiceColorBlack.setBackgroundResource(R.drawable.style_for_choice_button_teal_click);
+                _buttonChoiceColorTeal.setBackgroundResource(R.drawable.style_for_choice_button_teal_click);
                 break;
             case 9:
                 _buttonChoiceColorBrown.setBackgroundResource(R.drawable.style_for_choice_button_brown_click);
@@ -403,6 +547,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
     private void SaveEvent(){
         ColorStateList colorStateListRed = ColorStateList.valueOf(0xFFFF9494);
+
 
         int checkWeekChoice = 0;
         for (boolean click: _weekClick){
@@ -472,16 +617,24 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             event.SetColorForEvent(_saveColor);
         }
 
+
         // Сохранение данных в файл (Подразумевается, что файл уже существует, но ...)
         // FILE_NAME = "Event_Schedule_List.bin"
         try {
             // Читаем объект из файла
             EventScheduleList eventScheduleList = FileIO.ReadScheduleEventListInFile(FILE_NAME, this);
 
+            // Если редактируем, то просто удаляем старую запись
+            if(editFlag){
+                eventScheduleList.RemoveEventsDayById(eventId);
+            }
+
             // Добавляем в конец списка событие
             for(EventSchedule event: _eventSchedule){
                 eventScheduleList.AppendEvent(event);
             }
+
+            eventScheduleList.SortEventList();
 
             FileIO.WriteScheduleEventListInFile(eventScheduleList.GetEventsDayList(), FILE_NAME, this);
             Toasty.success(this, "Save", Toast.LENGTH_SHORT, true).show();
@@ -492,5 +645,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT,
                     true).show();
         }
+
+        MainActivity.getInstance().ReloadViewPager();
     }
 }

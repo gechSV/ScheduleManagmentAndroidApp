@@ -145,27 +145,31 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
             throw new Error("The argument timeEventStart cannot be null.");
         }
         else {
+            // Устанавливаем одну и ту же дату для всех событий
+            timeEventStart.set(Calendar.DAY_OF_WEEK, 1);
+            timeEventStart.set(Calendar.MONTH, 1);
+            timeEventStart.set(Calendar.YEAR, 1);
             this._timeEventStart = timeEventStart;
         }
     }
 
-    /**
-     * Установка времени начала события
-     * @param h Часы
-     * @param m Минуты
-     */
-    public void SetTimeEventStart(int h, int m) {
-        if ((h < 0) || (h > 23)){
-            throw new Error("Incorrect format of the number h");
-        }
-        else if ((m < 0) || (m > 59)){
-            throw new Error("Incorrect format of the number m");
-        }
-        else{
-            this._timeEventStart.set(Calendar.HOUR_OF_DAY, h);
-            this._timeEventStart.set(Calendar.MINUTE, m);
-        }
-    }
+//    /**
+//     * Установка времени начала события
+//     * @param h Часы
+//     * @param m Минуты
+//     */
+//    public void SetTimeEventStart(int h, int m) {
+//        if ((h < 0) || (h > 23)){
+//            throw new Error("Incorrect format of the number h");
+//        }
+//        else if ((m < 0) || (m > 59)){
+//            throw new Error("Incorrect format of the number m");
+//        }
+//        else{
+//            this._timeEventStart.set(Calendar.HOUR_OF_DAY, h);
+//            this._timeEventStart.set(Calendar.MINUTE, m);
+//        }
+//    }
 
     /**
      * Возвращает время начала события
@@ -189,6 +193,9 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
             throw new Error("The argument timeEventEnd cannot be null.");
         }
         else {
+            timeEventEnd.set(Calendar.DAY_OF_WEEK, 1);
+            timeEventEnd.set(Calendar.MONTH, 1);
+            timeEventEnd.set(Calendar.YEAR, 1);
             this._timeEventEnd = timeEventEnd;
         }
     }
@@ -198,18 +205,18 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
      * @param h Часы
      * @param m Минуты
      */
-    public void SetTimeEventEnd(int h, int m) {
-        if ((h < 0) || (h > 23)){
-            throw new Error("Incorrect format of the number h");
-        }
-        else if ((m < 0) || (m > 59)){
-            throw new Error("Incorrect format of the number m");
-        }
-        else{
-            this._timeEventEnd.set(Calendar.HOUR_OF_DAY, h);
-            this._timeEventEnd.set(Calendar.MINUTE, m);
-        }
-    }
+//    public void SetTimeEventEnd(int h, int m) {
+//        if ((h < 0) || (h > 23)){
+//            throw new Error("Incorrect format of the number h");
+//        }
+//        else if ((m < 0) || (m > 59)){
+//            throw new Error("Incorrect format of the number m");
+//        }
+//        else{
+//            this._timeEventEnd.set(Calendar.HOUR_OF_DAY, h);
+//            this._timeEventEnd.set(Calendar.MINUTE, m);
+//        }
+//    }
 
     /**
      * Возврвщает время окончания события
@@ -240,7 +247,7 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
     /**
      * Установить цвет
      * @param _colorForEvent 1 - Lime, 2 - Green, 3 - Blue, 4 - purple, 5 - pink, 6 - red, 7 - orange
-     *                       8 - gray, 9 - black, 10 - brown
+     *                       8 - gray, 9 - Teal, 10 - brown
      */
     public void SetColorForEvent(int _colorForEvent) {
             this._colorForEvent = _colorForEvent;
@@ -248,7 +255,8 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
 
     /**
      * Получить цвет события
-     * @return id цвета
+     * @return 1 - Lime, 2 - Green, 3 - Blue, 4 - purple, 5 - pink, 6 - red, 7 - orange
+     *         8 - gray, 9 - black, 10 - brown
      */
     public int GetColorForEvent() {
         return _colorForEvent;
@@ -282,5 +290,18 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
      */
     public boolean[] GetWeekDayPeek(){
         return this._weekDayPeek;
+    }
+
+    /**
+     * Получить идентификатор дня недели ( 0-пн, 1-вт, 2-ср, 3-чт, 4-пт, 5-сб, 6-вт)
+     * @return идентификатор дня
+     */
+    public int GetWeekDayPeekId(){
+        for(int i = 0; i < _weekDayPeek.length; i++){
+            if(_weekDayPeek[i]){
+                return i;
+            }
+        }
+        return -1;
     }
 }

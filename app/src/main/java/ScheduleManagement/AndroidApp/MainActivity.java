@@ -24,6 +24,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.gson.Gson;
 
 import java.io.File;
+import java.util.Calendar;
 import java.util.Objects;
 
 import es.dmoral.toasty.Toasty;
@@ -55,6 +56,12 @@ public class MainActivity extends AppCompatActivity{
     // Поле открывающее доступ к функциям этого класса из сторонних классов (Метод getInstance())
     private static MainActivity instance;
 
+    // Для открытия страницы в зависимости от текущего дня недели
+    private int currentWeekNumb = -1;
+
+    // для отслеживания выбранной недели(чётная, либо не чётная)
+    private int currentWeekType = -1;
+
     private TextView test;
 
     @Override
@@ -85,20 +92,9 @@ public class MainActivity extends AppCompatActivity{
 
         _fabButton.shrink();
 
-        // TODO: Убрать иконки,
-        // Конструкция для отлова закрытия активити
-        ActivityResultLauncher<Intent> finishActivityAddEvent = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == Activity.RESULT_OK) {
-                            // Обновляем данные отображаемые в ViewPager2
-                            // Настройка viewPager2
-                            ReloadViewPager();
-                        }
-                    }
-                });
+        // Инициализация активити для добавления события
+        _IntentAddEvent = new Intent(MainActivity.this, ActivityAddScheduleItem.class);
+        _IntentAddEvent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         _fabButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -132,7 +128,12 @@ public class MainActivity extends AppCompatActivity{
                     @Override
                     public void onClick(View view) {
                         // Запуск активити для добавления события
-                        finishActivityAddEvent.launch(_IntentAddEvent);
+                        Bundle bundleAdd = new Bundle();
+                        bundleAdd.putInt("WeekDayKey", _viewPager2.getCurrentItem());
+                        bundleAdd.putBoolean("editFlag", false);
+                        _IntentAddEvent.putExtras(bundleAdd);
+                        // TODO: тут закончил
+                        startActivity(_IntentAddEvent);
                     }
                 });
 
@@ -149,9 +150,6 @@ public class MainActivity extends AppCompatActivity{
                 });
 
 
-        // Инициализация активити для добавления события
-        _IntentAddEvent = new Intent(MainActivity.this, ActivityAddScheduleItem.class);
-
         // Читаем список событий из файла
         WriteEventListInFile();
 
@@ -163,7 +161,9 @@ public class MainActivity extends AppCompatActivity{
 
         _viewPager2.setAdapter(_viewPager2Adapter);
 
-        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(headerForPage, _viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
+        // Настройка tabLayout(показывает дни недели)
+        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(headerForPage, _viewPager2,
+                new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                 String[] weekDay = {getString(R.string.Mon), getString(R.string.Tue),
@@ -193,6 +193,81 @@ public class MainActivity extends AppCompatActivity{
                 super.onPageScrollStateChanged(state);
             }
         });
+
+        // Открытие страницы в соотвествии с текущим днём недели
+        if(currentWeekNumb == -1){
+            Calendar c = Calendar.getInstance();
+            // Получаем индикатор текущего дня недели
+            currentWeekNumb = c.get(Calendar.DAY_OF_WEEK);
+        }
+
+        switch (currentWeekNumb){
+            case 1:
+                // пн
+                _viewPager2.setCurrentItem(6, false);
+                break;
+            case 2:
+                // вт
+                _viewPager2.setCurrentItem(0, false);
+                break;
+            case 3:
+                // ср
+                _viewPager2.setCurrentItem(1, false);
+                break;
+            case 4:
+                // чт
+                _viewPager2.setCurrentItem(2, false);
+                break;
+            case 5:
+                // пт
+                _viewPager2.setCurrentItem(3, false);
+                break;
+            case 6:
+                // сб
+                _viewPager2.setCurrentItem(4, false);
+                break;
+            case 7:
+                // вс
+                _viewPager2.setCurrentItem(5, false);
+                break;
+            default:
+                // на всякий случай
+                _viewPager2.setCurrentItem(0, false);
+                break;
+        }
+    }
+
+
+    public void OnClickEditEvent(int id){
+        EventSchedule event = _eventScheduleList.GetEventsDayById(id);
+        if(event == null){
+            throw new Error("The event was not found by id. id = null");
+        }
+
+        // Запуск активити для редактирования события
+        Bundle bundleAdd = new Bundle();
+        bundleAdd.putBoolean("editFlag", true);
+        bundleAdd.putInt("eventId", event.GetId());
+        bundleAdd.putString("eventName", event.GetNameEvent());
+        bundleAdd.putInt("colorId", event.GetColorForEvent());
+        bundleAdd.putString("eventType", event.GetTypeEvent());
+        bundleAdd.putString("eventLocation", event.GetLocationEvent());
+        bundleAdd.putString("eventHost", event.GetEventHost());
+        bundleAdd.putInt("WeekDayKey", event.GetWeekDayPeekId());
+
+        Calendar time = Calendar.getInstance();
+        time = event.GetTimeEventStart();
+
+        bundleAdd.putInt("HHStart", time.get(Calendar.HOUR_OF_DAY));
+        bundleAdd.putInt("MMStart", time.get(Calendar.MINUTE));
+
+        time = event.GetTimeEventEnd();
+        bundleAdd.putInt("HHEnd", time.get(Calendar.HOUR_OF_DAY));
+        bundleAdd.putInt("MMEnd", time.get(Calendar.MINUTE));
+
+        _IntentAddEvent.putExtras(bundleAdd);
+        // TODO: тут закончил
+        startActivity(_IntentAddEvent);
     }
 
     public static MainActivity getInstance() {
@@ -237,6 +312,7 @@ public class MainActivity extends AppCompatActivity{
      * Обновление страниц ViewPager2
      */
     public void ReloadViewPager(){
+        currentWeekNumb = _viewPager2.getCurrentItem();
         // Читаем список событий из файла
         WriteEventListInFile();
 
@@ -245,5 +321,7 @@ public class MainActivity extends AppCompatActivity{
         _viewPager2Adapter = new ViewPager2Adapter(MainActivity.this, _eventScheduleList);
 
         _viewPager2.setAdapter(_viewPager2Adapter);
+
+        _viewPager2.setCurrentItem(currentWeekNumb, false);
     }
 }
