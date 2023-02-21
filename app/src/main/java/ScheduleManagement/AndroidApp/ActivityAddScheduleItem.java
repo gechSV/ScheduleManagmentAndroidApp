@@ -72,8 +72,6 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
     EventSchedule eventScheduleForEdit;
 
-    private final static String FILE_NAME = "Event_Schedule_List.bin";
-
     EditText test;
 
     // Контейнеры для принятия данных от Bundle
@@ -89,6 +87,8 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
     int MMStart = -1;
     int HHEnd = -1;
     int MMEnd = -1;
+
+    String FILE_NAME;
 
 
     @Override
@@ -190,6 +190,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             MMStart = bundle.getInt("MMStart");
             HHEnd = bundle.getInt("HHEnd");
             MMEnd = bundle.getInt("MMEnd");
+            FILE_NAME = bundle.getString("fileName");
 
             // Выбор дня недели в зависимости от того на каком
             // дне недели мы находились на гл. странице
@@ -646,6 +647,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
                     true).show();
         }
 
-        MainActivity.getInstance().ReloadViewPager();
+        MainActivity.getInstance().ReloadViewPager_1();
+        MainActivity.getInstance().ReloadViewPager_2();
     }
 }

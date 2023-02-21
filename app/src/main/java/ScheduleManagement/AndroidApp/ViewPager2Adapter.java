@@ -2,13 +2,10 @@ package ScheduleManagement.AndroidApp;
 
 import static android.app.PendingIntent.getActivity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,16 +15,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 
@@ -115,7 +106,7 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
     }
 
     // Класс для создания и заполнения макета для отображения на каждой странице ViewPager2
-    public static class ViewHolder extends RecyclerView.ViewHolder implements ScheduleManagement.AndroidApp.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         LinearLayout linearLayout;
         private int index;
         private int id;
@@ -244,12 +235,11 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
                                 // Удаление события из списка и перезапись списка в файл
                                 // В данном методе присутствует товарищ костыль
                                 // id события мы берём из невидемого TextView карточке:))
-                               FileIO.DeleteItemInFileById("Event_Schedule_List.bin",
-                                       cardView.getContext(), Integer.parseInt(String.valueOf(idEvent.getText())));
-
+                               MainActivity.getInstance().OnClickDeleteEvent(Integer.parseInt(String.valueOf(idEvent.getText())));
 
                                // Вызываем метод MainActivity, который обновляет ViewPager
-                                MainActivity.getInstance().ReloadViewPager();
+                                MainActivity.getInstance().ReloadViewPager_1();
+                                MainActivity.getInstance().ReloadViewPager_2();
                             }
                         });
 
@@ -330,6 +320,7 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
                 linearLayout.addView(buffView[arrayCounter]);
                 arrayCounter++;
             }
+
 
         }
 

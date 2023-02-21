@@ -42,5 +42,5 @@
     <color name="red_200">#EF9A9A</color>
     <color name="red_400">#EF5350</color>
     <color name="blue_400">#42A5F5</color>
-
+    <color name="defoultTextColor">#455A64</color>
 </resources>

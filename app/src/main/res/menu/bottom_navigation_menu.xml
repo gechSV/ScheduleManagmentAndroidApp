@@ -1,16 +1,25 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/accelerator"
-        android:title="sdsd"
-        android:contentDescription="sdsd" />
+        android:id="@+id/accelerator1"
+        android:icon="@drawable/baseline_delete_forever_24"
+        android:title="1"
+        android:contentDescription="1"
+        app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/rotation"
-        android:title="sdsd"
-        android:contentDescription="sdsd"/>
+        android:id="@+id/accelerator2"
+        android:icon="@drawable/baseline_delete_forever_24"
+        android:title="1"
+        android:contentDescription="1"
+        app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/dashboard"
-        android:title="sdsd"
-        android:contentDescription="sdsd"/>
+        android:id="@+id/accelerator3"
+        android:icon="@drawable/baseline_delete_forever_24"
+        android:title="1"
+        android:contentDescription="1"
+        app:showAsAction="ifRoom"/>
+
 </menu>
