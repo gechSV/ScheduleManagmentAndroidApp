@@ -2,18 +2,23 @@ package ScheduleManagement.AndroidApp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.res.ColorStateList;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Objects;
@@ -57,7 +62,9 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
     // Кнопка сохранения события
     private Button _buttonSaveEvent;
 
+    private LinearLayout _LL_Color_1, _LL_Color_2;
     private LinearLayout _LL_TypeOfEvent;
+    private LinearLayout _LL_HintName;
 
     // запоминает выбранный цвет
     private int _saveColor;
@@ -88,7 +95,10 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
     int HHEnd = -1;
     int MMEnd = -1;
 
-    String FILE_NAME;
+    String FILE_NAME, FILE_NAME_FOR_HINT_1, FILE_NAME_FOR_HINT_2;
+
+    EventScheduleList eventScheduleListForHint;
+    ArrayList<String> hintNameList;
 
 
     @Override
@@ -101,7 +111,9 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _ET_EventLocation = (EditText)findViewById(R.id.editTextEventLocation);
         _ET_NameOfTheEventHost = (EditText)findViewById(R.id.editTextNameOfTheEventHost);
 
+        _LL_Color_1 = (LinearLayout)findViewById(R.id.linearLayoutButtonColorRow1);
         _LL_TypeOfEvent = (LinearLayout)findViewById(R.id.linearLayoutTypeOfEvent);
+        _LL_HintName = (LinearLayout)findViewById(R.id.hintNameCon);
 
         _buttonChoiceColorLime = (Button) findViewById(R.id.buttonChoiceColorLime);
         _buttonChoiceColorGreen = (Button) findViewById(R.id.buttonChoiceColorCactus);
@@ -191,6 +203,8 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             HHEnd = bundle.getInt("HHEnd");
             MMEnd = bundle.getInt("MMEnd");
             FILE_NAME = bundle.getString("fileName");
+            FILE_NAME_FOR_HINT_1 = bundle.getString("hintFile1");
+            FILE_NAME_FOR_HINT_2 = bundle.getString("hintFile2");
 
             // Выбор дня недели в зависимости от того на каком
             // дне недели мы находились на гл. странице
@@ -299,7 +313,26 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
                 eventScheduleForEdit.SetTimeEventEnd(_endTime);
                 _buttonEndTime.setText(eventScheduleForEdit.GetEndTimeEvent());
             }
+
+            try{
+                _LL_HintName.setVisibility(View.VISIBLE);
+                eventScheduleListForHint = FileIO.ReadScheduleEventListInFile(
+                        FILE_NAME_FOR_HINT_1, this);
+
+                eventScheduleListForHint = eventScheduleListForHint.addAll(
+                        FileIO.ReadScheduleEventListInFile(FILE_NAME_FOR_HINT_2, this));
+
+                hintNameList = HintBuilder.getHintForAllName(eventScheduleListForHint);
+
+                ButtonHintBuilderForName(hintNameList);
+            }
+            catch (Error err){
+                Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT,
+                        true).show();
+            }
         }
+
+        _ET_EventName.addTextChangedListener(new TextWatcherName());
     }
 
 
@@ -649,5 +682,56 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
         MainActivity.getInstance().ReloadViewPager_1();
         MainActivity.getInstance().ReloadViewPager_2();
+    }
+
+    // Класс для отлова события модификации текста в EditTextName
+    public class TextWatcherName implements TextWatcher {
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            hintNameList = HintBuilder.getHintForNameByStr(
+                    String.valueOf(_ET_EventName.getText()), eventScheduleListForHint);
+
+            ButtonHintBuilderForName(hintNameList);
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+    }
+
+    /**
+     * Создаёт кнопки на основании выборки из списка ранее использованных наименований
+     * @param hintNameArrayList - Список наименований
+     */
+    private void ButtonHintBuilderForName(ArrayList<String> hintNameArrayList){
+        _LL_HintName.removeAllViews();
+
+        if (hintNameArrayList.size() == 0){
+
+            _LL_HintName.setVisibility(View.GONE);
+        }
+        else {
+            _LL_HintName.setVisibility(View.VISIBLE);
+        }
+
+        for(int i = 0; i < hintNameArrayList.size(); i++){
+
+            Button btn = new Button(this);
+            btn.setId(i);
+            final int id_ = btn.getId();
+            btn.setText(hintNameArrayList.get(i));
+            _LL_HintName.addView(btn, i);
+            Button btn1 = ((Button)findViewById(id_));
+
+            btn1.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    _ET_EventName.setText(btn1.getText());
+                    _LL_HintName.setVisibility(View.GONE);
+                }
+            });
+        }
     }
 }

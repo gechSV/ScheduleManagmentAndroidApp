@@ -172,4 +172,15 @@ public class EventScheduleList implements Serializable {
             counterId++;
         }
     }
+
+    public EventScheduleList addAll(EventScheduleList a){
+        if(a != null){
+            this.GetEventsDayList().addAll(a.GetEventsDayList());
+            return this;
+        }
+        else
+        {
+            throw new Error("The argument _typeEvent cannot be null.");
+        }
+    }
 }

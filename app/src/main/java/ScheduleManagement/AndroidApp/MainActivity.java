@@ -147,7 +147,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onPageSelected(int position){
                 super.onPageSelected(position);
                 currentWeekNumb = _viewPager_1.getCurrentItem();
-                Toast.makeText(MainActivity.this, "" + currentWeekNumb, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -167,7 +166,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onPageSelected(int position){
                 super.onPageSelected(position);
                 currentWeekNumb = _viewPager_2.getCurrentItem();
-                Toast.makeText(MainActivity.this, "" + currentWeekNumb, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -239,6 +237,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Запуск активити для редактирования события
         Bundle bundleAdd = new Bundle();
         bundleAdd.putBoolean("editFlag", true);
+        bundleAdd.putString("hintFile1", FILE_NAME_EVENT_LIST_1);
+        bundleAdd.putString("hintFile2", FILE_NAME_EVENT_LIST_2);
         bundleAdd.putInt("eventId", event.GetId());
         bundleAdd.putString("eventName", event.GetNameEvent());
         bundleAdd.putInt("colorId", event.GetColorForEvent());
@@ -328,7 +328,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void ReloadViewPager_1(){
         openViewPager(_weekFlag);
 
-        currentWeekNumb = _viewPager_1.getCurrentItem();
         // Читаем список событий из файла
         _eventScheduleList_1 = ReadEventListFromFile(FILE_NAME_EVENT_LIST_1);
 
@@ -344,7 +343,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void ReloadViewPager_2(){
         openViewPager(_weekFlag);
 
-        currentWeekNumb = _viewPager_2.getCurrentItem();
         // Читаем список событий из файла
         _eventScheduleList_2 = ReadEventListFromFile(FILE_NAME_EVENT_LIST_2);
 
@@ -425,6 +423,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     //TODO: добавить ошибку
                 }
                 bundleAdd.putBoolean("editFlag", false);
+                bundleAdd.putString("hintFile1", FILE_NAME_EVENT_LIST_1);
+                bundleAdd.putString("hintFile2", FILE_NAME_EVENT_LIST_2);
                 _IntentAddEvent.putExtras(bundleAdd);
                 startActivity(_IntentAddEvent);
                 break;

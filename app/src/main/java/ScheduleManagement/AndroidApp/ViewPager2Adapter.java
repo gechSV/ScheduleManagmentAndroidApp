@@ -189,11 +189,19 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
                                     DpInPxDisplay.ConvertDpToPixels(view.getContext(), 0),
                                     0, 0);
 
+                            TranslateAnimation animation2 = new TranslateAnimation(
+                                    DpInPxDisplay.ConvertDpToPixels(view.getContext(), 72),
+                                    DpInPxDisplay.ConvertDpToPixels(view.getContext(), 0),
+                                    0, 0);
+
                             animation.setDuration(200);
                             animation.setFillAfter(true);
 
+                            animation2.setDuration(200);
+                            animation2.setFillAfter(true);
+
                             // Запуск анимации
-                            LinerLayoutActionForCard.startAnimation(animation);
+                            LinerLayoutActionForCard.startAnimation(animation2);
                             cardTime.startAnimation(animation);
                         }
 
