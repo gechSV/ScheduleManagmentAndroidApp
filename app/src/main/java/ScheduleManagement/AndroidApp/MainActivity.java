@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static MainActivity instance;
 
     // Для открытия страницы в зависимости от текущего дня недели
-    //TODO: после добавления события переключаться на тот день с которого вошли в добавление
     private int currentWeekNumb = -1;
 
     // для отслеживания выбранной недели(чётная, либо не чётная)

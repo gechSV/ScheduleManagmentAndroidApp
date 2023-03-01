@@ -1,8 +1,9 @@
 package ScheduleManagement.AndroidApp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 
-import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.res.ColorStateList;
@@ -11,9 +12,10 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.animation.TranslateAnimation;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -60,11 +62,14 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
     private Button _buttonEndTime;
 
     // Кнопка сохранения события
-    private Button _buttonSaveEvent;
+    private CardView _buttonSaveEvent;
+    private CardView _buttonBack;
 
     private LinearLayout _LL_Color_1, _LL_Color_2;
     private LinearLayout _LL_TypeOfEvent;
-    private LinearLayout _LL_HintName;
+    private LinearLayout _LL_HintName, _LL_HintTypeCon, _LL_HintLocation, _LL_HintHost;
+
+    private CardView _CV_ActionCon;
 
     // запоминает выбранный цвет
     private int _saveColor;
@@ -99,6 +104,11 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
     EventScheduleList eventScheduleListForHint;
     ArrayList<String> hintNameList;
+    ArrayList<String> hintTypeList;
+    ArrayList<String> hintLocationList;
+    ArrayList<String> hintHostList;
+
+    private int HintButtonId = 0;
 
 
     @Override
@@ -114,6 +124,9 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _LL_Color_1 = (LinearLayout)findViewById(R.id.linearLayoutButtonColorRow1);
         _LL_TypeOfEvent = (LinearLayout)findViewById(R.id.linearLayoutTypeOfEvent);
         _LL_HintName = (LinearLayout)findViewById(R.id.hintNameCon);
+        _LL_HintTypeCon = (LinearLayout)findViewById(R.id.hintTypeCon);
+        _LL_HintLocation = (LinearLayout)findViewById(R.id.hintLocationCon);
+        _LL_HintHost = (LinearLayout)findViewById(R.id.hintHostCon);
 
         _buttonChoiceColorLime = (Button) findViewById(R.id.buttonChoiceColorLime);
         _buttonChoiceColorGreen = (Button) findViewById(R.id.buttonChoiceColorCactus);
@@ -137,7 +150,16 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _buttonChoiceWeekDaySat = (Button) findViewById(R.id.buttonSat);
         _buttonChoiceWeekDaySun = (Button) findViewById(R.id.buttonSun);
 
-        _buttonSaveEvent = (Button) findViewById(R.id.buttonSaveEvent);
+        _buttonSaveEvent = (CardView) findViewById(R.id.buttonSaveEvent);
+        _buttonSaveEvent.setBackgroundResource(R.drawable.style_for_add_button_in_menu);
+
+        _buttonBack = (CardView)findViewById(R.id.backButton);
+        _buttonBack.setBackgroundResource(R.drawable.style_for_add_button_in_menu);
+
+        _CV_ActionCon = (CardView)findViewById(R.id.action_con);
+        _CV_ActionCon.setBackgroundResource(R.drawable.menu_white_background);
+
+
 
         // Добавляем кнопки к прослушиванию для метода onClick()
         _buttonChoiceColorLime.setOnClickListener(this);
@@ -163,6 +185,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _buttonChoiceWeekDaySun.setOnClickListener(this);
 
         _buttonSaveEvent.setOnClickListener(this);
+        _buttonBack.setOnClickListener(this);
 
         // Рабочий пример кнопок
 //        for(int i = 0; i < 2; i++){
@@ -314,17 +337,33 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
                 _buttonEndTime.setText(eventScheduleForEdit.GetEndTimeEvent());
             }
 
+            // Здесь работаем с подсказками
             try{
                 _LL_HintName.setVisibility(View.VISIBLE);
+
+                // Читаем из файлов расписания - расписание и объединяем в один список
                 eventScheduleListForHint = FileIO.ReadScheduleEventListInFile(
                         FILE_NAME_FOR_HINT_1, this);
 
                 eventScheduleListForHint = eventScheduleListForHint.addAll(
                         FileIO.ReadScheduleEventListInFile(FILE_NAME_FOR_HINT_2, this));
 
-                hintNameList = HintBuilder.getHintForAllName(eventScheduleListForHint);
+                // Получаем из списка событий - список наименований
+                hintNameList = HintBuilder.getHintForNameByStr("", eventScheduleListForHint);
 
-                ButtonHintBuilderForName(hintNameList);
+                // Получаем из списка событий - список типов мероприятий
+                hintTypeList = HintBuilder.getHintForTypeByStr("", eventScheduleListForHint);
+
+                // Получаем из списка событий - список локаций мероприятия
+                hintLocationList = HintBuilder.getHintForLocationByStr("", eventScheduleListForHint);
+
+                // Получаем из списка событий - список локаций мероприятия
+                hintHostList = HintBuilder.getHintForHostByStr("", eventScheduleListForHint);
+
+                ButtonHintBuilder(_LL_HintName, _ET_EventName, hintNameList);
+                ButtonHintBuilder(_LL_HintTypeCon, _ET_TypeOfEvent, hintTypeList);
+                ButtonHintBuilder(_LL_HintLocation, _ET_EventLocation, hintLocationList);
+                ButtonHintBuilder(_LL_HintHost, _ET_NameOfTheEventHost, hintHostList);
             }
             catch (Error err){
                 Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT,
@@ -333,6 +372,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         }
 
         _ET_EventName.addTextChangedListener(new TextWatcherName());
+        _ET_TypeOfEvent.addTextChangedListener(new TextWatcherType());
     }
 
 
@@ -491,7 +531,9 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
             case (R.id.buttonSaveEvent):
                 SaveEvent();
-
+                break;
+            case (R.id.backButton):
+                this.finish();
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + v.getId());
@@ -684,6 +726,69 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         MainActivity.getInstance().ReloadViewPager_2();
     }
 
+    /**
+     * Создаёт кнопки на основании выборки из списка ранее использованных наименований
+     * @param hintNameArrayList - Список наименований
+     */
+    private void ButtonHintBuilder(LinearLayout linearLayoutForHint,
+                                            EditText editTextForSetHint,
+                                                ArrayList<String> hintNameArrayList){
+        linearLayoutForHint.removeAllViews();
+
+        if (hintNameArrayList.size() == 0){
+
+            linearLayoutForHint.setVisibility(View.GONE);
+        }
+        else {
+            linearLayoutForHint.setVisibility(View.VISIBLE);
+        }
+
+        LinearLayout.LayoutParams layoutParams = new  LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                (int)DpInPxDisplay.ConvertDpToPixels(this, 40)
+        );
+
+        // left, top, right, bottom
+        layoutParams.setMargins(
+                (int)DpInPxDisplay.ConvertDpToPixels(this, 8),
+                0,
+                0,
+                (int)DpInPxDisplay.ConvertDpToPixels(this, 8));
+
+        for(int i = 0; i < hintNameArrayList.size(); i++){
+
+            Button btn = new Button(this);
+            btn.setId(HintButtonId++);
+            final int id_ = btn.getId();
+            btn.setText(hintNameArrayList.get(i));
+
+            btn.setPadding(
+                    (int)DpInPxDisplay.ConvertDpToPixels(this, 8),
+                    0,
+                    (int)DpInPxDisplay.ConvertDpToPixels(this, 8),
+                    0
+            );
+
+            btn.setBackground(ContextCompat.getDrawable(this, R.drawable.style_for_hintbutton));
+            btn.setLayoutParams(layoutParams);
+
+            linearLayoutForHint.addView(btn, i);
+            Button btn1 = ((Button)findViewById(id_));
+
+            btn1.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    editTextForSetHint.setText(btn1.getText());
+                    linearLayoutForHint.setVisibility(View.GONE);
+                }
+            });
+        }
+    }
+
+
+
+
+
+
     // Класс для отлова события модификации текста в EditTextName
     public class TextWatcherName implements TextWatcher {
 
@@ -692,7 +797,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             hintNameList = HintBuilder.getHintForNameByStr(
                     String.valueOf(_ET_EventName.getText()), eventScheduleListForHint);
 
-            ButtonHintBuilderForName(hintNameList);
+            ButtonHintBuilder(_LL_HintName, _ET_EventName, hintNameList);
         }
 
         @Override
@@ -702,36 +807,57 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
     }
 
-    /**
-     * Создаёт кнопки на основании выборки из списка ранее использованных наименований
-     * @param hintNameArrayList - Список наименований
-     */
-    private void ButtonHintBuilderForName(ArrayList<String> hintNameArrayList){
-        _LL_HintName.removeAllViews();
+    // Класс для отлова события модификации текста в EditType
+    public class TextWatcherType implements TextWatcher {
 
-        if (hintNameArrayList.size() == 0){
+        @Override
+        public void afterTextChanged(Editable editable) {
+            hintNameList = HintBuilder.getHintForTypeByStr(
+                    String.valueOf(_ET_TypeOfEvent.getText()), eventScheduleListForHint);
 
-            _LL_HintName.setVisibility(View.GONE);
-        }
-        else {
-            _LL_HintName.setVisibility(View.VISIBLE);
+            ButtonHintBuilder(_LL_HintTypeCon, _ET_TypeOfEvent, hintNameList);
         }
 
-        for(int i = 0; i < hintNameArrayList.size(); i++){
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
-            Button btn = new Button(this);
-            btn.setId(i);
-            final int id_ = btn.getId();
-            btn.setText(hintNameArrayList.get(i));
-            _LL_HintName.addView(btn, i);
-            Button btn1 = ((Button)findViewById(id_));
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+    }
 
-            btn1.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
-                    _ET_EventName.setText(btn1.getText());
-                    _LL_HintName.setVisibility(View.GONE);
-                }
-            });
+    // Класс для отлова события модификации текста в EditType
+    public class TextWatcherLocation implements TextWatcher {
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            hintNameList = HintBuilder.getHintForLocationByStr(
+                    String.valueOf(_ET_EventLocation.getText()), eventScheduleListForHint);
+
+            ButtonHintBuilder(_LL_HintLocation, _ET_EventLocation, hintNameList);
         }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+    }
+
+    // Класс для отлова события модификации текста в EditHost
+    public class TextWatcherHost implements TextWatcher {
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            hintHostList = HintBuilder.getHintForHostByStr(
+                    String.valueOf(_ET_NameOfTheEventHost.getText()), eventScheduleListForHint);
+
+            ButtonHintBuilder(_LL_HintHost, _ET_NameOfTheEventHost, hintHostList);
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
     }
 }

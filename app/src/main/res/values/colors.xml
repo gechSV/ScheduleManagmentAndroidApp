@@ -43,4 +43,14 @@
     <color name="red_400">#EF5350</color>
     <color name="blue_400">#42A5F5</color>
     <color name="defoultTextColor">#455A64</color>
+    <color name="teal_300">#4DB6AC</color>
+    <color name="red_300">#E57373</color>
+    <color name="purple_300">#BA68C8</color>
+    <color name="pink_300">#F06292</color>
+    <color name="orange_300">#FFB74D</color>
+    <color name="lime_300">#DCE775</color>
+    <color name="blue_gray_300">#90A4AE</color>
+    <color name="green_300">#81C784</color>
+    <color name="brown_300">#A1887F</color>
+    <color name="blue_300">#64B5F6</color>
 </resources>
