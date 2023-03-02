@@ -441,7 +441,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             case (R.id.buttonMon):
                 if (_weekClick[0]){
                     _buttonChoiceWeekDayMon.setBackgroundResource(R.drawable.style_for_week_day_button);
-                    _buttonChoiceWeekDayMon.setTextColor(getResources().getColor(R.color.black));
+                    _buttonChoiceWeekDayMon.setTextColor(getResources().getColor(R.color.text_color));
                 }
                 else
                 {
@@ -454,7 +454,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             case (R.id.buttonTue):
                 if (_weekClick[1]){
                     _buttonChoiceWeekDayTue.setBackgroundResource(R.drawable.style_for_week_day_button);
-                    _buttonChoiceWeekDayTue.setTextColor(getResources().getColor(R.color.black));
+                    _buttonChoiceWeekDayTue.setTextColor(getResources().getColor(R.color.text_color));
                 }
                 else
                 {
@@ -467,7 +467,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             case (R.id.buttonWed):
                 if (_weekClick[2]){
                     _buttonChoiceWeekDayWed.setBackgroundResource(R.drawable.style_for_week_day_button);
-                    _buttonChoiceWeekDayWed.setTextColor(getResources().getColor(R.color.black));
+                    _buttonChoiceWeekDayWed.setTextColor(getResources().getColor(R.color.text_color));
                 }
                 else
                 {
@@ -480,7 +480,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             case (R.id.buttonThu):
                 if (_weekClick[3]){
                     _buttonChoiceWeekDayThu.setBackgroundResource(R.drawable.style_for_week_day_button);
-                    _buttonChoiceWeekDayThu.setTextColor(getResources().getColor(R.color.black));
+                    _buttonChoiceWeekDayThu.setTextColor(getResources().getColor(R.color.text_color));
                 }
                 else
                 {
@@ -493,7 +493,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             case (R.id.buttonFri):
                 if (_weekClick[4]){
                     _buttonChoiceWeekDayFri.setBackgroundResource(R.drawable.style_for_week_day_button);
-                    _buttonChoiceWeekDayFri.setTextColor(getResources().getColor(R.color.black));
+                    _buttonChoiceWeekDayFri.setTextColor(getResources().getColor(R.color.text_color));
                 }
                 else
                 {
@@ -506,7 +506,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             case (R.id.buttonSat):
                 if (_weekClick[5]){
                     _buttonChoiceWeekDaySat.setBackgroundResource(R.drawable.style_for_week_day_button);
-                    _buttonChoiceWeekDaySat.setTextColor(getResources().getColor(R.color.black));
+                    _buttonChoiceWeekDaySat.setTextColor(getResources().getColor(R.color.text_color));
                 }
                 else
                 {
@@ -519,7 +519,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             case (R.id.buttonSun):
                 if (_weekClick[6]){
                     _buttonChoiceWeekDaySun.setBackgroundResource(R.drawable.style_for_week_day_button);
-                    _buttonChoiceWeekDaySun.setTextColor(getResources().getColor(R.color.black));
+                    _buttonChoiceWeekDaySun.setTextColor(getResources().getColor(R.color.text_color));
                 }
                 else
                 {

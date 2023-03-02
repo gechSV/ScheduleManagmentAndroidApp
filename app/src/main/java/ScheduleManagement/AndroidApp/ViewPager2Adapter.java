@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -262,64 +263,55 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
                     }
                 });
 
+                cardView.setBackgroundResource(R.drawable.style_for_card_event);
                 // Установка цвета карточки. По умолчанию (если не выбран цвет) - серый
                 switch (dayEvent.get(index).GetColorForEvent()){
                     case 1:
                         SetTextData(dayEvent.get(index), cardView);
-                        cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_lime);
                         break;
                     case 2:
                         SetTextData(dayEvent.get(index), cardView);
-                        cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_green);
                         break;
                     case 3:
                         SetTextData(dayEvent.get(index), cardView);
-                        cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_blue);
                         break;
                     case 4:
                         SetTextData(dayEvent.get(index), cardView);
-                        cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_purple);
                         break;
                     case 5:
                         SetTextData(dayEvent.get(index), cardView);
-                        cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_pink);
                         break;
                     case 6:
                         SetTextData(dayEvent.get(index), cardView);
-                        cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_red);
                         break;
                     case 7:
                         SetTextData(dayEvent.get(index), cardView);
-                        cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_orange);
                         break;
                     case 8:
                         SetTextData(dayEvent.get(index), cardView);
-                        cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_gray);
                         break;
                     case 9:
                         SetTextData(dayEvent.get(index), cardView);
-                        cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_teal);
                         break;
                     case 10:
                         SetTextData(dayEvent.get(index), cardView);
-                        cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_brown);
                         break;
                     default:
                         SetTextData(dayEvent.get(index), cardView);
-                        cardView.setBackgroundResource(R.drawable.style_for_card_gray);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_gray);
                         break;
                 }
+
 
                 // Фон кнопок редактирования и удаления у всех карточек одинаковы
                 editCard.setBackgroundResource(R.drawable.style_for_edit_card);
@@ -333,6 +325,13 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
         }
 
         void SetTextData(EventSchedule event, CardView cardView){
+//            TypedValue typedValue = new TypedValue();
+//
+//            itemView.getContext().getTheme().resolveAttribute(
+//                    R.attr.background_color_for_event_card, typedValue, true);
+//            int color = ContextCompat.getColor(itemView.getContext(), typedValue.resourceId);
+//            textViewStartTime.setTextColor(color);
+
             CardView cardTime = cardView.findViewById(R.id.card_time);
             TextView textViewStartTime = cardView.findViewById(R.id.textViewCardTimeStart);
             TextView textViewEndTime = cardView.findViewById(R.id.textViewCardTimeEnd);
@@ -340,6 +339,8 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
             TextView textViewType = cardView.findViewById(R.id.event_type);
             TextView textViewHost = cardView.findViewById(R.id.event_host);
             TextView textViewLocation = cardView.findViewById(R.id.event_location);
+
+
 
             textViewStartTime.setText(event.GetStartTimeEvent().replace(':', '꞉'));
             textViewEndTime.setText(event.GetEndTimeEvent().replace(':', '꞉'));

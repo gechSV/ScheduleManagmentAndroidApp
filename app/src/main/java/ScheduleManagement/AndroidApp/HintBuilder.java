@@ -48,7 +48,7 @@ public final class HintBuilder {
             }
         }
 
-        return (newTypeList);
+        return RemoveDuplicate(newTypeList);
     }
 
     /**
@@ -71,7 +71,7 @@ public final class HintBuilder {
             }
         }
 
-        return (newTypeList);
+        return RemoveDuplicate(newTypeList);
     }
 
     /**
@@ -94,7 +94,7 @@ public final class HintBuilder {
             }
         }
 
-        return (newTypeList);
+        return RemoveDuplicate(newTypeList);
     }
 
     private static ArrayList<String> RemoveDuplicate(ArrayList<String> arrayList){

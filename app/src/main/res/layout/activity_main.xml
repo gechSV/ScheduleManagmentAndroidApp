@@ -87,7 +87,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/baseline_add_30_deep_orange_300"/>
+                    android:src="?attr/baseline_add_30"/>
 
             </androidx.cardview.widget.CardView>
 
@@ -105,8 +105,8 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
             app:tabSelectedTextColor="@color/deep_orange_300"
-            app:tabBackground="@color/white"
-            app:tabTextColor="#455A64"/>
+            app:tabBackground="?attr/background_for_tabs_pager"
+            app:tabTextColor="?attr/tabs_text_color"/>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout_2"
@@ -114,8 +114,8 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
             app:tabSelectedTextColor="@color/deep_orange_300"
-            app:tabBackground="@color/white"
-            app:tabTextColor="#455A64"
+            app:tabBackground="?attr/background_for_tabs_pager"
+            app:tabTextColor="?attr/tabs_text_color"
             android:visibility="gone"/>
 
     </com.google.android.material.appbar.AppBarLayout>

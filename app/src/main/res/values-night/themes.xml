@@ -2,15 +2,27 @@
     <!-- Base application theme. -->
     <style name="Theme.ScheduleManagement" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/deep_orange_300</item>
+        <item name="colorPrimaryVariant">@color/black</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorSecondary">@color/deep_orange_300</item>
+        <item name="colorSecondaryVariant">@color/deep_orange_300</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="background_color_for_event_card">@color/black</item>
+        <item name="android:textColor">@color/text_color_night</item>
+        <item name="background_for_menu">@color/black</item>
+        <item name="background_for_tabs_pager">@color/black</item>
+        <item name="tabs_text_color">@color/text_color_night</item>
+        <item name="button_color">@color/deep_orange_300</item>
+        <item name="baseline_add_30">@drawable/baseline_add_30_white</item>
+        <item name="inactive_button_week">@color/black</item>
+        <item name="save_vector">@drawable/baseline_check_24_white</item>
+        <item name="back_vector">@drawable/baseline_arrow_back_24_white</item>
+        <item name="text_button_week_color">@color/text_color</item>
+        <item name="color_picker_accent">@color/white</item>
     </style>
 </resources>

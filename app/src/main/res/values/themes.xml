@@ -13,10 +13,20 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+
         <!-- Customize your theme here. -->
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:textColor">#455A64</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="background_color_for_event_card">@color/white</item>
+        <item name="background_for_menu">@color/white</item>
+        <item name="background_for_tabs_pager">@color/white</item>
+        <item name="tabs_text_color">@color/text_color</item>
+        <item name="button_color">@color/deep_orange_50</item>
+        <item name="baseline_add_30">@drawable/baseline_add_30_deep_orange_300</item>
+        <item name="inactive_button_week">@color/white</item>
+        <item name="save_vector">@drawable/baseline_check_24</item>
+        <item name="back_vector">@drawable/baseline_arrow_back_24</item>
+        <item name="text_button_week_color">@color/text_color</item>
+        <item name="color_picker_accent">@color/deep_orange_300</item>
     </style>
-
-
 </resources>

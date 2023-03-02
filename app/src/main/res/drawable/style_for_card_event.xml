@@ -3,7 +3,7 @@
     <item>
         <shape android:shape="rectangle"  >
             <corners android:radius="20dp" />
-            <solid android:color="@color/white" />
+            <solid android:color="?attr/background_color_for_event_card" />
         </shape>
     </item>
 </selector>

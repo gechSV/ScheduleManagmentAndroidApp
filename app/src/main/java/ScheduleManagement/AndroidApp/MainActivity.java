@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -62,11 +63,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView test;
 
+    private int currentNightMode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         instance = this;
+
+        currentNightMode = getResources().getConfiguration().uiMode
+                & Configuration.UI_MODE_NIGHT_MASK;
 
         menuCon = findViewById(R.id.menu_con);
         menuCon.setBackgroundResource(R.drawable.menu_white_background);
@@ -360,17 +366,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void setActiveButtonWeekChoice(int weekFlag){
         if (weekFlag == 1){
+
             _BT_upWeek.setBackgroundResource(R.drawable.style_for_button_up_week_active);
-            _BT_upWeek.setTextColor(getResources().getColor(R.color.deep_orange_300));
             _BT_downWeek.setBackgroundResource(R.drawable.style_for_button_down_week_inactive);
-            _BT_downWeek.setTextColor(getResources().getColor(R.color.defoultTextColor));
+
+            switch (currentNightMode){
+                case Configuration.UI_MODE_NIGHT_NO:
+                    _BT_upWeek.setTextColor(getResources().getColor(R.color.deep_orange_300));
+                    _BT_downWeek.setTextColor(getResources().getColor(R.color.defoultTextColor));
+                case  Configuration.UI_MODE_NIGHT_YES:
+
+                    break;
+            }
         }
-        else if(weekFlag == 2)
-        {
+        else if(weekFlag == 2) {
+
             _BT_upWeek.setBackgroundResource(R.drawable.style_for_button_up_inactive);
-            _BT_upWeek.setTextColor(getResources().getColor(R.color.defoultTextColor));
             _BT_downWeek.setBackgroundResource(R.drawable.style_for_button_down_week_active);
-            _BT_downWeek.setTextColor(getResources().getColor(R.color.deep_orange_300));
+
+            switch (currentNightMode){
+                case Configuration.UI_MODE_NIGHT_NO:
+                    _BT_upWeek.setTextColor(getResources().getColor(R.color.defoultTextColor));
+                    _BT_downWeek.setTextColor(getResources().getColor(R.color.deep_orange_300));
+                    break;
+            }
         }
     }
 

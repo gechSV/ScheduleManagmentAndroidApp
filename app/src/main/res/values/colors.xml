@@ -53,4 +53,7 @@
     <color name="green_300">#81C784</color>
     <color name="brown_300">#A1887F</color>
     <color name="blue_300">#64B5F6</color>
+    <color name="text_color">#455A64</color>
+    <color name="text_color_night">#FAFAFA</color>
+
 </resources>
