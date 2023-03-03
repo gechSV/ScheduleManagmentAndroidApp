@@ -24,5 +24,7 @@
         <item name="back_vector">@drawable/baseline_arrow_back_24_white</item>
         <item name="text_button_week_color">@color/text_color</item>
         <item name="color_picker_accent">@color/white</item>
+        <item name="icon_check_list">@drawable/checkbox_list_black</item>
+        <item name="setting_icon">@drawable/baseline_settings_24_white</item>
     </style>
 </resources>

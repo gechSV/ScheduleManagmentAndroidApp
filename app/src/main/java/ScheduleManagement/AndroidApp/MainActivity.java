@@ -25,6 +25,7 @@ import es.dmoral.toasty.Toasty;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     // _IntentAddEvent - окно добавления события
     private Intent _IntentAddEvent;
+    private Intent _IntentSetting;
 
     private CardView _BT_AddEvent;
     private  Boolean _isAllFabVisible;
@@ -61,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private Button _BT_upWeek, _BT_downWeek;
 
+    private CardView _BTC_setting;
+
     private TextView test;
 
     private int currentNightMode;
@@ -83,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         _BT_upWeek = findViewById(R.id.button_up_week);
         _BT_downWeek = findViewById(R.id.button_down_week);
+        _BTC_setting = findViewById(R.id.button_setting);
 
         setActiveButtonWeekChoice(_weekFlag);
 
@@ -92,10 +96,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         _IntentAddEvent = new Intent(MainActivity.this, ActivityAddScheduleItem.class);
         _IntentAddEvent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
+        // Инициализация активити настроек
+        _IntentSetting = new Intent(MainActivity.this, activity_setting.class);
+
         // onClick для кнопки открытия активити для добавления события
         _BT_AddEvent.setOnClickListener(this);
         _BT_upWeek.setOnClickListener(this);
         _BT_downWeek.setOnClickListener(this);
+        _BTC_setting.setOnClickListener(this);
+
+        _BTC_setting.setBackgroundResource(R.drawable.style_for_button_setting);
 
         // Читаем список событий из файла для первой недли
         _eventScheduleList_1 = ReadEventListFromFile(FILE_NAME_EVENT_LIST_1);
@@ -457,6 +467,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 modifiButtonWeekFlag();
                 setActiveButtonWeekChoice(_weekFlag);
                 openViewPager(_weekFlag);
+                break;
+            case(R.id.button_setting):
+                startActivity(_IntentSetting);
                 break;
             default:
                 break;

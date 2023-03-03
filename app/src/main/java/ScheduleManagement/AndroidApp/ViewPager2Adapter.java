@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -72,7 +73,7 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
     // Этот метод связывает экран с представлением
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // This will set the images in imageview
+    // This will set the images in imageview
 //        holder.textView.setText(_weekDay[position]);
 
 //        switch (holder.getItemViewType()) {
@@ -123,7 +124,10 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
             // для хранения карточек в памяти
             LinearLayout[] buffView = new LinearLayout[dayEvent.size()];
 
-            Intent _IntentAddEvent = new Intent(itemView.getContext(), ActivityAddScheduleItem.class);
+            if(dayEvent.size() == 0){
+                ImageView image = itemView.findViewById(R.id.IconNotEvents);
+                image.setVisibility(View.VISIBLE);
+            }
 
             // перебор списка событий и вывод на экран карточек
             for(index = 0; index < dayEvent.size(); index++){
@@ -352,17 +356,3 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
     }
 
 }
-
-
-//new AlertDialog.Builder(itemView.getContext(), R.style.AlertDialogCustom)
-//                                // Specifying a listener allows you to take an action before dismissing the dialog.
-//                                // The dialog is automatically dismissed when a dialog button is clicked.
-//                                .setItems(catNamesArray, new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialogInterface, int i) {
-//                                        Toasty.success(itemView.getContext(), "Num" + i,
-//                                                Toast.LENGTH_SHORT, true).show();
-//                                    }
-//                                })
-//                                // A null listener allows the button to dismiss the dialog and take no further action.
-//                                .show();

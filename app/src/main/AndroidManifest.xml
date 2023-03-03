@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ScheduleManagement">
         <activity
+            android:name=".activity_setting"
+            android:exported="false" />
+        <activity
             android:name=".SettingTime"
             android:exported="false" />
         <activity
