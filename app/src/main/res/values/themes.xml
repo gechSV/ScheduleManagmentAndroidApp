@@ -26,9 +26,13 @@
         <item name="inactive_button_week">@color/white</item>
         <item name="save_vector">@drawable/baseline_check_24</item>
         <item name="back_vector">@drawable/baseline_arrow_back_24</item>
-        <item name="text_button_week_color">@color/text_color</item>
+        <item name="text_button_week_color_inactive">@color/text_color</item>
+        <item name="text_button_week_color_active">@color/white</item>
         <item name="color_picker_accent">@color/deep_orange_300</item>
         <item name="icon_check_list">@drawable/checkbox_list</item>
         <item name="setting_icon">@drawable/baseline_settings_24</item>
+        <item name="hint_button_color">@color/deep_orange_50</item>
+        <item name="week_day_button_color_active">@color/deep_orange_300</item>
+        <item name="week_day_button_color_inactive">@color/deep_orange_50</item>
     </style>
 </resources>

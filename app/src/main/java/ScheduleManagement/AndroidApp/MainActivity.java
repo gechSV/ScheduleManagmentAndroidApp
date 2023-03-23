@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         _BT_upWeek = findViewById(R.id.button_up_week);
         _BT_downWeek = findViewById(R.id.button_down_week);
         _BTC_setting = findViewById(R.id.button_setting);
+        _BTC_setting.setBackgroundResource(R.drawable.style_for_button_setting);
 
         setActiveButtonWeekChoice(_weekFlag);
 
@@ -97,15 +98,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         _IntentAddEvent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         // Инициализация активити настроек
-        _IntentSetting = new Intent(MainActivity.this, activity_setting.class);
+        _IntentSetting = new Intent(MainActivity.this, ActivitySetting.class);
 
         // onClick для кнопки открытия активити для добавления события
         _BT_AddEvent.setOnClickListener(this);
         _BT_upWeek.setOnClickListener(this);
         _BT_downWeek.setOnClickListener(this);
         _BTC_setting.setOnClickListener(this);
-
-        _BTC_setting.setBackgroundResource(R.drawable.style_for_button_setting);
 
         // Читаем список событий из файла для первой недли
         _eventScheduleList_1 = ReadEventListFromFile(FILE_NAME_EVENT_LIST_1);

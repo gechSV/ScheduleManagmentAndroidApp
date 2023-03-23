@@ -55,5 +55,6 @@
     <color name="blue_300">#64B5F6</color>
     <color name="text_color">#455A64</color>
     <color name="text_color_night">#FAFAFA</color>
+    <color name="black_black">#000000</color>
 
 </resources>

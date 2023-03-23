@@ -9,8 +9,12 @@
     <attr name="inactive_button_week" format="color"/>
     <attr name="back_vector" format="reference"/>
     <attr name="save_vector" format="reference"/>
-    <attr name="text_button_week_color" format="color"/>
+    <attr name="text_button_week_color_inactive" format="color"/>
     <attr name="color_picker_accent" format="color"/>
     <attr name="icon_check_list" format="reference"/>
     <attr name="setting_icon" format="reference"/>
+    <attr name="hint_button_color" format="color"/>
+    <attr name="week_day_button_color_active" format="color"/>
+    <attr name="week_day_button_color_inactive" format="color"/>
+    <attr name="text_button_week_color_active" format="color"/>
 </resources>

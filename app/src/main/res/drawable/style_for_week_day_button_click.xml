@@ -3,7 +3,7 @@
     <item>
         <shape android:shape="rectangle"  >
             <corners android:radius="30dp" />
-            <solid android:color="@color/deep_orange_300" />
+            <solid android:color="?attr/week_day_button_color_active" />
         </shape>
     </item>
 </selector>

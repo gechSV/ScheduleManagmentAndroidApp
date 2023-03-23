@@ -11,11 +11,11 @@ import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -109,6 +109,9 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
     ArrayList<String> hintHostList;
 
     private int HintButtonId = 0;
+
+    TypedValue typedValue;
+    int colorWeekButtonInactive, colorWeekButtonActive;
 
 
     @Override
@@ -207,6 +210,12 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _weekClick = new boolean[7];
 
         Arrays.fill(_weekClick, false);
+
+        typedValue = new TypedValue();
+        getTheme().resolveAttribute(R.attr.text_button_week_color_inactive, typedValue, true);
+        colorWeekButtonInactive = typedValue.data;
+        getTheme().resolveAttribute(R.attr.text_button_week_color_active, typedValue, true);
+        colorWeekButtonActive = typedValue.data;
 
         // Получаем данные при добавлении нового события
         Bundle bundle = getIntent().getExtras();
@@ -373,6 +382,8 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
         _ET_EventName.addTextChangedListener(new TextWatcherName());
         _ET_TypeOfEvent.addTextChangedListener(new TextWatcherType());
+        _ET_EventLocation.addTextChangedListener(new TextWatcherLocation());
+        _ET_NameOfTheEventHost.addTextChangedListener(new TextWatcherHost());
     }
 
 
@@ -441,12 +452,12 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             case (R.id.buttonMon):
                 if (_weekClick[0]){
                     _buttonChoiceWeekDayMon.setBackgroundResource(R.drawable.style_for_week_day_button);
-                    _buttonChoiceWeekDayMon.setTextColor(getResources().getColor(R.color.text_color));
+                    _buttonChoiceWeekDayMon.setTextColor(colorWeekButtonInactive);
                 }
                 else
                 {
                     _buttonChoiceWeekDayMon.setBackgroundResource(R.drawable.style_for_week_day_button_click);
-                    _buttonChoiceWeekDayMon.setTextColor(getResources().getColor(R.color.white));
+                    _buttonChoiceWeekDayMon.setTextColor(colorWeekButtonActive);
                 }
                 _weekClick[0] = !_weekClick[0];
                 break;
@@ -454,12 +465,12 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             case (R.id.buttonTue):
                 if (_weekClick[1]){
                     _buttonChoiceWeekDayTue.setBackgroundResource(R.drawable.style_for_week_day_button);
-                    _buttonChoiceWeekDayTue.setTextColor(getResources().getColor(R.color.text_color));
+                    _buttonChoiceWeekDayTue.setTextColor(colorWeekButtonInactive);
                 }
                 else
                 {
                     _buttonChoiceWeekDayTue.setBackgroundResource(R.drawable.style_for_week_day_button_click);
-                    _buttonChoiceWeekDayTue.setTextColor(getResources().getColor(R.color.white));
+                    _buttonChoiceWeekDayTue.setTextColor(colorWeekButtonActive);
                 }
                 _weekClick[1] = !_weekClick[1];
                 break;
@@ -467,12 +478,12 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             case (R.id.buttonWed):
                 if (_weekClick[2]){
                     _buttonChoiceWeekDayWed.setBackgroundResource(R.drawable.style_for_week_day_button);
-                    _buttonChoiceWeekDayWed.setTextColor(getResources().getColor(R.color.text_color));
+                    _buttonChoiceWeekDayWed.setTextColor(colorWeekButtonInactive);
                 }
                 else
                 {
                     _buttonChoiceWeekDayWed.setBackgroundResource(R.drawable.style_for_week_day_button_click);
-                    _buttonChoiceWeekDayWed.setTextColor(getResources().getColor(R.color.white));
+                    _buttonChoiceWeekDayWed.setTextColor(colorWeekButtonActive);
                 }
                 _weekClick[2] = !_weekClick[2];
                 break;
@@ -480,12 +491,12 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             case (R.id.buttonThu):
                 if (_weekClick[3]){
                     _buttonChoiceWeekDayThu.setBackgroundResource(R.drawable.style_for_week_day_button);
-                    _buttonChoiceWeekDayThu.setTextColor(getResources().getColor(R.color.text_color));
+                    _buttonChoiceWeekDayThu.setTextColor(colorWeekButtonInactive);
                 }
                 else
                 {
                     _buttonChoiceWeekDayThu.setBackgroundResource(R.drawable.style_for_week_day_button_click);
-                    _buttonChoiceWeekDayThu.setTextColor(getResources().getColor(R.color.white));
+                    _buttonChoiceWeekDayThu.setTextColor(colorWeekButtonActive);
                 }
                 _weekClick[3] = !_weekClick[3];
                 break;
@@ -493,12 +504,12 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             case (R.id.buttonFri):
                 if (_weekClick[4]){
                     _buttonChoiceWeekDayFri.setBackgroundResource(R.drawable.style_for_week_day_button);
-                    _buttonChoiceWeekDayFri.setTextColor(getResources().getColor(R.color.text_color));
+                    _buttonChoiceWeekDayFri.setTextColor(colorWeekButtonInactive);
                 }
                 else
                 {
                     _buttonChoiceWeekDayFri.setBackgroundResource(R.drawable.style_for_week_day_button_click);
-                    _buttonChoiceWeekDayFri.setTextColor(getResources().getColor(R.color.white));
+                    _buttonChoiceWeekDayFri.setTextColor(colorWeekButtonActive);
                 }
                 _weekClick[4] = !_weekClick[4];
                 break;
@@ -506,12 +517,12 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             case (R.id.buttonSat):
                 if (_weekClick[5]){
                     _buttonChoiceWeekDaySat.setBackgroundResource(R.drawable.style_for_week_day_button);
-                    _buttonChoiceWeekDaySat.setTextColor(getResources().getColor(R.color.text_color));
+                    _buttonChoiceWeekDaySat.setTextColor(colorWeekButtonInactive);
                 }
                 else
                 {
                     _buttonChoiceWeekDaySat.setBackgroundResource(R.drawable.style_for_week_day_button_click);
-                    _buttonChoiceWeekDaySat.setTextColor(getResources().getColor(R.color.white));
+                    _buttonChoiceWeekDaySat.setTextColor(colorWeekButtonActive);
                 }
                 _weekClick[5] = !_weekClick[5];
                 break;
@@ -519,12 +530,12 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             case (R.id.buttonSun):
                 if (_weekClick[6]){
                     _buttonChoiceWeekDaySun.setBackgroundResource(R.drawable.style_for_week_day_button);
-                    _buttonChoiceWeekDaySun.setTextColor(getResources().getColor(R.color.text_color));
+                    _buttonChoiceWeekDaySun.setTextColor(colorWeekButtonInactive);
                 }
                 else
                 {
                     _buttonChoiceWeekDaySun.setBackgroundResource(R.drawable.style_for_week_day_button_click);
-                    _buttonChoiceWeekDaySun.setTextColor(getResources().getColor(R.color.white));
+                    _buttonChoiceWeekDaySun.setTextColor(colorWeekButtonActive);
                 }
                 _weekClick[6] = !_weekClick[6];
                 break;
@@ -783,10 +794,6 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             });
         }
     }
-
-
-
-
 
 
     // Класс для отлова события модификации текста в EditTextName
