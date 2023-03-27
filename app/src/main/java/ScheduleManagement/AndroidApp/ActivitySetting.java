@@ -2,12 +2,14 @@ package ScheduleManagement.AndroidApp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -16,8 +18,15 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class ActivitySetting extends AppCompatActivity implements View.OnClickListener{
+
+    private Intent _IntentChoosingSchedule;
+    private CardView _CV_ActionCon;
+    private CardView _buttonBack;
     private Button TestButton;
+    private Button _BT_openChoosingSchedule;
     private TextView TestText;
+
+    private ProgressBar _PB_progress;
     private httpAppClient _httpAppClient;
 
     @Override
@@ -25,39 +34,36 @@ public class ActivitySetting extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        _httpAppClient = new httpAppClient();
-        TestButton = findViewById(R.id.buttonTest);
-        TestText = findViewById(R.id.textViewTest);
+        _IntentChoosingSchedule = new Intent(ActivitySetting.this, activity_choosing_schedule.class);
+        _IntentChoosingSchedule.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        TestButton.setOnClickListener(this);
+        _CV_ActionCon = (CardView)findViewById(R.id.action_con);
+        _CV_ActionCon.setBackgroundResource(R.drawable.menu_white_background);
+
+        _buttonBack = (CardView)findViewById(R.id.backButton);
+        _buttonBack.setBackgroundResource(R.drawable.style_for_button_setting);
+        _buttonBack.setOnClickListener(this);
+
+        _BT_openChoosingSchedule = findViewById(R.id.open_choosing_schedule);
+        _BT_openChoosingSchedule.setOnClickListener(this);
+
+        _PB_progress = (ProgressBar)findViewById(R.id.progressBar);
+        _PB_progress.setVisibility(ProgressBar.INVISIBLE);
+
+        _httpAppClient = new httpAppClient();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            // Прослушивание кнопок выбора цвета
-            case (R.id.buttonTest):
-                _httpAppClient.GetScheduleNameListByName(new Callback() {
-                    @Override
-                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                        TestText.setText(e.getMessage());
-                    }
+            case (R.id.backButton):
+                this.finish();
+                break;
+            case (R.id.open_choosing_schedule):
+                _PB_progress.setVisibility(ProgressBar.VISIBLE);
+                startActivity(_IntentChoosingSchedule);
+                break;
 
-                    @Override
-                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                        switch (response.code()){
-                            case 200:
-                                TestText.setText(response.body().string());
-                                break;
-                            case 400:
-                                TestText.setText("400");
-                                break;
-                            case 404:
-                                TestText.setText("404");
-                                break;
-                        }
-                    }
-                });
         }
     }
 }

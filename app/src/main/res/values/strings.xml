@@ -31,4 +31,5 @@
     <string name="confirmation_of_deletion">Do you really want to delete the event ?</string>
     <string name="cancel">cancel</string>
     <string name="delete">Delete</string>
+    <string name="connection_error_message">Connection error. Check your internet connection.</string>
 </resources>

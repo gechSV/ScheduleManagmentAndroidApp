@@ -12,6 +12,7 @@
     <attr name="text_button_week_color_inactive" format="color"/>
     <attr name="color_picker_accent" format="color"/>
     <attr name="icon_check_list" format="reference"/>
+    <attr name="icon_no_connect" format="reference"/>
     <attr name="setting_icon" format="reference"/>
     <attr name="hint_button_color" format="color"/>
     <attr name="week_day_button_color_active" format="color"/>

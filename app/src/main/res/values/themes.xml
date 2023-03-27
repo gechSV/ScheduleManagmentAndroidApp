@@ -30,6 +30,7 @@
         <item name="text_button_week_color_active">@color/white</item>
         <item name="color_picker_accent">@color/deep_orange_300</item>
         <item name="icon_check_list">@drawable/checkbox_list</item>
+        <item name="icon_no_connect">@drawable/no_connect_deep_orange_50</item>
         <item name="setting_icon">@drawable/baseline_settings_24</item>
         <item name="hint_button_color">@color/deep_orange_50</item>
         <item name="week_day_button_color_active">@color/deep_orange_300</item>

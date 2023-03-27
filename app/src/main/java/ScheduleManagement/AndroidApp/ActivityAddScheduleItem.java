@@ -154,10 +154,10 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _buttonChoiceWeekDaySun = (Button) findViewById(R.id.buttonSun);
 
         _buttonSaveEvent = (CardView) findViewById(R.id.buttonSaveEvent);
-        _buttonSaveEvent.setBackgroundResource(R.drawable.style_for_add_button_in_menu);
+        _buttonSaveEvent.setBackgroundResource(R.drawable.style_for_button_setting);
 
         _buttonBack = (CardView)findViewById(R.id.backButton);
-        _buttonBack.setBackgroundResource(R.drawable.style_for_add_button_in_menu);
+        _buttonBack.setBackgroundResource(R.drawable.style_for_button_setting);
 
         _CV_ActionCon = (CardView)findViewById(R.id.action_con);
         _CV_ActionCon.setBackgroundResource(R.drawable.menu_white_background);
