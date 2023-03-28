@@ -5,8 +5,6 @@ import static android.app.PendingIntent.getActivity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +22,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import ScheduleManagement.AndroidApp.activity_controllers.MainActivity;
+
 // Класс-адаптер для компонента ViewPager2
-class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolder>{
+public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolder>{
 
     // Дни недели - массив ресурсов для отображения
     private int[] _weekDay = {R.string.Monday, R.string.Tuesday, R.string.Wednesday,
@@ -37,7 +37,7 @@ class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolde
     private final Context _context;
 
     // Конструктор ViewPager2Adapter класса
-    ViewPager2Adapter(Context ctx, EventScheduleList eventScheduleList) {
+    public ViewPager2Adapter(Context ctx, EventScheduleList eventScheduleList) {
         this._eventScheduleList = eventScheduleList;
         this._context = ctx;
     }

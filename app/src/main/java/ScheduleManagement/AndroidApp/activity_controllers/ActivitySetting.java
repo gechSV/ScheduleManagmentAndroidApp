@@ -1,6 +1,5 @@
-package ScheduleManagement.AndroidApp;
+package ScheduleManagement.AndroidApp.activity_controllers;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -11,11 +10,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
+import ScheduleManagement.AndroidApp.R;
+import ScheduleManagement.AndroidApp.httpAppClient;
 
 public class ActivitySetting extends AppCompatActivity implements View.OnClickListener{
 
@@ -34,7 +30,7 @@ public class ActivitySetting extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        _IntentChoosingSchedule = new Intent(ActivitySetting.this, activity_choosing_schedule.class);
+        _IntentChoosingSchedule = new Intent(ActivitySetting.this, ActivityChoosingSchedule.class);
         _IntentChoosingSchedule.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         _CV_ActionCon = (CardView)findViewById(R.id.action_con);

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity_choosing_schedule">
+    tools:context=".activity_controllers.ActivityChoosingSchedule">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/action_con"
@@ -35,6 +35,19 @@
     </androidx.cardview.widget.CardView>
 
     <LinearLayout
+        android:id="@+id/button_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="66dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/action_con">
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/connectErrorBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -61,5 +74,15 @@
 
     </LinearLayout>
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="invisible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

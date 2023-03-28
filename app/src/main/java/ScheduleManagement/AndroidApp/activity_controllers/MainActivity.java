@@ -1,4 +1,4 @@
-package ScheduleManagement.AndroidApp;
+package ScheduleManagement.AndroidApp.activity_controllers;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +20,11 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.Objects;
 
+import ScheduleManagement.AndroidApp.EventSchedule;
+import ScheduleManagement.AndroidApp.EventScheduleList;
+import ScheduleManagement.AndroidApp.FileIO;
+import ScheduleManagement.AndroidApp.R;
+import ScheduleManagement.AndroidApp.ViewPager2Adapter;
 import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -43,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CardView menuCon;
 
     // _eventScheduleList - объект содержащий список событий
-    private  EventScheduleList _eventScheduleList_1;
+    private EventScheduleList _eventScheduleList_1;
     private  EventScheduleList _eventScheduleList_2;
 
     private final String FILE_NAME_EVENT_LIST_1 = "Event_Schedule_List_1.bin";

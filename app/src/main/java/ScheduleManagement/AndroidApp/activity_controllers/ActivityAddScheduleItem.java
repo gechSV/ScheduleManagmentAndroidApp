@@ -1,4 +1,4 @@
-package ScheduleManagement.AndroidApp;
+package ScheduleManagement.AndroidApp.activity_controllers;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -25,6 +25,12 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Objects;
 
+import ScheduleManagement.AndroidApp.DpInPxDisplay;
+import ScheduleManagement.AndroidApp.EventSchedule;
+import ScheduleManagement.AndroidApp.EventScheduleList;
+import ScheduleManagement.AndroidApp.FileIO;
+import ScheduleManagement.AndroidApp.HintBuilder;
+import ScheduleManagement.AndroidApp.R;
 import es.dmoral.toasty.Toasty;
 
 
@@ -756,7 +762,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
         LinearLayout.LayoutParams layoutParams = new  LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
-                (int)DpInPxDisplay.ConvertDpToPixels(this, 40)
+                (int) DpInPxDisplay.ConvertDpToPixels(this, 40)
         );
 
         // left, top, right, bottom

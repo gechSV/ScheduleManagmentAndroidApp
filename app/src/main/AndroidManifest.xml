@@ -13,19 +13,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ScheduleManagement">
         <activity
-            android:name=".activity_choosing_schedule"
+            android:name=".activity_controllers.ActivityChoosingSchedule"
             android:exported="false" />
         <activity
-            android:name=".ActivitySetting"
+            android:name=".activity_controllers.ActivitySetting"
             android:exported="false" />
         <activity
             android:name=".SettingTime"
             android:exported="false" />
         <activity
-            android:name=".ActivityAddScheduleItem"
+            android:name=".activity_controllers.ActivityAddScheduleItem"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity_controllers.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
