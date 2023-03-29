@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -67,6 +68,48 @@ public class httpAppClient {
         }
         catch (IOException e) {
             Log.d("MesLog3", e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Groups[] GetGroupByNameOrganizations(String OrgName){
+        String _jsonGroupName = "1";
+
+        Request request = new Request.Builder()
+                .url("http://192.168.0.11:8000/api/getScheduleNameListByOrganizatonName/" + OrgName)
+                .build();
+
+        CallbackFuture future = new CallbackFuture();
+
+        client.newCall(request).enqueue(future);
+
+        try {
+            Response response = future.get();
+            int code = response.code();
+
+            switch (code){
+                case 200:
+                    Gson gson = new Gson();
+
+                    _jsonGroupName = response.body().string();
+
+                    Log.d("MesLog", _jsonGroupName);
+                    // Конвертируем json в массив java
+                    Groups[] groups = gson.fromJson(_jsonGroupName, Groups[].class);
+                    return groups;
+                default:
+                    throw new RuntimeException("Сервер недоступен");
+            }
+        }
+        catch (ExecutionException e) {
+            Log.d("MesLog1", e.getMessage());
+            // выполняется если сервер недоступен
+            throw new RuntimeException(e);
+        }
+        catch (InterruptedException e) {
+            Log.d("MesLog2", e.getMessage());
+            throw new RuntimeException(e);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

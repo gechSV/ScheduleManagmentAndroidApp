@@ -15,6 +15,7 @@ import ScheduleManagement.AndroidApp.httpAppClient;
 
 public class ActivitySetting extends AppCompatActivity implements View.OnClickListener{
 
+    private static ActivitySetting instance;
     private Intent _IntentChoosingSchedule;
     private CardView _CV_ActionCon;
     private CardView _buttonBack;
@@ -29,6 +30,8 @@ public class ActivitySetting extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+
+        instance = this;
 
         _IntentChoosingSchedule = new Intent(ActivitySetting.this, ActivityChoosingSchedule.class);
         _IntentChoosingSchedule.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -47,6 +50,14 @@ public class ActivitySetting extends AppCompatActivity implements View.OnClickLi
         _PB_progress.setVisibility(ProgressBar.INVISIBLE);
 
         _httpAppClient = new httpAppClient();
+    }
+
+    public static ActivitySetting getInstance() {
+        return instance;
+    }
+
+    public void HideProgressBar(){
+        _PB_progress.setVisibility(ProgressBar.INVISIBLE);
     }
 
     @Override

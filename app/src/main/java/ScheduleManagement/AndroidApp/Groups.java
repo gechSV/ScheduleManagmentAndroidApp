@@ -1,6 +1,6 @@
 package ScheduleManagement.AndroidApp;
 
-public class Organization {
+public class Groups{
     private String name;
 
     public void setName(String name) {
@@ -13,6 +13,6 @@ public class Organization {
 
     @Override
     public String toString(){
-        return "Organisation [name=" + name + "]";
+        return "Group [name=" + name + "]";
     }
 }
