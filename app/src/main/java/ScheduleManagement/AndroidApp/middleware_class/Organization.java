@@ -1,4 +1,4 @@
-package ScheduleManagement.AndroidApp;
+package ScheduleManagement.AndroidApp.middleware_class;
 
 public class Organization {
     private String name;

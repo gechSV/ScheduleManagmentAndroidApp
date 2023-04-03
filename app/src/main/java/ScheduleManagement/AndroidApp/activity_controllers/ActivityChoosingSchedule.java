@@ -2,22 +2,20 @@ package ScheduleManagement.AndroidApp.activity_controllers;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import ScheduleManagement.AndroidApp.DpInPxDisplay;
-import ScheduleManagement.AndroidApp.Groups;
-import ScheduleManagement.AndroidApp.Organization;
+import ScheduleManagement.AndroidApp.middleware_class.Groups;
+import ScheduleManagement.AndroidApp.middleware_class.Organization;
 import ScheduleManagement.AndroidApp.R;
 import ScheduleManagement.AndroidApp.httpAppClient;
+import ScheduleManagement.AndroidApp.middleware_class.Schedule;
 
 public class ActivityChoosingSchedule extends AppCompatActivity implements View.OnClickListener{
     private httpAppClient _httpAppClient;
@@ -31,6 +29,8 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
 
     private Organization[] organization;
     private Groups[] groups;
+
+    private Schedule[] _jsonSchedule;
     int idButton = 0;
 
     @Override
@@ -56,13 +56,13 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
 
         if(!this.getOrganizationName()) return;
 
-        this.buttonBuild();
+        this.buttonOrganizationBuild(organization);
     }
+
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            // Прослушивание кнопок выбора цвета
             case (R.id.backButton):
                 this.finish();
                 break;
@@ -71,20 +71,21 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
 
     private boolean getOrganizationName(){
         try {
-            // получаем массив наименований организаций
-
+            // Запускаем дочерний поток для запроса к серверу
             Thread t1 = new Thread(new Runnable() {
                 @Override
                 public void run() {
-
-                    organization = _httpAppClient.GetOrganizationNameByTypeName();
-
+                    try {
+                        // получаем массив наименований организаций
+                        organization = _httpAppClient.GetOrganizationNameByTypeName();
+                    }
+                    catch (Exception err){
+                        Log.d("MesLog", err.getMessage());
+                    }
                 }
             });
             t1.start();
-
             t1.join();
-            Log.d("MesLog", organization[0].getName());
             return true;
         }
         catch(RuntimeException err){
@@ -95,11 +96,60 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
         }
     }
 
-    private void buttonBuild(){
-        for(int i = 0; i < organization.length; i++){
-//            View view = LayoutInflater
-//                    .from(this)
-//                    .inflate(R.layout.button_pattern_for_setting, null);
+    private boolean GetGroupName(String orgName){
+        try {
+            Thread t1 = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        groups = _httpAppClient.GetGroupByNameOrganizations(orgName);
+                    }
+                    catch (Exception err){
+                        Log.d("MesLog", err.getMessage());
+                    }
+                }
+            });
+            t1.start();
+            t1.join();
+            Log.d("MesLog", groups[0].getName());
+            return true;
+        }
+        catch (RuntimeException err){
+            _LL_ConnectErrorBox.setVisibility(View.VISIBLE);
+            return false;
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private boolean GetSchedule(String groupName, String password){
+        try {
+            Thread t1 = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                         _jsonSchedule = _httpAppClient.getScheduleByName(groupName, password);
+                    }
+                    catch (Exception err){
+                        Log.d("MesLog", err.getMessage());
+                    }
+                }
+            });
+            t1.start();
+            t1.join();
+//            Log.d("MesLog", _jsonSchedule);
+            return true;
+        }
+        catch (RuntimeException err){
+            _LL_ConnectErrorBox.setVisibility(View.VISIBLE);
+            return false;
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void buttonOrganizationBuild(Organization[] org){
+        for(int i = 0; i < org.length; i++){
 
             Button btn = (Button) LayoutInflater
                     .from(this)
@@ -107,36 +157,49 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
 
             btn.setId(idButton++);
             final int id_ = btn.getId();
-            btn.setText(organization[i].getName());
+            btn.setText(org[i].getName());
 
             _LL_ButtonBox.addView(btn, i);
             Button btn1 = ((Button)findViewById(id_));
 
             btn1.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
-                   try {
-                       Thread t1 = new Thread(new Runnable() {
-                           @Override
-                           public void run() {
-                               groups = _httpAppClient.GetGroupByNameOrganizations(btn1.getText().toString());
-                           }
-                       });
-                       t1.start();
-
-                       t1.join();
-
-                       Log.d("MesLog", groups[0].getName());
-                   }
-                   catch (RuntimeException err){
-//                       Log.d("MesLog", err.getMessage().toString());
-                       _LL_ConnectErrorBox.setVisibility(View.VISIBLE);
-                   } catch (InterruptedException e) {
-                       throw new RuntimeException(e);
-                   }
+                    _PB_progress.setVisibility(ProgressBar.VISIBLE);
+                    if(!GetGroupName(btn1.getText().toString())){
+                        _PB_progress.setVisibility(ProgressBar.INVISIBLE);
+                        return;
+                    }
+                    _PB_progress.setVisibility(ProgressBar.INVISIBLE);
+                    _LL_ButtonBox.removeAllViews();
+                    buttonGroupBuild(groups);
                 }
             });
         }
     }
+
+    private void buttonGroupBuild(Groups[] gr){
+        for (int i = 0; i < gr.length; i++){
+            Button btn = (Button) LayoutInflater
+                    .from(this)
+                    .inflate(R.layout.button_pattern_for_setting, null);
+
+            btn.setId(idButton++);
+            final int id_ = btn.getId();
+            btn.setText(gr[i].getName());
+
+            _LL_ButtonBox.addView(btn, i);
+            Button btn1 = ((Button)findViewById(id_));
+
+            btn1.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    if(!GetSchedule(btn1.getText().toString(), "zabgu")){ return; }
+                    //TODO: закончил здесь
+                }
+            });
+        }
+    }
+
+
 
 }
 

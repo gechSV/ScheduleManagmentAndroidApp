@@ -70,7 +70,6 @@ public class ActivitySetting extends AppCompatActivity implements View.OnClickLi
                 _PB_progress.setVisibility(ProgressBar.VISIBLE);
                 startActivity(_IntentChoosingSchedule);
                 break;
-
         }
     }
 }

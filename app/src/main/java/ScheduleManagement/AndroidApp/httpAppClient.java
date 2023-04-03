@@ -1,25 +1,24 @@
 package ScheduleManagement.AndroidApp;
 
-import static java.sql.DriverManager.println;
-
 import android.util.Log;
-
-import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
-import okhttp3.Call;
+import ScheduleManagement.AndroidApp.middleware_class.Groups;
+import ScheduleManagement.AndroidApp.middleware_class.Organization;
+import ScheduleManagement.AndroidApp.middleware_class.Schedule;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class httpAppClient {
+    public class httpAppClient {
     private  OkHttpClient client;
+
+    private String _serverSocket = "192.168.0.11:8000";
 
     public httpAppClient(){
         this.client = new OkHttpClient();
@@ -28,14 +27,18 @@ public class httpAppClient {
 
     public void GetScheduleNameListByName(Callback callback){
         Request request = new Request.Builder()
-                .url("http://192.168.0.11:8000/api/getScheduleNameListByOrganizatonName/ЗабГУ")
+                .url(String.format("http://%s/api/getScheduleNameListByOrganizatonName/ЗабГУ", _serverSocket))
                 .build();
         client.newCall(request).enqueue(callback);
     }
 
+        /**
+         * Получить список организаций
+         * @return Organization[]
+         */
     public Organization[] GetOrganizationNameByTypeName(){
         Request request = new Request.Builder()
-                .url("http://192.168.0.11:8000/api/getAllOrganizationByOrgType/Высшее учебное заведение")
+                .url(String.format("http://%s/api/getAllOrganizationByOrgType/Высшее учебное заведение", _serverSocket))
                 .build();
 
         CallbackFuture future = new CallbackFuture();
@@ -72,11 +75,16 @@ public class httpAppClient {
         }
     }
 
+        /**
+         * Получить наименования групп(названия расписания) по имени организации
+         * @param OrgName наименование организации
+         * @return Groups[]
+         */
     public Groups[] GetGroupByNameOrganizations(String OrgName){
-        String _jsonGroupName = "1";
+        String _jsonGroupName;
 
         Request request = new Request.Builder()
-                .url("http://192.168.0.11:8000/api/getScheduleNameListByOrganizatonName/" + OrgName)
+                .url(String.format("http://%s/api/getScheduleNameListByOrganizatonName/%s", _serverSocket, OrgName))
                 .build();
 
         CallbackFuture future = new CallbackFuture();
@@ -92,13 +100,49 @@ public class httpAppClient {
                     Gson gson = new Gson();
 
                     _jsonGroupName = response.body().string();
-
-                    Log.d("MesLog", _jsonGroupName);
                     // Конвертируем json в массив java
                     Groups[] groups = gson.fromJson(_jsonGroupName, Groups[].class);
+                    Log.d("MesLog", groups[1].toString());
                     return groups;
                 default:
                     throw new RuntimeException("Сервер недоступен");
+            }
+        }
+        catch (ExecutionException e) {
+            Log.d("MesLog1", e.getMessage());
+            // выполняется если сервер недоступен
+            throw new RuntimeException(e);
+        }
+        catch (InterruptedException e) {
+            Log.d("MesLog2", e.getMessage());
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Schedule[] getScheduleByName(String groupName, String password){
+        Request request = new Request.Builder()
+                .url(String.format("http://%s/api/getScheduleByGroupName/%s", _serverSocket, groupName))
+                .addHeader("password", password)
+                .build();
+
+        CallbackFuture future = new CallbackFuture();
+
+        client.newCall(request).enqueue(future);
+
+        try {
+            Response response = future.get();
+            int code = response.code();
+
+            switch (code){
+                case 200:
+                    Gson gson = new Gson();
+                    String _jsonSchedule = response.body().string();
+                    Schedule[] schedule = gson.fromJson(_jsonSchedule, Schedule[].class);
+                    return schedule;
+                default:
+                    throw new RuntimeException("Ошибка сервера");
             }
         }
         catch (ExecutionException e) {
