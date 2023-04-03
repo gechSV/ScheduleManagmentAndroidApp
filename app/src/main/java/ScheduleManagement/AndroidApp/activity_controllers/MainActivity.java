@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private  EventScheduleList _eventScheduleList_2;
 
     private final String FILE_NAME_EVENT_LIST_1 = "Event_Schedule_List_1.bin";
-    private final String FILE_NAME_EVENT_LIST_2 = "Event_Schedule_List_2.bin";
+
 
     // Поле открывающее доступ к функциям этого класса из сторонних классов (Метод getInstance())
     private static MainActivity instance;
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Читаем список событий из файла для первой недли
         _eventScheduleList_1 = ReadEventListFromFile(FILE_NAME_EVENT_LIST_1);
-        _eventScheduleList_2 = ReadEventListFromFile(FILE_NAME_EVENT_LIST_2);
+//        _eventScheduleList_2 = ReadEventListFromFile(FILE_NAME_EVENT_LIST_1).GetEventScheduleByWeekType(1);
 
         // Настройка viewPager2
         _viewPager_1 = findViewById(R.id.viewpager_1);
@@ -121,8 +121,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         headerForPage_1 = findViewById(R.id.tab_layout_1);
         headerForPage_2 = findViewById(R.id.tab_layout_2);
 
-        _viewPager2Adapter_1 = new ViewPager2Adapter(this, _eventScheduleList_1);
-        _viewPager2Adapter_2 = new ViewPager2Adapter(this, _eventScheduleList_2);
+        _viewPager2Adapter_1 = new ViewPager2Adapter(this, _eventScheduleList_1, 0);
+        _viewPager2Adapter_2 = new ViewPager2Adapter(this, _eventScheduleList_1, 1);
 
         _viewPager_1.setAdapter(_viewPager2Adapter_1);
         _viewPager_2.setAdapter(_viewPager2Adapter_2);
@@ -257,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Bundle bundleAdd = new Bundle();
         bundleAdd.putBoolean("editFlag", true);
         bundleAdd.putString("hintFile1", FILE_NAME_EVENT_LIST_1);
-        bundleAdd.putString("hintFile2", FILE_NAME_EVENT_LIST_2);
+        bundleAdd.putString("hintFile2", FILE_NAME_EVENT_LIST_1);
         bundleAdd.putInt("eventId", event.GetId());
         bundleAdd.putString("eventName", event.GetNameEvent());
         bundleAdd.putInt("colorId", event.GetColorForEvent());
@@ -279,7 +279,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(_weekFlag == 1){
             bundleAdd.putString("fileName", FILE_NAME_EVENT_LIST_1);
         } else if (_weekFlag == 2) {
-            bundleAdd.putString("fileName", FILE_NAME_EVENT_LIST_2);
+            bundleAdd.putString("fileName", FILE_NAME_EVENT_LIST_1);
         }
         else{
             //TODO: добавить ошибку
@@ -294,7 +294,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             FileIO.DeleteItemInFileById(FILE_NAME_EVENT_LIST_1,
                     this, id);
         } else if (_weekFlag == 2) {
-            FileIO.DeleteItemInFileById(FILE_NAME_EVENT_LIST_2,
+            FileIO.DeleteItemInFileById(FILE_NAME_EVENT_LIST_1,
                     this, id);
         }
         else {
@@ -352,7 +352,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         _viewPager_1 = findViewById(R.id.viewpager_1);
 
-        _viewPager2Adapter_1 = new ViewPager2Adapter(MainActivity.this, _eventScheduleList_1);
+        _viewPager2Adapter_1 = new ViewPager2Adapter(MainActivity.this,
+                _eventScheduleList_1, 0);
 
         _viewPager_1.setAdapter(_viewPager2Adapter_1);
 
@@ -363,11 +364,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         openViewPager(_weekFlag);
 
         // Читаем список событий из файла
-        _eventScheduleList_2 = ReadEventListFromFile(FILE_NAME_EVENT_LIST_2);
+        _eventScheduleList_1 = ReadEventListFromFile(FILE_NAME_EVENT_LIST_1);
 
         _viewPager_2 = findViewById(R.id.viewpager_2);
 
-        _viewPager2Adapter_2 = new ViewPager2Adapter(MainActivity.this, _eventScheduleList_2);
+        _viewPager2Adapter_2 = new ViewPager2Adapter(MainActivity.this,
+                _eventScheduleList_1, 1);
 
         _viewPager_2.setAdapter(_viewPager2Adapter_2);
 
@@ -449,14 +451,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else if (_weekFlag == 2) {
 
                     bundleAdd.putInt("WeekDayKey", _viewPager_2.getCurrentItem());
-                    bundleAdd.putString("fileName", FILE_NAME_EVENT_LIST_2);
+                    bundleAdd.putString("fileName", FILE_NAME_EVENT_LIST_1);
 
                 }else {
                     //TODO: добавить ошибку
                 }
                 bundleAdd.putBoolean("editFlag", false);
                 bundleAdd.putString("hintFile1", FILE_NAME_EVENT_LIST_1);
-                bundleAdd.putString("hintFile2", FILE_NAME_EVENT_LIST_2);
+                bundleAdd.putString("hintFile2", FILE_NAME_EVENT_LIST_1);
                 _IntentAddEvent.putExtras(bundleAdd);
                 startActivity(_IntentAddEvent);
                 break;

@@ -21,6 +21,7 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
     private Calendar _timeEventEnd; // Время окончания мероприятия
     // Массив флагов для хранения выбранного дня недели
     private boolean[] _weekDayPeek; // 0-пн, 1-вт, 2-ср, 3-чт, 4-пт, 5-сб, 6-вт
+    private int _weekId;
     private int _colorForEvent = 0; // Цвет для отображения в расписании
 
     /**
@@ -303,5 +304,13 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
             }
         }
         return -1;
+    }
+
+    public void setWeekId(int weekId){
+        this._weekId = weekId;
+    }
+
+    public int getWeekId(){
+        return this._weekId;
     }
 }

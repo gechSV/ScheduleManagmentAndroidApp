@@ -36,10 +36,13 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Vi
 
     private final Context _context;
 
+    int weekId;
+
     // Конструктор ViewPager2Adapter класса
-    public ViewPager2Adapter(Context ctx, EventScheduleList eventScheduleList) {
+    public ViewPager2Adapter(Context ctx, EventScheduleList eventScheduleList, int weekId) {
         this._eventScheduleList = eventScheduleList;
         this._context = ctx;
+        this.weekId = weekId;
     }
 
     // Этот метод возвращает наш макет
@@ -52,14 +55,14 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Vi
 //        return new ViewHolder(view);
 
         switch (viewType) {
-            case 0: return new ViewHolder(view, _eventScheduleList.GetEventByDayWeek(0) ,0);
-            case 1: return new ViewHolder(view, _eventScheduleList.GetEventByDayWeek(1) ,1);
-            case 2: return new ViewHolder(view, _eventScheduleList.GetEventByDayWeek(2) ,2);
-            case 3: return new ViewHolder(view, _eventScheduleList.GetEventByDayWeek(3) ,3);
-            case 4: return new ViewHolder(view, _eventScheduleList.GetEventByDayWeek(4) ,4);
-            case 5: return new ViewHolder(view, _eventScheduleList.GetEventByDayWeek(5) ,5);
-            case 6: return new ViewHolder(view, _eventScheduleList.GetEventByDayWeek(6) ,6);
-            default: return new ViewHolder(view, _eventScheduleList.GetEventByDayWeek(0) ,-1);
+            case 0: return new ViewHolder(view, _eventScheduleList.GetEventByDayWeek(0) ,0, weekId);
+            case 1: return new ViewHolder(view, _eventScheduleList.GetEventByDayWeek(1) ,1, weekId);
+            case 2: return new ViewHolder(view, _eventScheduleList.GetEventByDayWeek(2) ,2, weekId);
+            case 3: return new ViewHolder(view, _eventScheduleList.GetEventByDayWeek(3) ,3, weekId);
+            case 4: return new ViewHolder(view, _eventScheduleList.GetEventByDayWeek(4) ,4, weekId);
+            case 5: return new ViewHolder(view, _eventScheduleList.GetEventByDayWeek(5) ,5, weekId);
+            case 6: return new ViewHolder(view, _eventScheduleList.GetEventByDayWeek(6) ,6, weekId);
+            default: return new ViewHolder(view, _eventScheduleList.GetEventByDayWeek(0) ,-1, weekId);
         }
     }
 
@@ -115,22 +118,29 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Vi
         /**
          * Конструктор холдера
          **/
-        public ViewHolder(@NonNull View itemView, ArrayList<EventSchedule> dayEvent, int n) {
+        public ViewHolder(@NonNull View itemView, ArrayList<EventSchedule> dayEvent, int n, int weekId) {
             super(itemView);
 
             int arrayCounter = 0; //счётчик для массива
             linearLayout = itemView.findViewById((R.id.linear_layout_for_card));
+            ArrayList<EventSchedule> newEventList = new ArrayList<>();
+
+            for(int i = 0; i < dayEvent.size(); i++){
+                if(dayEvent.get(i).getWeekId() == weekId){
+                    newEventList.add(dayEvent.get(i));
+                }
+            }
 
             // для хранения карточек в памяти
-            LinearLayout[] buffView = new LinearLayout[dayEvent.size()];
+            LinearLayout[] buffView = new LinearLayout[newEventList.size()];
 
-            if(dayEvent.size() == 0){
+            if(newEventList.size() == 0){
                 ImageView image = itemView.findViewById(R.id.IconNotEvents);
                 image.setVisibility(View.VISIBLE);
             }
 
             // перебор списка событий и вывод на экран карточек
-            for(index = 0; index < dayEvent.size(); index++){
+            for(index = 0; index < newEventList.size(); index++){
 //                id = dayEvent.get(index).GetId();
                 // копируем макет
                 buffView[arrayCounter] = (LinearLayout)LayoutInflater.from(itemView.getContext())
@@ -143,7 +153,7 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Vi
                 CardView deleteCard = cardView.findViewById(R.id.delete_event);
                 LinearLayout LinerLayoutActionForCard = buffView[arrayCounter].findViewById(R.id.EditButton);
                 TextView idEvent = cardView.findViewById(R.id.idEvent);
-                idEvent.setText(Integer.toString(dayEvent.get(index).GetId()));
+                idEvent.setText(Integer.toString(newEventList.get(index).GetId()));
 
                 // ------- Долгое нажатие на карточку -------
                 cardView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -269,49 +279,49 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Vi
 
                 cardView.setBackgroundResource(R.drawable.style_for_card_event);
                 // Установка цвета карточки. По умолчанию (если не выбран цвет) - серый
-                switch (dayEvent.get(index).GetColorForEvent()){
+                switch (newEventList.get(index).GetColorForEvent()){
                     case 1:
-                        SetTextData(dayEvent.get(index), cardView);
+                        SetTextData(newEventList.get(index), cardView);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_lime);
                         break;
                     case 2:
-                        SetTextData(dayEvent.get(index), cardView);
+                        SetTextData(newEventList.get(index), cardView);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_green);
                         break;
                     case 3:
-                        SetTextData(dayEvent.get(index), cardView);
+                        SetTextData(newEventList.get(index), cardView);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_blue);
                         break;
                     case 4:
-                        SetTextData(dayEvent.get(index), cardView);
+                        SetTextData(newEventList.get(index), cardView);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_purple);
                         break;
                     case 5:
-                        SetTextData(dayEvent.get(index), cardView);
+                        SetTextData(newEventList.get(index), cardView);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_pink);
                         break;
                     case 6:
-                        SetTextData(dayEvent.get(index), cardView);
+                        SetTextData(newEventList.get(index), cardView);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_red);
                         break;
                     case 7:
-                        SetTextData(dayEvent.get(index), cardView);
+                        SetTextData(newEventList.get(index), cardView);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_orange);
                         break;
                     case 8:
-                        SetTextData(dayEvent.get(index), cardView);
+                        SetTextData(newEventList.get(index), cardView);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_gray);
                         break;
                     case 9:
-                        SetTextData(dayEvent.get(index), cardView);
+                        SetTextData(newEventList.get(index), cardView);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_teal);
                         break;
                     case 10:
-                        SetTextData(dayEvent.get(index), cardView);
+                        SetTextData(newEventList.get(index), cardView);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_brown);
                         break;
                     default:
-                        SetTextData(dayEvent.get(index), cardView);
+                        SetTextData(newEventList.get(index), cardView);
                         cardTime.setBackgroundResource(R.drawable.style_for_card_time_gray);
                         break;
                 }

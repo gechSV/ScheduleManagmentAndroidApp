@@ -183,4 +183,20 @@ public class EventScheduleList implements Serializable {
             throw new Error("The argument _typeEvent cannot be null.");
         }
     }
+
+    /**
+     * Получить список, который содержит только элементы верхней, либо нижней недели
+     * @param typeId
+     */
+    public EventScheduleList GetEventScheduleByWeekType(int typeId){
+        EventScheduleList newEventList = new EventScheduleList();
+
+        for(EventSchedule event: _eventScheduleList){
+            if(event.getWeekId() == typeId){
+                newEventList.AppendEvent(event);
+            }
+        }
+
+        return newEventList;
+    }
 }
