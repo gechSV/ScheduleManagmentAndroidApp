@@ -213,4 +213,16 @@ public class EventScheduleList implements Serializable {
 
         return newEventList;
     }
+
+    /**
+     * Ужалить из списка все элементы имеющие ShceduleTypeId
+     * @param ScheduleTypeId
+     */
+    public void RemoveEventsByScheduleType(int ScheduleTypeId){
+        for(int i = 0; i < this._eventScheduleList.size(); i++){
+            if(_eventScheduleList.get(i).getScheduleType() == ScheduleTypeId){
+                _eventScheduleList.remove(i);
+            }
+        }
+    }
 }

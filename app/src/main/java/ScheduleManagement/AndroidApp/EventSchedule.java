@@ -21,7 +21,8 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
     private Calendar _timeEventEnd; // Время окончания мероприятия
     // Массив флагов для хранения выбранного дня недели
     private boolean[] _weekDayPeek; // 0-пн, 1-вт, 2-ср, 3-чт, 4-пт, 5-сб, 6-вт
-    private int _weekId;
+    private int _weekId;// id недели 1 - верхняя или 2 - нижняя и тд
+    private int _scheduleType;// 0 - пользовательское, 1 - расписание, которое скачиваем с сервера
     private int _colorForEvent = 0; // Цвет для отображения в расписании
 
     /**
@@ -118,7 +119,7 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
      * Присвоение имени руководителя
      * @param name имя
      */
-    public void SetEventHost(String name){
+    public void SetHostEvent(String name){
         if (name != null){
             this._EventHost = name;
         }
@@ -309,8 +310,14 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
     public void setWeekId(int weekId){
         this._weekId = weekId;
     }
-
     public int getWeekId(){
         return this._weekId;
+    }
+
+    public void setScheduleType(int scheduleTypeId){
+        this._scheduleType = scheduleTypeId;
+    }
+    public int getScheduleType(){
+        return this._scheduleType;
     }
 }

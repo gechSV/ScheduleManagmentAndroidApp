@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import ScheduleManagement.AndroidApp.EventSchedule;
+import ScheduleManagement.AndroidApp.EventScheduleList;
+import ScheduleManagement.AndroidApp.FileIO;
 import ScheduleManagement.AndroidApp.middleware_class.Groups;
 import ScheduleManagement.AndroidApp.middleware_class.Organization;
 import ScheduleManagement.AndroidApp.R;
@@ -30,7 +33,7 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
     private Organization[] organization;
     private Groups[] groups;
 
-    private Schedule[] _jsonSchedule;
+    private Schedule[] _Schedule;
     int idButton = 0;
 
     @Override
@@ -128,7 +131,7 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
                 @Override
                 public void run() {
                     try {
-                         _jsonSchedule = _httpAppClient.getScheduleByName(groupName, password);
+                         _Schedule = _httpAppClient.getScheduleByName(groupName, password);
                     }
                     catch (Exception err){
                         Log.d("MesLog", err.getMessage());
@@ -193,7 +196,20 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
             btn1.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
                     if(!GetSchedule(btn1.getText().toString(), "zabgu")){ return; }
-                    //TODO: закончил здесь
+                    EventScheduleList eventList = FileIO.ReadScheduleEventListInFile
+                            ("Event_Schedule_List_1.bin", ActivityChoosingSchedule.this);
+                    eventList.RemoveEventsByScheduleType(1);
+                    for(Schedule schedule: _Schedule){
+                        EventSchedule event = schedule.toEventSchedule();
+                        event.setScheduleType(1);
+                        eventList.AppendEvent(event);
+                    }
+
+                    FileIO.WriteScheduleEventListInFile(eventList.GetEventsDayList(),
+                            "Event_Schedule_List_1.bin", ActivityChoosingSchedule.this);
+
+                    MainActivity.getInstance().ReloadViewPager_1();
+                    MainActivity.getInstance().ReloadViewPager_2();
                 }
             });
         }

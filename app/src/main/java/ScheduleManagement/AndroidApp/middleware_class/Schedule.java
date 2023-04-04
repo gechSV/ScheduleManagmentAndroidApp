@@ -1,5 +1,7 @@
 package ScheduleManagement.AndroidApp.middleware_class;
 
+import ScheduleManagement.AndroidApp.EventSchedule;
+
 public class Schedule {
     private int WeekDayNumber;
     private int WeekType;
@@ -62,6 +64,17 @@ public class Schedule {
         return this.Location;
     }
 
+    public EventSchedule toEventSchedule(){
+        EventSchedule newEvent = new EventSchedule();
+
+        newEvent.setWeekId(WeekType);
+        newEvent.SetWeekDayPeek(WeekDayNumber - 1);
+        newEvent.SetNameEvent(this.Name);
+        newEvent.SetTypeEvent(this.Type);
+        newEvent.SetHostEvent(this.Host);
+        newEvent.SetLocationEvent(this.Location);
+        return newEvent;
+    }
     @Override
     public String toString(){
         return
@@ -74,4 +87,5 @@ public class Schedule {
                         "[Faculty=" + faculty + "]\n" +
                         "[Location=" + Location + "]\n";
     }
+
 }

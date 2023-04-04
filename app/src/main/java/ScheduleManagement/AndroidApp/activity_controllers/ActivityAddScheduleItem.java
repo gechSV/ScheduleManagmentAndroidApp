@@ -343,7 +343,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
                 if(eventHost != null){
                     _ET_NameOfTheEventHost.setText(eventHost);
-                    eventScheduleForEdit.SetEventHost(eventHost);
+                    eventScheduleForEdit.SetHostEvent(eventHost);
                 }
 
                 _startTime.set(Calendar.HOUR_OF_DAY, HHStart);
@@ -762,7 +762,8 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         // Цикл для записи данных в объекты EventSchedule
         if(_weekTypeFlag[0]){
             for(EventSchedule event: _eventSchedule_1){
-                event.setWeekId(0);
+                event.setWeekId(1);
+                event.setScheduleType(0);
                 // Event name
                 if (_ET_EventName.getText().toString().length() != 0) {
                     event.SetNameEvent(_ET_EventName.getText().toString());
@@ -785,7 +786,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
                 // Event Host
                 if (_ET_NameOfTheEventHost.getText().toString().length() != 0) {
-                    event.SetEventHost(_ET_NameOfTheEventHost.getText().toString());
+                    event.SetHostEvent(_ET_NameOfTheEventHost.getText().toString());
                 }
 
                 // Time start and End
@@ -802,7 +803,8 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
         if(_weekTypeFlag[1]){
             for(EventSchedule event: _eventSchedule_2){
-                event.setWeekId(1);
+                event.setWeekId(2);
+                event.setScheduleType(0);
                 // Event name
                 if (_ET_EventName.getText().toString().length() != 0) {
                     event.SetNameEvent(_ET_EventName.getText().toString());
@@ -825,7 +827,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
                 // Event Host
                 if (_ET_NameOfTheEventHost.getText().toString().length() != 0) {
-                    event.SetEventHost(_ET_NameOfTheEventHost.getText().toString());
+                    event.SetHostEvent(_ET_NameOfTheEventHost.getText().toString());
                 }
 
                 // Time start and End

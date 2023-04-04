@@ -121,8 +121,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         headerForPage_1 = findViewById(R.id.tab_layout_1);
         headerForPage_2 = findViewById(R.id.tab_layout_2);
 
-        _viewPager2Adapter_1 = new ViewPager2Adapter(this, _eventScheduleList_1, 0);
-        _viewPager2Adapter_2 = new ViewPager2Adapter(this, _eventScheduleList_1, 1);
+        _viewPager2Adapter_1 = new ViewPager2Adapter(this, _eventScheduleList_1, 1);
+        _viewPager2Adapter_2 = new ViewPager2Adapter(this, _eventScheduleList_1, 2);
 
         _viewPager_1.setAdapter(_viewPager2Adapter_1);
         _viewPager_2.setAdapter(_viewPager2Adapter_2);
@@ -353,7 +353,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         _viewPager_1 = findViewById(R.id.viewpager_1);
 
         _viewPager2Adapter_1 = new ViewPager2Adapter(MainActivity.this,
-                _eventScheduleList_1, 0);
+                _eventScheduleList_1, 1);
 
         _viewPager_1.setAdapter(_viewPager2Adapter_1);
 
@@ -369,7 +369,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         _viewPager_2 = findViewById(R.id.viewpager_2);
 
         _viewPager2Adapter_2 = new ViewPager2Adapter(MainActivity.this,
-                _eventScheduleList_1, 1);
+                _eventScheduleList_1, 2);
 
         _viewPager_2.setAdapter(_viewPager2Adapter_2);
 
