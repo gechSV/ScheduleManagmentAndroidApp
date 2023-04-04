@@ -28,7 +28,7 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
      * Конструктор без параметров
      */
     public EventSchedule(){
-        this._id = 0;
+        this._id = -1;
         this._timeEventStart = Calendar.getInstance();
         this._timeEventEnd = Calendar.getInstance();
         _weekDayPeek = new boolean[7];
