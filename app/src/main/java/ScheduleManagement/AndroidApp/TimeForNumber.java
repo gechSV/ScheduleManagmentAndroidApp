@@ -2,6 +2,7 @@ package ScheduleManagement.AndroidApp;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class TimeForNumber implements Serializable {
 
@@ -10,8 +11,13 @@ public class TimeForNumber implements Serializable {
     private Calendar _endTime;
 
     public TimeForNumber(){
-        _startTime = Calendar.getInstance();
-        _endTime = Calendar.getInstance();
+        this._startTime = new GregorianCalendar();
+        _startTime.set(Calendar.HOUR_OF_DAY, 0);
+        _startTime.set(Calendar.MINUTE, 0);
+
+        this._endTime = new GregorianCalendar();
+        _endTime.set(Calendar.HOUR_OF_DAY, 0);
+        _endTime.set(Calendar.MINUTE, 0);
     }
 
     public void SetStartTime(Calendar _startTime) {

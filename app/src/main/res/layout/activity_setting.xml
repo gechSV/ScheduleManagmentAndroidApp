@@ -55,12 +55,12 @@
             <Button
                 android:id="@+id/open_choosing_schedule"
                 style="@style/setting_button"
-                android:text="Find a schedule" />
+                android:text="@string/find_a_schedule_in_setting_activity" />
 
             <Button
-                android:id="@+id/testButton1"
+                android:id="@+id/open_time_interval"
                 style="@style/setting_button"
-                android:text="Test" />
+                android:text="Time intervals" />
 
             <Button
                 android:id="@+id/testButton2"

@@ -24,6 +24,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Objects;
 
 import ScheduleManagement.AndroidApp.DpInPxDisplay;
@@ -210,9 +211,15 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _buttonSaveEvent.setOnClickListener(this);
         _buttonBack.setOnClickListener(this);
 
-        // Рабочий пример кнопок
-        _startTime = Calendar.getInstance();
-        _endTime = Calendar.getInstance();
+        _startTime = new GregorianCalendar();
+        this._startTime = new GregorianCalendar();
+        _startTime.set(Calendar.HOUR_OF_DAY, 0);
+        _startTime.set(Calendar.MINUTE, 0);
+
+        _endTime = new GregorianCalendar();
+        this._endTime = new GregorianCalendar();
+        _endTime.set(Calendar.HOUR_OF_DAY, 0);
+        _endTime.set(Calendar.MINUTE, 0);
 
         _weekClick = new boolean[7];
         Arrays.fill(_weekClick, false);
@@ -243,11 +250,21 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
             HHStart = bundle.getInt("HHStart");
             MMStart = bundle.getInt("MMStart");
+
             HHEnd = bundle.getInt("HHEnd");
             MMEnd = bundle.getInt("MMEnd");
+
             FILE_NAME = bundle.getString("fileName");
             FILE_NAME_FOR_HINT_1 = bundle.getString("hintFile1");
             FILE_NAME_FOR_HINT_2 = bundle.getString("hintFile2");
+
+
+
+            _startTime.set(Calendar.HOUR_OF_DAY, HHStart);
+            _startTime.set(Calendar.MINUTE, MMStart);
+
+            _endTime.set(Calendar.HOUR_OF_DAY, HHEnd);
+            _endTime.set(Calendar.MINUTE, MMEnd);
 
             // Выбор дня недели в зависимости от того на каком
             // дне недели мы находились на гл. странице
@@ -346,13 +363,9 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
                     eventScheduleForEdit.SetHostEvent(eventHost);
                 }
 
-                _startTime.set(Calendar.HOUR_OF_DAY, HHStart);
-                _startTime.set(Calendar.MINUTE, MMStart);
                 eventScheduleForEdit.SetTimeEventStart(_startTime);
                 _buttonStartTime.setText(eventScheduleForEdit.GetStartTimeEvent());
 
-                _endTime.set(Calendar.HOUR_OF_DAY, HHEnd);
-                _endTime.set(Calendar.MINUTE, MMEnd);
                 eventScheduleForEdit.SetTimeEventEnd(_endTime);
                 _buttonEndTime.setText(eventScheduleForEdit.GetEndTimeEvent());
             }
@@ -668,8 +681,8 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
     private void SetTime(Button button, Calendar time){
 
         final Calendar currentTime = Calendar.getInstance();
-        int hour = currentTime.get(Calendar.HOUR_OF_DAY);
-        int minute = currentTime.get(Calendar.MINUTE);
+        int hour = time.get(Calendar.HOUR_OF_DAY);
+        int minute = time.get(Calendar.MINUTE);
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
 
@@ -790,10 +803,8 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
                 }
 
                 // Time start and End
-                if(!editFlag){
-                    event.SetTimeEventStart(_startTime);
-                    event.SetTimeEventEnd(_endTime);
-                }
+                event.SetTimeEventStart(_startTime);
+                event.SetTimeEventEnd(_endTime);
 
 
                 // Event add Color

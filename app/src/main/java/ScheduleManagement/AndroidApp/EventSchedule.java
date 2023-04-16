@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * Класс для управления событием расписания
@@ -30,8 +31,13 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
      */
     public EventSchedule(){
         this._id = -1;
-        this._timeEventStart = Calendar.getInstance();
-        this._timeEventEnd = Calendar.getInstance();
+        this._timeEventStart = new GregorianCalendar();
+        _timeEventStart.set(Calendar.HOUR_OF_DAY, 0);
+        _timeEventStart.set(Calendar.MINUTE, 0);
+
+        this._timeEventEnd = new GregorianCalendar();
+        _timeEventEnd.set(Calendar.HOUR_OF_DAY, 0);
+        _timeEventEnd.set(Calendar.MINUTE, 0);
         _weekDayPeek = new boolean[7];
         Arrays.fill(_weekDayPeek, false);
     }

@@ -69,6 +69,7 @@ public class Schedule {
 
         newEvent.setWeekId(WeekType);
         newEvent.SetWeekDayPeek(WeekDayNumber - 1);
+        newEvent.SetColorForEvent(7);
         newEvent.SetNameEvent(this.Name);
         newEvent.SetTypeEvent(this.Type);
         newEvent.SetHostEvent(this.Host);

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingTime">
+    tools:context=".activity_controllers.ActivityTimeSetting">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/action_con"
@@ -29,30 +28,46 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
-                android:src="@drawable/baseline_arrow_back_24" />
+                android:src="?attr/back_vector" />
 
         </androidx.cardview.widget.CardView>
 
-
         <androidx.cardview.widget.CardView
-            android:id="@+id/buttonSaveEvent"
+            android:id="@+id/buttonAddTime"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_gravity="end"
             android:layout_margin="8dp"
             android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground">
+            android:foreground="?android:attr/selectableItemBackground"
+            android:layout_gravity="end">
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
-                android:src="@drawable/baseline_check_24" />
+                android:src="?attr/baseline_add_30"/>
 
         </androidx.cardview.widget.CardView>
 
     </androidx.cardview.widget.CardView>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="66dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/action_con">
 
+        <LinearLayout
+            android:id="@+id/button_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

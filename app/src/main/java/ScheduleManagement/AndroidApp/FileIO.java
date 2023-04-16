@@ -122,4 +122,32 @@ public class FileIO {
             FileIO.WriteScheduleEventListInFile(list.GetEventsDayList(), fileName, context);
         }
     }
+
+    public static  void WriteTimeForNumberList(ArrayList<TimeForNumber> time, String fileName, Context context){
+        try{
+            FileOutputStream fos = context.openFileOutput(fileName, context.MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(time);
+            oos.close();
+            fos.close();
+        }
+        catch (IOException ex){
+            throw new Error(ex.getMessage());
+        }
+    }
+
+    public static TimeForNumberList ReadTimeForNumberList(String fileName, Context context){
+        try{
+            FileInputStream fis = context.openFileInput(fileName);
+            ObjectInputStream is = new ObjectInputStream(fis);
+            ArrayList<TimeForNumber> time = (ArrayList<TimeForNumber>)is.readObject();
+            TimeForNumberList timeList = new TimeForNumberList(time);
+            is.close();
+            fis.close();
+            return timeList;
+        }
+        catch (IOException | ClassNotFoundException ex){
+            throw new Error(ex.getMessage());
+        }
+    }
 }

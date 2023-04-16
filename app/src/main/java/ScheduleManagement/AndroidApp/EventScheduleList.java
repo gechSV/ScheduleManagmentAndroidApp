@@ -59,25 +59,17 @@ public class EventScheduleList implements Serializable {
      * @return Объект класса EventSchedule
      */
     public EventSchedule GetEventsDayById(int id){
-        EventSchedule event = _eventScheduleList.get(id);
-        // если id и индекс совпали, то просто возвращаем эвент по id
-        if (event.GetId() == id){
-            return event;
-        }
-        else
-        {
-            // если id и index не совпали то ищем вручную
-            // Я бы мог написать сложный алгоритм поиска, а не просто перебор по порядку
-            // Но не думаю, что в расписании шкило или студентика будет более 30 записей в списке
-            // так что рисуем перебор и не выёбываемся, китайский сяоми справится ещё до того, как
-            // пользователь захочет удалить событие
-            for(int i = 0; i <= this._eventScheduleList.size();  i++){
-                if(this._eventScheduleList.get(i).GetId() == id){
-                    return this._eventScheduleList.get(i);
-                }
+        // если id и index не совпали то ищем вручную
+        // Я бы мог написать сложный алгоритм поиска, а не просто перебор по порядку
+        // Но не думаю, что в расписании шкило или студентика будет более 30 записей в списке
+        // так что рисуем перебор и не выёбываемся, китайский сяоми справится ещё до того, как
+        // пользователь захочет удалить событие
+        for(int i = 0; i <= this._eventScheduleList.size();  i++){
+            if(this._eventScheduleList.get(i).GetId() == id){
+                return this._eventScheduleList.get(i);
             }
-            return null;
         }
+        return null;
     }
 
     /**
@@ -219,10 +211,6 @@ public class EventScheduleList implements Serializable {
      * @param ScheduleTypeId
      */
     public void RemoveEventsByScheduleType(int ScheduleTypeId){
-        for(int i = 0; i < this._eventScheduleList.size(); i++){
-            if(_eventScheduleList.get(i).getScheduleType() == ScheduleTypeId){
-                _eventScheduleList.remove(i);
-            }
-        }
+        _eventScheduleList.removeIf(event -> event.getScheduleType() == ScheduleTypeId);
     }
 }

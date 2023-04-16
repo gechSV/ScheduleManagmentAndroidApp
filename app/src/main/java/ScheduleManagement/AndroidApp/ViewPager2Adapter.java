@@ -125,6 +125,7 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Vi
             linearLayout = itemView.findViewById((R.id.linear_layout_for_card));
             ArrayList<EventSchedule> newEventList = new ArrayList<>();
 
+            // Выделение в новый список событий по их weekId.
             for(int i = 0; i < dayEvent.size(); i++){
                 if(dayEvent.get(i).getWeekId() == weekId){
                     newEventList.add(dayEvent.get(i));
@@ -225,6 +226,7 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Vi
                     }
                 });
 
+                // Нажатие на кнопку редактирования
                 editCard.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -326,7 +328,6 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Vi
                         break;
                 }
 
-
                 // Фон кнопок редактирования и удаления у всех карточек одинаковы
                 editCard.setBackgroundResource(R.drawable.style_for_edit_card);
                 deleteCard.setBackgroundResource(R.drawable.style_for_delete_card);
@@ -334,8 +335,6 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Vi
                 linearLayout.addView(buffView[arrayCounter]);
                 arrayCounter++;
             }
-
-
         }
 
         void SetTextData(EventSchedule event, CardView cardView){

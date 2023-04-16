@@ -2,6 +2,7 @@ package ScheduleManagement.AndroidApp;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class TimeForNumberList implements Serializable {
 
@@ -11,6 +12,17 @@ public class TimeForNumberList implements Serializable {
 
     public TimeForNumberList(){
         _timeForNumberList = new ArrayList<>();
+    }
+
+    public TimeForNumberList(ArrayList<TimeForNumber> timeList){
+        if(timeList != null){
+            _timeForNumberList = timeList;
+        }
+        else
+        {
+            throw new Error("_timeList == null");
+        }
+
     }
 
     public void SetTimeForNumberList(ArrayList<TimeForNumber> _timeForNumberList) {
@@ -42,5 +54,35 @@ public class TimeForNumberList implements Serializable {
         else{
             throw new Error("incorrect index");
         }
+    }
+
+    public int length(){
+        return this._timeForNumberList.size();
+    }
+
+    public void SetStartTimeById(Calendar time, int id){
+        if(time != null){
+            this._timeForNumberList.get(id).SetStartTime(time);
+        }
+        else{
+            throw new Error("time == null");
+        }
+    }
+
+    public Calendar GetStartTimeById(int id){
+        return this._timeForNumberList.get(id).GetStartTime();
+    }
+
+    public void SetEndTimeById(Calendar time, int id){
+        if(time != null){
+            this._timeForNumberList.get(id).SetEndTime(time);
+        }
+        else{
+            throw new Error("time == null");
+        }
+    }
+
+    public Calendar GetEndTimeById(int id){
+        return this._timeForNumberList.get(id).GetEndTime();
     }
 }

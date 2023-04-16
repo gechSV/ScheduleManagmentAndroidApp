@@ -24,10 +24,8 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
     private httpAppClient _httpAppClient;
     private CardView _CV_ActionCon;
     private CardView _buttonBack;
-    private String _jsonOrgName;
     private LinearLayout _LL_ConnectErrorBox;
     private LinearLayout _LL_ButtonBox;
-
     private ProgressBar _PB_progress;
 
     private Organization[] organization;
@@ -57,7 +55,10 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
 
         ActivitySetting.getInstance().HideProgressBar();
 
-        if(!this.getOrganizationName()) return;
+        if((!this.getOrganizationName()) || organization == null) {
+            _LL_ConnectErrorBox.setVisibility(View.VISIBLE);
+            return;
+        }
 
         this.buttonOrganizationBuild(organization);
     }
@@ -91,11 +92,8 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
             t1.join();
             return true;
         }
-        catch(RuntimeException err){
-            _LL_ConnectErrorBox.setVisibility(View.VISIBLE);
+        catch(RuntimeException | InterruptedException err){
             return false;
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -117,11 +115,9 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
             Log.d("MesLog", groups[0].getName());
             return true;
         }
-        catch (RuntimeException err){
+        catch (RuntimeException | InterruptedException err){
             _LL_ConnectErrorBox.setVisibility(View.VISIBLE);
             return false;
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -195,10 +191,17 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
 
             btn1.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
-                    if(!GetSchedule(btn1.getText().toString(), "zabgu")){ return; }
+                    _LL_ConnectErrorBox.setVisibility(View.INVISIBLE);
+                    if(!GetSchedule(btn1.getText().toString(), "zabgu") || _Schedule == null){
+                        _LL_ButtonBox.setVisibility(View.INVISIBLE);
+                        _LL_ConnectErrorBox.setVisibility(View.VISIBLE);
+                        return;
+                    }
                     EventScheduleList eventList = FileIO.ReadScheduleEventListInFile
                             ("Event_Schedule_List_1.bin", ActivityChoosingSchedule.this);
+
                     eventList.RemoveEventsByScheduleType(1);
+
                     for(Schedule schedule: _Schedule){
                         EventSchedule event = schedule.toEventSchedule();
                         event.setScheduleType(1);
@@ -214,8 +217,5 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
             });
         }
     }
-
-
-
 }
 
