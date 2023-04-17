@@ -40,7 +40,7 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
         setContentView(R.layout.activity_choosing_schedule);
 
         _CV_ActionCon = (CardView)findViewById(R.id.action_con);
-        _CV_ActionCon.setBackgroundResource(R.drawable.menu_white_background);
+        _CV_ActionCon.setBackgroundResource(R.drawable.menu_background);
 
         _buttonBack = (CardView)findViewById(R.id.backButton);
         _buttonBack.setBackgroundResource(R.drawable.style_for_button_setting);

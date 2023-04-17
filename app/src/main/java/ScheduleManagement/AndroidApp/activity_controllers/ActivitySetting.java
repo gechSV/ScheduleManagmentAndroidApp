@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import ScheduleManagement.AndroidApp.R;
 import ScheduleManagement.AndroidApp.httpAppClient;
@@ -41,7 +40,7 @@ public class ActivitySetting extends AppCompatActivity implements View.OnClickLi
         _IntentTimeIntervals.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         _CV_ActionCon = (CardView)findViewById(R.id.action_con);
-        _CV_ActionCon.setBackgroundResource(R.drawable.menu_white_background);
+        _CV_ActionCon.setBackgroundResource(R.drawable.menu_background);
 
         _buttonBack = (CardView)findViewById(R.id.backButton);
         _buttonBack.setBackgroundResource(R.drawable.style_for_button_setting);

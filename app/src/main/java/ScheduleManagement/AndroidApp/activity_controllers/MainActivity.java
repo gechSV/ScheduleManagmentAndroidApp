@@ -24,6 +24,7 @@ import ScheduleManagement.AndroidApp.EventSchedule;
 import ScheduleManagement.AndroidApp.EventScheduleList;
 import ScheduleManagement.AndroidApp.FileIO;
 import ScheduleManagement.AndroidApp.R;
+import ScheduleManagement.AndroidApp.TimeForNumberList;
 import ScheduleManagement.AndroidApp.ViewPager2Adapter;
 import es.dmoral.toasty.Toasty;
 
@@ -31,20 +32,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // _IntentAddEvent - окно добавления события
     private Intent _IntentAddEvent;
     private Intent _IntentSetting;
-
     private CardView _BT_AddEvent;
     private  Boolean _isAllFabVisible;
-
     // _viewPager2 - что бы странички листались
     private ViewPager2 _viewPager_1;
     private ViewPager2 _viewPager_2;
-
     ViewPager2Adapter _viewPager2Adapter_1;
     ViewPager2Adapter _viewPager2Adapter_2;
-
     TabLayout headerForPage_1;
     TabLayout headerForPage_2;
-
     private CardView menuCon;
 
     // _eventScheduleList - объект содержащий список событий
@@ -83,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 & Configuration.UI_MODE_NIGHT_MASK;
 
         menuCon = findViewById(R.id.menu_con);
-        menuCon.setBackgroundResource(R.drawable.menu_white_background);
+        menuCon.setBackgroundResource(R.drawable.menu_background);
 
         // Кнопки меню
         _BT_AddEvent = findViewById(R.id.add_schedule_event);
@@ -242,6 +238,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 _viewPager_2.setCurrentItem(0, false);
                 break;
         }
+
+        if (!ReadFirstRunFlagFromFile("firstRun.bin")){
+            TimeForNumberList newTime = this.ReadTimeForNumberListFromFile("TimeList.bin");
+            newTime.FirstSetTimeList();
+            FileIO.WriteTimeForNumberList(newTime.GetTimeForNumberList(), "TimeList.bin", this);
+        }
+        FileIO.SetRunAppFlag(true, "firstRun.bin", this);
+
     }
 
 
@@ -480,5 +484,63 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
         }
+    }
+
+    /**
+     * Чтение файла содержащего список паттернов времени
+     */
+    private TimeForNumberList ReadTimeForNumberListFromFile(String fileName){
+        try {
+            // Проверка существования файла содержащего список событий
+            File file = new File(getApplicationContext().getFilesDir(), fileName);
+
+            // Проверка на существование файла
+            if(file.exists()){
+                // Файл существует (был создан ранее)
+                // Читаем список из файла и записываем в новый объект
+                return FileIO.ReadTimeForNumberList(fileName, this);
+            }
+            else
+            {
+                // Файл не существует (не был создан)
+                // Cоздаём новый пустой объект и записываем его в файл
+                TimeForNumberList timeList = new TimeForNumberList();
+                FileIO.WriteTimeForNumberList(timeList.GetTimeForNumberList(), fileName, this);
+                return timeList;
+            }
+        }
+        catch (Error err){
+            Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT, true).show();
+        }
+        return null;
+    }
+
+    /**
+     * Чтение файла содержащего список паттернов времени
+     */
+    private boolean ReadFirstRunFlagFromFile(String fileName){
+        try {
+            // Проверка существования файла содержащего список событий
+            File file = new File(getApplicationContext().getFilesDir(), fileName);
+
+            // Проверка на существование файла
+            if(file.exists()){
+                // Файл существует (был создан ранее)
+                // Читаем список из файла и записываем в новый объект
+                return FileIO.CheckRunAppFlag(fileName, this);
+            }
+            else
+            {
+                // Файл не существует (не был создан)
+                // Cоздаём новый пустой объект и записываем его в файл
+                boolean flag = false;
+                FileIO.SetRunAppFlag(flag, fileName, this);
+                return flag;
+            }
+        }
+        catch (Error err){
+            Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT, true).show();
+        }
+        return false;
     }
 }

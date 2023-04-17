@@ -20,6 +20,17 @@ public class TimeForNumber implements Serializable {
         _endTime.set(Calendar.MINUTE, 0);
     }
 
+    public TimeForNumber(Calendar newTimeStart, Calendar newTimeEnd){
+        if((newTimeStart != null) && (newTimeEnd != null)){
+            this._startTime = newTimeStart;
+            this._endTime = newTimeEnd;
+        }
+        else {
+            throw new Error("param == null");
+        }
+
+    }
+
     public void SetStartTime(Calendar _startTime) {
         if (_startTime != null) {
             this._startTime = _startTime;

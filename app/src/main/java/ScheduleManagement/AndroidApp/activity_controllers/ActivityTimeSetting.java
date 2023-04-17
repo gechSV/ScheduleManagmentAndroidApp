@@ -6,10 +6,8 @@ import androidx.cardview.widget.CardView;
 import android.app.TimePickerDialog;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -27,6 +25,8 @@ import es.dmoral.toasty.Toasty;
 
 public class ActivityTimeSetting extends AppCompatActivity implements View.OnClickListener{
     String TIME_LIST_FILE_NAME = "TimeList.bin";
+
+    CardView _CV_ActionCon;
     private CardView _buttonBack;
     private CardView _addTime;
     private LinearLayout _LL_ButtonList;
@@ -35,6 +35,9 @@ public class ActivityTimeSetting extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_setting);
+
+        _CV_ActionCon = (CardView)findViewById(R.id.action_con);
+        _CV_ActionCon.setBackgroundResource(R.drawable.menu_background);
 
         _buttonBack = (CardView)findViewById(R.id.backButton);
         _buttonBack.setBackgroundResource(R.drawable.style_for_button_setting);

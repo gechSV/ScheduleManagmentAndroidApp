@@ -179,7 +179,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _buttonBack.setBackgroundResource(R.drawable.style_for_button_setting);
 
         _CV_ActionCon = (CardView)findViewById(R.id.action_con);
-        _CV_ActionCon.setBackgroundResource(R.drawable.menu_white_background);
+        _CV_ActionCon.setBackgroundResource(R.drawable.menu_background);
 
 
 

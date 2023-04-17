@@ -31,9 +31,11 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Vi
     private int[] _weekDay = {R.string.Monday, R.string.Tuesday, R.string.Wednesday,
             R.string.Thursday, R.string.Friday, R.string.Saturday, R.string.Sunday};
 
-    // Список событий
+    // объект класса EventScheduleList, необходим для заполнения ViewPager2 карточками событий
     EventScheduleList _eventScheduleList;
 
+    //объект класса Context, необходим для получения доступа к ресурсам приложения, таким
+    // как запуск Activity, отправка широковещательных сообщений, получение намерений и прочее
     private final Context _context;
 
     int weekId;

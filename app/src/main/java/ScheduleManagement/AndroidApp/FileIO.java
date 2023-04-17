@@ -150,4 +150,31 @@ public class FileIO {
             throw new Error(ex.getMessage());
         }
     }
+
+    public static boolean CheckRunAppFlag(String fileName, Context context){
+        try{
+            FileInputStream fis = context.openFileInput(fileName);
+            ObjectInputStream is = new ObjectInputStream(fis);
+            boolean flag = (boolean)is.readObject();
+            is.close();
+            fis.close();
+            return flag;
+        }
+        catch (IOException | ClassNotFoundException ex){
+            throw new Error(ex.getMessage());
+        }
+    }
+
+    public static void SetRunAppFlag(boolean flag, String fileName, Context context){
+        try{
+            FileOutputStream fos = context.openFileOutput(fileName, context.MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(flag);
+            oos.close();
+            fos.close();
+        }
+        catch (IOException ex){
+            throw new Error(ex.getMessage());
+        }
+    }
 }
