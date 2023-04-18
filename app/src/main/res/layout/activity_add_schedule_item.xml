@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:id="@+id/actionBar"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,9 +61,10 @@
 
         <EditText
             android:id="@+id/editTextEventName"
-            android:layout_width="413dp"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_weight="0.2"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
             android:ems="10"
             android:hint="@string/PlainTextPlaceholderEventName"
             android:inputType="textPersonName"
@@ -78,12 +79,11 @@
 
     <ScrollView
         android:id="@+id/scrollView"
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/actionBar"
         app:layout_constraintVertical_bias="0.0">
@@ -91,7 +91,7 @@
         <LinearLayout
             android:id="@+id/linearLayoutRow1"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <HorizontalScrollView
@@ -101,7 +101,7 @@
 
                 <LinearLayout
                     android:id="@+id/hintNameCon"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:orientation="horizontal"
                     android:visibility="gone">
@@ -197,9 +197,10 @@
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/editTextTypeOfEvent"
-                    android:layout_width="400dp"
+                    android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:layout_weight="0.2"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
                     android:ems="10"
                     android:hint="@string/PlainTextPlaceholderEventType"
                     android:inputType="textPersonName"/>
@@ -207,11 +208,12 @@
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="0dp">
 
                     <LinearLayout
                         android:id="@+id/hintTypeCon"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:orientation="horizontal"
                         android:visibility="gone">
@@ -222,9 +224,10 @@
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/editTextEventLocation"
-                    android:layout_width="400dp"
+                    android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:layout_weight="0.2"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
                     android:ems="10"
                     android:hint="@string/PlainTextPlaceholderEventLocation"
                     android:inputType="textPersonName"/>
@@ -236,7 +239,7 @@
 
                     <LinearLayout
                         android:id="@+id/hintLocationCon"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:orientation="horizontal"
                         android:visibility="gone">
@@ -247,9 +250,10 @@
 
                 <EditText
                     android:id="@+id/editTextNameOfTheEventHost"
-                    android:layout_width="400dp"
+                    android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:layout_weight="0.2"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
                     android:ems="10"
                     android:hint="@string/PlainTextPlaceholderNameOfTheEventHost"
                     android:inputType="textPersonName"/>
@@ -261,7 +265,7 @@
 
                     <LinearLayout
                         android:id="@+id/hintHostCon"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:orientation="horizontal"
                         android:visibility="gone">
@@ -276,11 +280,25 @@
                     android:layout_weight="0.2"
                     android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/buttonStartTime"
-                        android:background="@null"
-                        style="@style/ButtonPickTime"
-                        android:text="@string/PlainTextPlaceholderChoiceTime" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="start at:"
+                            android:layout_gravity="center"
+                            android:textSize="15sp"/>
+
+                        <Button
+                            android:id="@+id/buttonStartTime"
+                            android:background="@null"
+                            style="@style/ButtonPickTime"
+                            android:text="@string/PlainTextPlaceholderChoiceTime" />
+
+                    </LinearLayout>
 
                     <Space
                         android:layout_width="wrap_content"
@@ -288,13 +306,50 @@
                         android:layout_weight="1" />
 
                     <Button
-                        android:id="@+id/buttonEndTime"
-                        android:background="@null"
-                        style="@style/ButtonPickTime"
-                        android:text="@string/PlainTextPlaceholderChoiceTime" />
+                        android:id="@+id/patternTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:text="time pattern"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:background="@drawable/style_for_hintbutton"/>
+
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="end at:"
+                            android:layout_gravity="center"
+                            android:textSize="15sp"/>
+
+                        <Button
+                            android:id="@+id/buttonEndTime"
+                            android:background="@null"
+                            style="@style/ButtonPickTime"
+                            android:text="@string/PlainTextPlaceholderChoiceTime" />
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="day of the week"
+                    android:layout_gravity="center"
+                    android:textSize="15sp"
+                    android:layout_marginBottom="8dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -348,12 +403,20 @@
                         android:background="@drawable/style_for_week_day_button"/>
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="type of week"
+                    android:layout_gravity="center"
+                    android:textSize="15sp"
+                    android:layout_marginBottom="8dp"/>
+
                 <LinearLayout
+                    android:id="@+id/weekTypeCon"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:layout_gravity="center"
-                    android:paddingEnd="10dp">
+                    android:layout_gravity="center">
 
                     <Button
                         android:id="@+id/button_up_week"
@@ -362,6 +425,10 @@
                         android:text="1"
                         android:textSize="20dp" />
 
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
 
                     <Button
                         android:id="@+id/button_down_week"
@@ -377,6 +444,31 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/LLChoiceTimePattern"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#aa191919"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardChoiceTimePattern"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp">
+
+            <LinearLayout
+                android:id="@+id/LLChoiceTimePatternCard"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

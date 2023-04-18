@@ -312,7 +312,6 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
     public int getWeekId(){
         return this._weekId;
     }
-
     public void setScheduleType(int scheduleTypeId){
         this._scheduleType = scheduleTypeId;
     }

@@ -259,6 +259,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Запуск активити для редактирования события
         Bundle bundleAdd = new Bundle();
         bundleAdd.putBoolean("editFlag", true);
+
         bundleAdd.putString("hintFile1", FILE_NAME_EVENT_LIST_1);
         bundleAdd.putString("hintFile2", FILE_NAME_EVENT_LIST_1);
         bundleAdd.putInt("eventId", event.GetId());
@@ -279,14 +280,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bundleAdd.putInt("HHEnd", time.get(Calendar.HOUR_OF_DAY));
         bundleAdd.putInt("MMEnd", time.get(Calendar.MINUTE));
 
-        if(_weekFlag == 1){
-            bundleAdd.putString("fileName", FILE_NAME_EVENT_LIST_1);
-        } else if (_weekFlag == 2) {
-            bundleAdd.putString("fileName", FILE_NAME_EVENT_LIST_1);
-        }
-        else{
-            //TODO: добавить ошибку
-        }
+        bundleAdd.putString("fileName", FILE_NAME_EVENT_LIST_1);
+        bundleAdd.putInt("weekType", _weekFlag);
 
         _IntentAddEvent.putExtras(bundleAdd);
         startActivity(_IntentAddEvent);
@@ -462,6 +457,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 bundleAdd.putBoolean("editFlag", false);
                 bundleAdd.putString("hintFile1", FILE_NAME_EVENT_LIST_1);
                 bundleAdd.putString("hintFile2", FILE_NAME_EVENT_LIST_1);
+                bundleAdd.putInt("weekType", _weekFlag);
                 _IntentAddEvent.putExtras(bundleAdd);
                 startActivity(_IntentAddEvent);
                 break;

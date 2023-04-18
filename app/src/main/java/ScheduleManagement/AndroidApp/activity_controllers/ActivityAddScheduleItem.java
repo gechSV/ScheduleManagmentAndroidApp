@@ -13,14 +13,17 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -33,6 +36,7 @@ import ScheduleManagement.AndroidApp.EventScheduleList;
 import ScheduleManagement.AndroidApp.FileIO;
 import ScheduleManagement.AndroidApp.HintBuilder;
 import ScheduleManagement.AndroidApp.R;
+import ScheduleManagement.AndroidApp.TimeForNumberList;
 import es.dmoral.toasty.Toasty;
 
 
@@ -71,6 +75,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
     private Button _buttonEndTime;
     // Выбор верхней/нижней недели
     private Button _BT_upWeek, _BT_downWeek;
+    private Button _BT_PatternTime;
 
     // Кнопка сохранения события
     private CardView _buttonSaveEvent;
@@ -78,9 +83,12 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
     private LinearLayout _LL_Color_1, _LL_Color_2;
     private LinearLayout _LL_TypeOfEvent;
-    private LinearLayout _LL_HintName, _LL_HintTypeCon, _LL_HintLocation, _LL_HintHost;
+    private LinearLayout _LL_HintName, _LL_HintTypeCon,
+            _LL_HintLocation, _LL_HintHost, _LL_WeekTypeCon,
+            _LL_ChoiceTimePattern, _LL_LLChoiceTimePatternCard;
 
-    private CardView _CV_ActionCon;
+
+    private CardView _CV_ActionCon, _CV_ChoiceTimePattern;
 
     // запоминает выбранный цвет
     private int _saveColor;
@@ -111,8 +119,10 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
     int MMStart = -1;
     int HHEnd = -1;
     int MMEnd = -1;
+    int weekType;
 
-    String FILE_NAME, FILE_NAME_FOR_HINT_1, FILE_NAME_FOR_HINT_2;
+    String FILE_NAME, FILE_NAME_FOR_HINT_1;
+    String TIME_LIST_FILE_NAME = "TimeList.bin";
 
     EventScheduleList eventScheduleListForHint;
     ArrayList<String> hintNameList;
@@ -126,6 +136,8 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
     int colorWeekButtonInactive, colorWeekButtonActive;
 
     boolean[] _weekTypeFlag;
+
+    private TimeForNumberList _timeList;
 
 
     @Override
@@ -147,6 +159,12 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _LL_HintTypeCon = (LinearLayout)findViewById(R.id.hintTypeCon);
         _LL_HintLocation = (LinearLayout)findViewById(R.id.hintLocationCon);
         _LL_HintHost = (LinearLayout)findViewById(R.id.hintHostCon);
+        _LL_WeekTypeCon = (LinearLayout)findViewById(R.id.weekTypeCon);
+        _LL_ChoiceTimePattern = (LinearLayout)findViewById(R.id.LLChoiceTimePattern);
+        _LL_ChoiceTimePattern.setClickable(true);
+        _LL_ChoiceTimePattern.setOnClickListener(this);
+        _LL_LLChoiceTimePatternCard = (LinearLayout)findViewById(R.id.LLChoiceTimePatternCard);
+        _LL_LLChoiceTimePatternCard.setClickable(true);
 
         _buttonChoiceColorLime = (Button) findViewById(R.id.buttonChoiceColorLime);
         _buttonChoiceColorGreen = (Button) findViewById(R.id.buttonChoiceColorCactus);
@@ -172,6 +190,8 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _BT_upWeek = (Button)findViewById(R.id.button_up_week);
         _BT_downWeek = (Button)findViewById(R.id.button_down_week);
 
+        _BT_PatternTime = (Button)findViewById(R.id.patternTime);
+
         _buttonSaveEvent = (CardView) findViewById(R.id.buttonSaveEvent);
         _buttonSaveEvent.setBackgroundResource(R.drawable.style_for_button_setting);
 
@@ -180,6 +200,9 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
         _CV_ActionCon = (CardView)findViewById(R.id.action_con);
         _CV_ActionCon.setBackgroundResource(R.drawable.menu_background);
+
+        _CV_ChoiceTimePattern = (CardView)findViewById(R.id.cardChoiceTimePattern);
+        _CV_ChoiceTimePattern.setBackgroundResource(R.drawable.style_for_card_event);
 
 
 
@@ -208,6 +231,8 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _BT_upWeek.setOnClickListener(this);
         _BT_downWeek.setOnClickListener(this);
 
+        _BT_PatternTime.setOnClickListener(this);
+
         _buttonSaveEvent.setOnClickListener(this);
         _buttonBack.setOnClickListener(this);
 
@@ -218,6 +243,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         Arrays.fill(_weekClick, false);
         _weekTypeFlag = new boolean[2];
         Arrays.fill(_weekTypeFlag, false);
+
 
         typedValue = new TypedValue();
         getTheme().resolveAttribute(R.attr.text_button_week_color_inactive, typedValue, true);
@@ -249,9 +275,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
             FILE_NAME = bundle.getString("fileName");
             FILE_NAME_FOR_HINT_1 = bundle.getString("hintFile1");
-            FILE_NAME_FOR_HINT_2 = bundle.getString("hintFile2");
-
-
+            weekType = bundle.getInt("weekType");
 
             _startTime.set(Calendar.HOUR_OF_DAY, HHStart);
             _startTime.set(Calendar.MINUTE, MMStart);
@@ -361,6 +385,24 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
                 eventScheduleForEdit.SetTimeEventEnd(_endTime);
                 _buttonEndTime.setText(eventScheduleForEdit.GetEndTimeEvent());
+
+                if(weekType == 1){
+                    _weekTypeFlag[0] = true;
+                    _BT_upWeek.performClick();
+                }
+                if(weekType == 2){
+                    _weekTypeFlag[1] = true;
+                    _BT_downWeek.performClick();
+                }
+                _LL_WeekTypeCon.setVisibility(View.GONE);
+            }
+            else{
+                if(weekType == 1){
+                    _BT_upWeek.performClick();
+                }
+                if(weekType == 2){
+                    _BT_downWeek.performClick();
+                }
             }
 
             // Здесь работаем с подсказками
@@ -371,8 +413,6 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
                 eventScheduleListForHint = FileIO.ReadScheduleEventListInFile(
                         FILE_NAME_FOR_HINT_1, this);
 
-                eventScheduleListForHint = eventScheduleListForHint.addAll(
-                        FileIO.ReadScheduleEventListInFile(FILE_NAME_FOR_HINT_2, this));
 
                 // Получаем из списка событий - список наименований
                 hintNameList = HintBuilder.getHintForNameByStr("", eventScheduleListForHint);
@@ -571,6 +611,15 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             case (R.id.button_down_week):
                 _weekTypeFlag[1] = !_weekTypeFlag[1];
                 ClickWeekDown(_weekTypeFlag[1]);
+                break;
+
+            case (R.id.patternTime):
+                _LL_ChoiceTimePattern.setVisibility(View.VISIBLE);
+                buttonTimePatternBuild();
+                break;
+
+            case (R.id.LLChoiceTimePattern):
+                _LL_ChoiceTimePattern.setVisibility(View.GONE);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + v.getId());
@@ -1013,6 +1062,139 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
     }
+
+    /**
+     * Чтение файла содержащего список времени и последующая
+     * его запись в переменную
+     */
+    private TimeForNumberList ReadTimeListFromFile(String fileName){
+        try {
+            // Проверка существования файла содержащего список событий
+            File file = new File(getApplicationContext().getFilesDir(), fileName);
+
+            // Проверка на существование файла
+            if(file.exists()){
+                // Файл существует (был создан ранее)
+
+                // Читаем список из файла и записываем в новый объект
+                return FileIO.ReadTimeForNumberList(fileName, this);
+            }
+            else
+            {
+                // Файл не существует (не был создан)
+                // Cоздаём новый пустой объект и записываем его в файл
+                TimeForNumberList timeList = new TimeForNumberList();
+                FileIO.WriteTimeForNumberList(timeList.GetTimeForNumberList(), fileName, this);
+                return timeList;
+            }
+        }
+        catch (Error err){
+            Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT, true).show();
+        }
+        return null;
+    }
+
+    private void buttonTimePatternBuild(){
+        _LL_LLChoiceTimePatternCard.removeAllViews();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+
+        try {
+            _timeList = this.ReadTimeListFromFile(TIME_LIST_FILE_NAME);
+            Objects.requireNonNull(_timeList).SortTimeList();
+        }
+        catch (Error err){
+            Toasty.error(this, Objects.requireNonNull(err.getMessage()),
+                    Toast.LENGTH_SHORT, true).show();
+        }
+
+        for(int i = 0; i < _timeList.length(); i++){
+
+            Calendar timeStartBuf = _timeList.GetStartTimeById(i);
+            Calendar timeEndBuf = _timeList.GetEndTimeById(i);
+
+            LinearLayout LL = (LinearLayout) LayoutInflater
+                    .from(this)
+                    .inflate(R.layout.button_pattern_for_setting_time, null);
+
+            TextView TV_count = (TextView)LL.findViewById(R.id.time_count);
+            TextView TV_startTime = (TextView)LL.findViewById(R.id.start_time);
+            TextView TV_endTime = (TextView)LL.findViewById(R.id.end_time);
+
+            TV_count.setText(String.valueOf(i + 1));
+
+            TV_startTime.setId(View.generateViewId());
+            TV_startTime.setText(simpleDateFormat.format(timeStartBuf.getTime()).replace(':', '꞉'));
+
+            TV_endTime.setId(View.generateViewId());
+            TV_endTime.setText(simpleDateFormat.format(timeEndBuf.getTime()).replace(':', '꞉'));
+
+            final int startTime_id = TV_startTime.getId();
+            final int endTime_id = TV_endTime.getId();
+            final int id = i;
+
+            _LL_LLChoiceTimePatternCard.addView(LL, i);
+
+            TextView txtViewStartTime = (TextView)findViewById(startTime_id);
+        }
+    }
+
+//    private void buttonTimeBuild(){
+//        _LL_ButtonList.removeAllViews();
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+//
+//        try {
+//            _timeList = this.ReadTimeListFromFile(TIME_LIST_FILE_NAME);
+//            Objects.requireNonNull(_timeList).SortTimeList();
+//        }
+//        catch (Error err){
+//            Toasty.error(this, Objects.requireNonNull(err.getMessage()),
+//                    Toast.LENGTH_SHORT, true).show();
+//        }
+//
+//        for(int i = 0; i < _timeList.length(); i++){
+//
+//            Calendar timeStartBuf = _timeList.GetStartTimeById(i);
+//            Calendar timeEndBuf = _timeList.GetEndTimeById(i);
+//
+//            LinearLayout LL = (LinearLayout) LayoutInflater
+//                    .from(this)
+//                    .inflate(R.layout.button_pattern_for_setting_time, null);
+//
+//            TextView TV_count = (TextView)LL.findViewById(R.id.time_count);
+//            TextView TV_startTime = (TextView)LL.findViewById(R.id.start_time);
+//            TextView TV_endTime = (TextView)LL.findViewById(R.id.end_time);
+//
+//            TV_count.setText(String.valueOf(i + 1));
+//
+//            TV_startTime.setId(View.generateViewId());
+//            TV_startTime.setText(simpleDateFormat.format(timeStartBuf.getTime()).replace(':', '꞉'));
+//
+//            TV_endTime.setId(View.generateViewId());
+//            TV_endTime.setText(simpleDateFormat.format(timeEndBuf.getTime()).replace(':', '꞉'));
+//
+//            final int startTime_id = TV_startTime.getId();
+//            final int endTime_id = TV_endTime.getId();
+//            final int id = i;
+//
+//            _LL_ButtonList.addView(LL, i);
+//
+//            TextView txtViewStartTime = (TextView)findViewById(startTime_id);
+//            txtViewStartTime.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    SetTime(txtViewStartTime, timeStartBuf, id, "st");
+//                }
+//            });
+//
+//            TextView txtViewEndTime = (TextView)findViewById(endTime_id);
+//            txtViewEndTime.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    SetTime(txtViewEndTime, timeEndBuf, id, "end");
+//                }
+//            });
+//        }
+//    }
 }
 
 //TODO: время при редактировании не должно изменяться
