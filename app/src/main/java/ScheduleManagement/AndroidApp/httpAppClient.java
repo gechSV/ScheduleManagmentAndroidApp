@@ -18,7 +18,7 @@ import okhttp3.Response;
     public class httpAppClient {
     private  OkHttpClient client;
 
-    private String _serverSocket = "127.0.0.1:8000";
+    private String _serverSocket = "192.168.0.11:8000";
 
     public httpAppClient(){
         this.client = new OkHttpClient();

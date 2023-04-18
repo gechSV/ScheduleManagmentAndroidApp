@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import android.app.TimePickerDialog;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -25,7 +26,6 @@ import es.dmoral.toasty.Toasty;
 
 public class ActivityTimeSetting extends AppCompatActivity implements View.OnClickListener{
     String TIME_LIST_FILE_NAME = "TimeList.bin";
-
     CardView _CV_ActionCon;
     private CardView _buttonBack;
     private CardView _addTime;
@@ -59,7 +59,10 @@ public class ActivityTimeSetting extends AppCompatActivity implements View.OnCli
                 this.finish();
                 break;
             case (R.id.buttonAddTime):
-                TimeForNumber newTime = new TimeForNumber();
+                TimeForNumber newTime = new TimeForNumber(0);
+//                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE, MMMM d, yyyy");
+//                Toast.makeText(ActivityTimeSetting.this, simpleDateFormat.format(newTime.GetStartTime()), Toast.LENGTH_SHORT).show();
+//                Log.d("MesLog", "" + simpleDateFormat.format(newTime.GetStartTime()));
                 _timeList.AddTime(newTime);
                 FileIO.WriteTimeForNumberList(_timeList.GetTimeForNumberList(),
                         TIME_LIST_FILE_NAME, this);
@@ -108,7 +111,6 @@ public class ActivityTimeSetting extends AppCompatActivity implements View.OnCli
      */
     private void SetTime(TextView textView, Calendar time, int id, String typeTime){
 
-        final Calendar currentTime = Calendar.getInstance();
         int hour = time.get(Calendar.HOUR_OF_DAY);
         int minute = time.get(Calendar.MINUTE);
 
@@ -125,11 +127,13 @@ public class ActivityTimeSetting extends AppCompatActivity implements View.OnCli
 
                     if(Objects.equals(typeTime, "st")){
                         _timeList.SetStartTimeById(time, id);
+                        _timeList.SortTimeList();
                         FileIO.WriteTimeForNumberList(_timeList.GetTimeForNumberList(), TIME_LIST_FILE_NAME,
                                 ActivityTimeSetting.this);
                     }
                     else if (Objects.equals(typeTime, "end")){
                         _timeList.SetEndTimeById(time, id);
+                        _timeList.SortTimeList();
                         FileIO.WriteTimeForNumberList(_timeList.GetTimeForNumberList(), TIME_LIST_FILE_NAME,
                                 ActivityTimeSetting.this);
                     }
@@ -149,6 +153,7 @@ public class ActivityTimeSetting extends AppCompatActivity implements View.OnCli
 
         try {
             _timeList = this.ReadTimeListFromFile(TIME_LIST_FILE_NAME);
+            Objects.requireNonNull(_timeList).SortTimeList();
         }
         catch (Error err){
             Toasty.error(this, Objects.requireNonNull(err.getMessage()),

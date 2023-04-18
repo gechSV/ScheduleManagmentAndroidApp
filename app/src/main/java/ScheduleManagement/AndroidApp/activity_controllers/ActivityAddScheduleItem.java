@@ -24,9 +24,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.Objects;
 
+import ScheduleManagement.AndroidApp.CalendarConstructor;
 import ScheduleManagement.AndroidApp.DpInPxDisplay;
 import ScheduleManagement.AndroidApp.EventSchedule;
 import ScheduleManagement.AndroidApp.EventScheduleList;
@@ -211,15 +211,8 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _buttonSaveEvent.setOnClickListener(this);
         _buttonBack.setOnClickListener(this);
 
-        _startTime = new GregorianCalendar();
-        this._startTime = new GregorianCalendar();
-        _startTime.set(Calendar.HOUR_OF_DAY, 0);
-        _startTime.set(Calendar.MINUTE, 0);
-
-        _endTime = new GregorianCalendar();
-        this._endTime = new GregorianCalendar();
-        _endTime.set(Calendar.HOUR_OF_DAY, 0);
-        _endTime.set(Calendar.MINUTE, 0);
+        _startTime = CalendarConstructor.GetNewCalendar();
+        _endTime = CalendarConstructor.GetNewCalendar();
 
         _weekClick = new boolean[7];
         Arrays.fill(_weekClick, false);

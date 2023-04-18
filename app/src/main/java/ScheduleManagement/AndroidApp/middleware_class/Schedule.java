@@ -1,6 +1,7 @@
 package ScheduleManagement.AndroidApp.middleware_class;
 
 import ScheduleManagement.AndroidApp.EventSchedule;
+import ScheduleManagement.AndroidApp.TimeForNumberList;
 
 public class Schedule {
     private int WeekDayNumber;
@@ -64,7 +65,7 @@ public class Schedule {
         return this.Location;
     }
 
-    public EventSchedule toEventSchedule(){
+    public EventSchedule toEventSchedule(TimeForNumberList timeList){
         EventSchedule newEvent = new EventSchedule();
 
         newEvent.setWeekId(WeekType);
@@ -74,6 +75,8 @@ public class Schedule {
         newEvent.SetTypeEvent(this.Type);
         newEvent.SetHostEvent(this.Host);
         newEvent.SetLocationEvent(this.Location);
+        newEvent.SetTimeEventStart(timeList.GetStartTimeById(this.EventNumber - 1));
+        newEvent.SetTimeEventEnd(timeList.GetEndTimeById(this.EventNumber - 1));
         return newEvent;
     }
     @Override

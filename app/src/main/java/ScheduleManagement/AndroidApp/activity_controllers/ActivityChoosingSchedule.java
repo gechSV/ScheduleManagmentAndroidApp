@@ -10,10 +10,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import ScheduleManagement.AndroidApp.EventSchedule;
 import ScheduleManagement.AndroidApp.EventScheduleList;
 import ScheduleManagement.AndroidApp.FileIO;
+import ScheduleManagement.AndroidApp.TimeForNumberList;
 import ScheduleManagement.AndroidApp.middleware_class.Groups;
 import ScheduleManagement.AndroidApp.middleware_class.Organization;
 import ScheduleManagement.AndroidApp.R;
@@ -136,7 +138,6 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
             });
             t1.start();
             t1.join();
-//            Log.d("MesLog", _jsonSchedule);
             return true;
         }
         catch (RuntimeException err){
@@ -191,6 +192,8 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
 
             btn1.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
+                    _PB_progress.setVisibility(ProgressBar.VISIBLE);
+                    
                     _LL_ConnectErrorBox.setVisibility(View.INVISIBLE);
                     if(!GetSchedule(btn1.getText().toString(), "zabgu") || _Schedule == null){
                         _LL_ButtonBox.setVisibility(View.INVISIBLE);
@@ -199,20 +202,29 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
                     }
                     EventScheduleList eventList = FileIO.ReadScheduleEventListInFile
                             ("Event_Schedule_List_1.bin", ActivityChoosingSchedule.this);
+                    TimeForNumberList timeList = FileIO.ReadTimeForNumberList("TimeListForZabGU.bin",
+                            ActivityChoosingSchedule.this);
 
                     eventList.RemoveEventsByScheduleType(1);
 
+
+
                     for(Schedule schedule: _Schedule){
-                        EventSchedule event = schedule.toEventSchedule();
+                        EventSchedule event = schedule.toEventSchedule(timeList);
                         event.setScheduleType(1);
                         eventList.AppendEvent(event);
                     }
+
+                    eventList.SetColorForIdenticalEvents();
 
                     FileIO.WriteScheduleEventListInFile(eventList.GetEventsDayList(),
                             "Event_Schedule_List_1.bin", ActivityChoosingSchedule.this);
 
                     MainActivity.getInstance().ReloadViewPager_1();
                     MainActivity.getInstance().ReloadViewPager_2();
+
+                    _PB_progress.setVisibility(ProgressBar.INVISIBLE);
+                    Toast.makeText(ActivityChoosingSchedule.this, "Schedule added successfully", Toast.LENGTH_SHORT).show();
                 }
             });
         }

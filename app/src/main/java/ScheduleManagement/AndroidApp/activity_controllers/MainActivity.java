@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private  EventScheduleList _eventScheduleList_2;
 
     private final String FILE_NAME_EVENT_LIST_1 = "Event_Schedule_List_1.bin";
-
-
+    private final String FILE_NAME_TIME_LIST = "TimeList.bin";
+    private final String FILE_NAME_TIME_LIST_ZABGU = "TimeListForZabGU.bin";
     // Поле открывающее доступ к функциям этого класса из сторонних классов (Метод getInstance())
     private static MainActivity instance;
 
@@ -240,16 +240,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if (!ReadFirstRunFlagFromFile("firstRun.bin")){
-            TimeForNumberList newTime = this.ReadTimeForNumberListFromFile("TimeList.bin");
+            TimeForNumberList newTime = this.ReadTimeForNumberListFromFile(FILE_NAME_TIME_LIST);
             newTime.FirstSetTimeList();
-            FileIO.WriteTimeForNumberList(newTime.GetTimeForNumberList(), "TimeList.bin", this);
+            // Заполнение шаблонов времени для пользовательского расписания
+            FileIO.WriteTimeForNumberList(newTime.GetTimeForNumberList(), FILE_NAME_TIME_LIST, this);
+            // Запись в файл шаблонов для скачиваемого расписания вузов
+            FileIO.WriteTimeForNumberList(newTime.GetTimeForNumberList(), FILE_NAME_TIME_LIST_ZABGU, this);
         }
         FileIO.SetRunAppFlag(true, "firstRun.bin", this);
-
     }
-
-
-
 
     public void OnClickEditEvent(int id){
         EventSchedule event = _eventScheduleList_1.GetEventsDayById(id);

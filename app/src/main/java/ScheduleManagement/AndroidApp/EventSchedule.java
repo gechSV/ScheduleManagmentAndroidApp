@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 /**
  * Класс для управления событием расписания
@@ -12,7 +11,6 @@ import java.util.GregorianCalendar;
 public class EventSchedule implements Comparable<EventSchedule>, Serializable {
 
     private static final long serialVersionUID = 6024437629835836202L;
-
     private int _id;
     private String _nameEvent; // Имя события (название пары, урока и т.п.)
     private String _typeEvent; // Тип события (лекция, практика, собрание, концерт и т.д.)
@@ -31,13 +29,8 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
      */
     public EventSchedule(){
         this._id = -1;
-        this._timeEventStart = new GregorianCalendar();
-        _timeEventStart.set(Calendar.HOUR_OF_DAY, 0);
-        _timeEventStart.set(Calendar.MINUTE, 0);
-
-        this._timeEventEnd = new GregorianCalendar();
-        _timeEventEnd.set(Calendar.HOUR_OF_DAY, 0);
-        _timeEventEnd.set(Calendar.MINUTE, 0);
+        this._timeEventStart = CalendarConstructor.GetNewCalendar();
+        this._timeEventEnd = CalendarConstructor.GetNewCalendar();
         _weekDayPeek = new boolean[7];
         Arrays.fill(_weekDayPeek, false);
     }

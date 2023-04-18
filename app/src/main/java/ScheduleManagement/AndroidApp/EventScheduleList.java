@@ -3,6 +3,9 @@ package ScheduleManagement.AndroidApp;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * Класс-список для хранения объектов EventSchedule
@@ -212,5 +215,39 @@ public class EventScheduleList implements Serializable {
      */
     public void RemoveEventsByScheduleType(int ScheduleTypeId){
         _eventScheduleList.removeIf(event -> event.getScheduleType() == ScheduleTypeId);
+    }
+
+    /**
+     * Выставляет цвета у событий имеющих одно название
+     */
+    public void SetColorForIdenticalEvents(){
+        String nameBuf;
+        Set<String> nameListSet = new HashSet<>();
+        ArrayList<String> nameList = new ArrayList<>();
+
+        for(EventSchedule event: _eventScheduleList){
+            nameBuf = event.GetNameEvent();
+            if(!nameListSet.add(nameBuf)){
+                nameList.add(nameBuf);
+            }
+        }
+
+        int color = 1;
+        for(String name: nameList){
+            for(EventSchedule event: _eventScheduleList){
+
+                if(Objects.equals(name, event.GetNameEvent())){
+                    event.SetColorForEvent(color);
+                }
+
+            }
+
+            color++;
+
+            if(color > 10){
+                color=1;
+            }
+        }
+
     }
 }
