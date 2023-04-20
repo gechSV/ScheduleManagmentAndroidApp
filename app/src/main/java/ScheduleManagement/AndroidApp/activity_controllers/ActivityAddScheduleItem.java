@@ -639,20 +639,30 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
                 break;
 
             case (R.id.LLChoiceTimePattern):
-                _LL_ChoiceTimePattern.setVisibility(View.GONE);
+                this.setVisibilityGoneForTimeChoice();
                 break;
 
             case (R.id.closeChoseCon):
-                Animation animation = AnimationUtils.loadAnimation(this, R.anim.animation_background_time_choice);
-
-                _LL_ChoiceTimePattern.setVisibility(View.GONE);
-                _CV_MenuChoiceTimePattern.setVisibility(View.GONE);
-                _CV_ChoiceTimePattern.setVisibility(View.GONE);
+                this.setVisibilityGoneForTimeChoice();
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + v.getId());
         }
     }
+
+    private void setVisibilityGoneForTimeChoice(){
+        Animation animationAlphaRev = AnimationUtils.loadAnimation(this, R.anim.animation_background_time_choice_reverse);
+        Animation animationTranslationRev = AnimationUtils.loadAnimation(this, R.anim.animation_emergence_time_choice_con_reverse);
+
+        _LL_ChoiceTimePattern.startAnimation(animationAlphaRev);
+        _CV_MenuChoiceTimePattern.setAnimation(animationTranslationRev);
+        _CV_ChoiceTimePattern.setAnimation(animationTranslationRev);
+
+        _LL_ChoiceTimePattern.setVisibility(View.GONE);
+        _CV_MenuChoiceTimePattern.setVisibility(View.GONE);
+        _CV_ChoiceTimePattern.setVisibility(View.GONE);
+    }
+
 
     private void ClickWeekUp(boolean flag){
         if (flag){
