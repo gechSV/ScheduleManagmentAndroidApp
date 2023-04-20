@@ -35,5 +35,7 @@
         <item name="hint_button_color">@color/deep_orange_50</item>
         <item name="week_day_button_color_active">@color/deep_orange_300</item>
         <item name="week_day_button_color_inactive">@color/deep_orange_50</item>
+        <item name="background_action_con">@color/white</item>
+        <item name="close_vector">@drawable/baseline_close_24</item>
     </style>
 </resources>

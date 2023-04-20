@@ -16,6 +16,8 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -88,7 +90,8 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             _LL_ChoiceTimePattern, _LL_LLChoiceTimePatternCard;
 
 
-    private CardView _CV_ActionCon, _CV_ChoiceTimePattern;
+    private CardView _CV_ActionCon, _CV_ChoiceTimePattern, _CV_MenuChoiceTimePattern,
+                        _CV_CloseChoiceTime;
 
     // запоминает выбранный цвет
     private int _saveColor;
@@ -202,9 +205,16 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _CV_ActionCon.setBackgroundResource(R.drawable.menu_background);
 
         _CV_ChoiceTimePattern = (CardView)findViewById(R.id.cardChoiceTimePattern);
-        _CV_ChoiceTimePattern.setBackgroundResource(R.drawable.style_for_card_event);
+        _CV_ChoiceTimePattern.setBackgroundResource(R.drawable.action_screen);
 
+        _CV_MenuChoiceTimePattern = (CardView)findViewById(R.id.menuChoiceTimePattern);
+        _CV_MenuChoiceTimePattern.setBackgroundResource(R.drawable.action_screen_menu);
+        _CV_MenuChoiceTimePattern.setClickable(true);
 
+        _CV_CloseChoiceTime = (CardView)findViewById(R.id.closeChoseCon);
+        _CV_CloseChoiceTime.setBackgroundResource(R.drawable.style_for_button_setting);
+        _CV_CloseChoiceTime.setOnClickListener(this);
+        _CV_CloseChoiceTime.setClickable(true);
 
         // Добавляем кнопки к прослушиванию для метода onClick()
         _buttonChoiceColorLime.setOnClickListener(this);
@@ -614,12 +624,30 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
                 break;
 
             case (R.id.patternTime):
+                Animation animationAlpha = AnimationUtils.loadAnimation(this, R.anim.animation_background_time_choice);
+                Animation animationTranslation = AnimationUtils.loadAnimation(this, R.anim.animation_emergence_time_choice_con);
+
                 _LL_ChoiceTimePattern.setVisibility(View.VISIBLE);
+                _CV_MenuChoiceTimePattern.setVisibility(View.VISIBLE);
+                _CV_ChoiceTimePattern.setVisibility(View.VISIBLE);
+
+                _LL_ChoiceTimePattern.startAnimation(animationAlpha);
+                _CV_MenuChoiceTimePattern.setAnimation(animationTranslation);
+                _CV_ChoiceTimePattern.setAnimation(animationTranslation);
+
                 buttonTimePatternBuild();
                 break;
 
             case (R.id.LLChoiceTimePattern):
                 _LL_ChoiceTimePattern.setVisibility(View.GONE);
+                break;
+
+            case (R.id.closeChoseCon):
+                Animation animation = AnimationUtils.loadAnimation(this, R.anim.animation_background_time_choice);
+
+                _LL_ChoiceTimePattern.setVisibility(View.GONE);
+                _CV_MenuChoiceTimePattern.setVisibility(View.GONE);
+                _CV_ChoiceTimePattern.setVisibility(View.GONE);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + v.getId());
