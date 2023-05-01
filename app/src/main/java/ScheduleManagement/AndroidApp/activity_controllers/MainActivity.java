@@ -10,6 +10,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TabLayout headerForPage_1;
     TabLayout headerForPage_2;
     private CardView menuCon;
+
+    private LinearLayout _LL_backGrayBlur;
+
+    private CardView _CV_cardFullInform, _CV_menuFullInform, _CV_closeFullInform, _CV_FullInformNameBackground;
+
+    TextView _TV_FullInformName;
 
     // _eventScheduleList - объект содержащий список событий
     private EventScheduleList _eventScheduleList_1;
@@ -116,6 +123,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         _viewPager_2 = findViewById(R.id.viewpager_2);
         headerForPage_1 = findViewById(R.id.tab_layout_1);
         headerForPage_2 = findViewById(R.id.tab_layout_2);
+
+        _LL_backGrayBlur = (LinearLayout)findViewById(R.id.backGrayBlur);
+        _LL_backGrayBlur.setOnClickListener(this);
+
+        _CV_cardFullInform = (CardView)findViewById(R.id.cardFullInform);
+        _CV_cardFullInform.setBackgroundResource(R.drawable.action_screen_menu);
+
+        _CV_menuFullInform = (CardView)findViewById(R.id.menuFullInform);
+        _CV_menuFullInform.setBackgroundResource(R.drawable.action_screen_menu);
+
+        _CV_closeFullInform = (CardView)findViewById(R.id.closeFullInform);
+        _CV_closeFullInform.setOnClickListener(this);
+        _CV_closeFullInform.setBackgroundResource(R.drawable.style_for_button_setting);
+
+        _CV_FullInformNameBackground = (CardView)findViewById(R.id.FullInformNameBackground);
+        _CV_FullInformNameBackground.setBackgroundResource(R.drawable.style_for_card_time_lime);
+
+        _TV_FullInformName = (TextView)findViewById(R.id.FullInformName);
 
         _viewPager2Adapter_1 = new ViewPager2Adapter(this, _eventScheduleList_1, 1);
         _viewPager2Adapter_2 = new ViewPager2Adapter(this, _eventScheduleList_1, 2);
@@ -476,9 +501,66 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case(R.id.button_setting):
                 startActivity(_IntentSetting);
                 break;
+            case(R.id.backGrayBlur):
+                if(_LL_backGrayBlur.getVisibility() == View.VISIBLE){
+                    _LL_backGrayBlur.setVisibility(View.GONE);
+                    _CV_menuFullInform.setVisibility(View.GONE);
+                    _CV_cardFullInform.setVisibility(View.GONE);
+                }
+                break;
+            case(R.id.closeFullInform):
+                _LL_backGrayBlur.setVisibility(View.GONE);
+                _CV_menuFullInform.setVisibility(View.GONE);
+                _CV_cardFullInform.setVisibility(View.GONE);
+                break;
             default:
                 break;
         }
+    }
+
+    public void ShowInformTable(int id){
+        _TV_FullInformName.setText(_eventScheduleList_1.GetEventsDayById(id).GetNameEvent());
+
+        // Установка цвета карточки. По умолчанию (если не выбран цвет) - серый
+        switch (_eventScheduleList_1.GetEventsDayById(id).GetColorForEvent()){
+            case 1:
+                _CV_FullInformNameBackground.setBackgroundResource(R.drawable.style_for_card_time_lime);
+                break;
+            case 2:
+                _CV_FullInformNameBackground.setBackgroundResource(R.drawable.style_for_card_time_green);
+                break;
+            case 3:
+                _CV_FullInformNameBackground.setBackgroundResource(R.drawable.style_for_card_time_blue);
+                break;
+            case 4:
+                _CV_FullInformNameBackground.setBackgroundResource(R.drawable.style_for_card_time_purple);
+                break;
+            case 5:
+                _CV_FullInformNameBackground.setBackgroundResource(R.drawable.style_for_card_time_pink);
+                break;
+            case 6:
+                _CV_FullInformNameBackground.setBackgroundResource(R.drawable.style_for_card_time_red);
+                break;
+            case 7:
+                _CV_FullInformNameBackground.setBackgroundResource(R.drawable.style_for_card_time_orange);
+                break;
+            case 8:
+                _CV_FullInformNameBackground.setBackgroundResource(R.drawable.style_for_card_time_gray);
+                break;
+            case 9:
+                _CV_FullInformNameBackground.setBackgroundResource(R.drawable.style_for_card_time_teal);
+                break;
+            case 10:
+                _CV_FullInformNameBackground.setBackgroundResource(R.drawable.style_for_card_time_brown);
+                break;
+            default:
+                _CV_FullInformNameBackground.setBackgroundResource(R.drawable.style_for_card_time_gray);
+                break;
+        }
+
+        _LL_backGrayBlur.setVisibility(View.VISIBLE);
+        _CV_menuFullInform.setVisibility(View.VISIBLE);
+        _CV_cardFullInform.setVisibility(View.VISIBLE);
     }
 
     /**

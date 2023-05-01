@@ -1,4 +1,4 @@
-package ScheduleManagement.AndroidApp.middleware_class;
+package ScheduleManagement.AndroidApp.activity_controllers.middleware_class;
 
 import ScheduleManagement.AndroidApp.EventSchedule;
 import ScheduleManagement.AndroidApp.TimeForNumberList;

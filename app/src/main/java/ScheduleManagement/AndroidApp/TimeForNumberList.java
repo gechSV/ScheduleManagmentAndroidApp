@@ -96,6 +96,10 @@ public class TimeForNumberList implements Serializable {
         return true;
     }
 
+    public void RemoveByIndex(int index){
+        this._timeForNumberList.remove(index);
+    }
+
     public void FirstSetTimeList(){
         Calendar timeSt1 = CalendarConstructor.GetNewCalendar();
         Calendar timeEnd1 = CalendarConstructor.GetNewCalendar();

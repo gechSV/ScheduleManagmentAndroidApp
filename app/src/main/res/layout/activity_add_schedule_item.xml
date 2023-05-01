@@ -488,7 +488,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardChoiceTimePattern"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="400dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:visibility="gone">
@@ -500,7 +500,8 @@
 
                 <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:scrollbars="none">
 
                     <LinearLayout
                         android:id="@+id/LLChoiceTimePatternCard"

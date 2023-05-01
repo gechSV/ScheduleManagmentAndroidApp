@@ -1,141 +1,264 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity_controllers.MainActivity">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewpager_1"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_marginTop="35dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomAppBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        android:layout_marginBottom="76dp">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewpager_2"
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout_1"
+                style="@style/Widget.Material3.TabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                app:tabBackground="?attr/background_for_tabs_pager"
+                app:tabSelectedTextColor="@color/deep_orange_300"
+                app:tabTextColor="?attr/tabs_text_color" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout_2"
+                style="@style/Widget.Material3.TabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:visibility="gone"
+                app:tabBackground="?attr/background_for_tabs_pager"
+                app:tabSelectedTextColor="@color/deep_orange_300"
+                app:tabTextColor="?attr/tabs_text_color" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:visibility="gone" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/menu_con"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/button_setting"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:src="?attr/setting_icon" />
+
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingEnd="10dp">
+
+                    <Button
+                        android:id="@+id/button_up_week"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/transparent_background"
+                        android:text="1"
+                        android:textSize="20dp" />
+
+
+                    <Button
+                        android:id="@+id/button_down_week"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="0dp"
+                        android:background="@drawable/transparent_background"
+                        android:text="2"
+                        android:textSize="20dp" />
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/add_schedule_event"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="8dp"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:src="?attr/baseline_add_30"/>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/backGrayBlur"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_marginTop="35dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomAppBar"
+        android:orientation="vertical"
+        android:background="#aa555555"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"/>
+        android:visibility="visible"
+        android:clickable="true">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/menu_con"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/button_setting"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="8dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:src="?attr/setting_icon"/>
-
-            </androidx.cardview.widget.CardView>
-
-        <LinearLayout
+        <Space
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:paddingEnd="10dp">
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
-            <Button
-                android:id="@+id/button_up_week"
-                android:layout_marginStart="10dp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/transparent_background"
-                android:text="1"
-                android:textSize="20dp" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardFullInform"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:visibility="visible">
 
-
-            <Button
-                android:id="@+id/button_down_week"
-                android:layout_margin="0dp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/transparent_background"
-                android:text="2"
-                android:textSize="20dp" />
-
-        </LinearLayout>
-
-            <Space
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:orientation="vertical">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:id="@+id/LLFullInform"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/FullInformNameBackground"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="8dp">
+
+                            <TextView
+                                android:id="@+id/FullInformName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="24dp"
+                                android:text=""
+                                android:layout_marginTop="8dp"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginBottom="8dp"/>
+
+                        </androidx.cardview.widget.CardView>
+
+
+
+                    </LinearLayout>
+
+                </ScrollView>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/menuFullInform"
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:visibility="visible">
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/add_schedule_event"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:id="@+id/closeFullInform"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_margin="8dp"
                 android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground">
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_gravity="end">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_gravity="center"
-                    android:src="?attr/baseline_add_30"/>
-
+                    android:src="?attr/close_vector"/>
             </androidx.cardview.widget.CardView>
 
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    </LinearLayout>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout_1"
-            style="@style/Widget.Material3.TabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            app:tabSelectedTextColor="@color/deep_orange_300"
-            app:tabBackground="?attr/background_for_tabs_pager"
-            app:tabTextColor="?attr/tabs_text_color"/>
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout_2"
-            style="@style/Widget.Material3.TabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            app:tabSelectedTextColor="@color/deep_orange_300"
-            app:tabBackground="?attr/background_for_tabs_pager"
-            app:tabTextColor="?attr/tabs_text_color"
-            android:visibility="gone"/>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

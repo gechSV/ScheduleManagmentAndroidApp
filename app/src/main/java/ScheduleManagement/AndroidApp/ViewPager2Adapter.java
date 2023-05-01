@@ -156,7 +156,14 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Vi
                 CardView deleteCard = cardView.findViewById(R.id.delete_event);
                 LinearLayout LinerLayoutActionForCard = buffView[arrayCounter].findViewById(R.id.EditButton);
                 TextView idEvent = cardView.findViewById(R.id.idEvent);
-                idEvent.setText(Integer.toString(newEventList.get(index).GetId()));
+                final int _idEvent =  newEventList.get(index).GetId();
+
+                cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MainActivity.getInstance().ShowInformTable(_idEvent);
+                    }
+                });
 
                 // ------- Долгое нажатие на карточку -------
                 cardView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -224,7 +231,7 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Vi
                         }
 
                         flag = !flag;
-                        return false;
+                        return true;
                     }
                 });
 
@@ -232,7 +239,7 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Vi
                 editCard.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                    MainActivity.getInstance().OnClickEditEvent(Integer.parseInt(String.valueOf(idEvent.getText())));
+                    MainActivity.getInstance().OnClickEditEvent(_idEvent);
                     }
                 });
 
@@ -256,13 +263,13 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Vi
                         // Кнопка УДАЛИТЬ
                         builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(itemView.getContext(), idEvent.getText(),
+                                Toast.makeText(itemView.getContext(), _idEvent + "",
                                         Toast.LENGTH_LONG).show();
 
                                 // Удаление события из списка и перезапись списка в файл
                                 // В данном методе присутствует товарищ костыль
                                 // id события мы берём из невидемого TextView карточке:))
-                               MainActivity.getInstance().OnClickDeleteEvent(Integer.parseInt(String.valueOf(idEvent.getText())));
+                               MainActivity.getInstance().OnClickDeleteEvent(_idEvent);
 
                                // Вызываем метод MainActivity, который обновляет ViewPager
                                 MainActivity.getInstance().ReloadViewPager_1();

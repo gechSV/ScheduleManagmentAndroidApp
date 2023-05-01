@@ -151,6 +151,20 @@ public class FileIO {
         }
     }
 
+    /**
+     * Удаление элемента списка хранящегося в файле
+     * @param fileName имя файла
+     * @param context контекст
+     * @param id индекс удаляемого элемента
+     */
+    public static void DeleteTimePatternInFileById(String fileName, Context context, int id){
+        if(id >= 0){
+            TimeForNumberList list = FileIO.ReadTimeForNumberList(fileName, context);
+            list.RemoveByIndex(id);
+            FileIO.WriteTimeForNumberList(list.GetTimeForNumberList(), fileName, context);
+        }
+    }
+
     public static boolean CheckRunAppFlag(String fileName, Context context){
         try{
             FileInputStream fis = context.openFileInput(fileName);
@@ -177,4 +191,6 @@ public class FileIO {
             throw new Error(ex.getMessage());
         }
     }
+
+
 }

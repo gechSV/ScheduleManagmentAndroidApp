@@ -1,6 +1,6 @@
-package ScheduleManagement.AndroidApp.middleware_class;
+package ScheduleManagement.AndroidApp.activity_controllers.middleware_class;
 
-public class Groups{
+public class Organization {
     private String name;
 
     public void setName(String name) {
@@ -13,6 +13,6 @@ public class Groups{
 
     @Override
     public String toString(){
-        return "Group [name=" + name + "]";
+        return "Organisation [name=" + name + "]";
     }
 }

@@ -650,6 +650,9 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         }
     }
 
+    /**
+     * Убрать контейнер с выбором времени
+     */
     private void setVisibilityGoneForTimeChoice(){
         Animation animationAlphaRev = AnimationUtils.loadAnimation(this, R.anim.animation_background_time_choice_reverse);
         Animation animationTranslationRev = AnimationUtils.loadAnimation(this, R.anim.animation_emergence_time_choice_con_reverse);
@@ -1160,19 +1163,39 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
 
             TV_count.setText(String.valueOf(i + 1));
 
-            TV_startTime.setId(View.generateViewId());
-            TV_startTime.setText(simpleDateFormat.format(timeStartBuf.getTime()).replace(':', '꞉'));
+//            TV_startTime.setId(View.generateViewId());
+            TV_startTime.setText(simpleDateFormat.format(timeStartBuf.getTime()));
 
-            TV_endTime.setId(View.generateViewId());
-            TV_endTime.setText(simpleDateFormat.format(timeEndBuf.getTime()).replace(':', '꞉'));
+//            TV_endTime.setId(View.generateViewId());
+            TV_endTime.setText(simpleDateFormat.format(timeEndBuf.getTime()));
 
-            final int startTime_id = TV_startTime.getId();
-            final int endTime_id = TV_endTime.getId();
-            final int id = i;
+//            final int startTime_id = TV_startTime.getId();
+//            final int endTime_id = TV_endTime.getId();
+//            final int id = i;
+
+            LL.setId(View.generateViewId());
+            final int LL_id = LL.getId();
 
             _LL_LLChoiceTimePatternCard.addView(LL, i);
 
-            TextView txtViewStartTime = (TextView)findViewById(startTime_id);
+            LinearLayout LL_click = (LinearLayout)LL.findViewById(LL_id);
+            LL_click.setClickable(true);
+
+            LL_click.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    _startTime = timeStartBuf;
+                    _endTime = timeEndBuf;
+
+                    _buttonStartTime.setText(simpleDateFormat.format(_startTime.getTime()).replace(':', '꞉'));
+                    _buttonEndTime.setText(simpleDateFormat.format(_endTime.getTime()).replace(':', '꞉'));
+
+                    setVisibilityGoneForTimeChoice();
+                }
+            });
+//            TextView txtViewStartTime = (TextView)findViewById(startTime_id);
+
+
         }
     }
 

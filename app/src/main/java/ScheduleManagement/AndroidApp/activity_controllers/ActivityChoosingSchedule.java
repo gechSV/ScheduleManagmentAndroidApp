@@ -16,11 +16,11 @@ import ScheduleManagement.AndroidApp.EventSchedule;
 import ScheduleManagement.AndroidApp.EventScheduleList;
 import ScheduleManagement.AndroidApp.FileIO;
 import ScheduleManagement.AndroidApp.TimeForNumberList;
-import ScheduleManagement.AndroidApp.middleware_class.Groups;
-import ScheduleManagement.AndroidApp.middleware_class.Organization;
+import ScheduleManagement.AndroidApp.activity_controllers.middleware_class.Groups;
+import ScheduleManagement.AndroidApp.activity_controllers.middleware_class.Organization;
 import ScheduleManagement.AndroidApp.R;
 import ScheduleManagement.AndroidApp.httpAppClient;
-import ScheduleManagement.AndroidApp.middleware_class.Schedule;
+import ScheduleManagement.AndroidApp.activity_controllers.middleware_class.Schedule;
 
 public class ActivityChoosingSchedule extends AppCompatActivity implements View.OnClickListener{
     private httpAppClient _httpAppClient;

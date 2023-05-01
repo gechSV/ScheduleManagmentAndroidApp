@@ -7,9 +7,9 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-import ScheduleManagement.AndroidApp.middleware_class.Groups;
-import ScheduleManagement.AndroidApp.middleware_class.Organization;
-import ScheduleManagement.AndroidApp.middleware_class.Schedule;
+import ScheduleManagement.AndroidApp.activity_controllers.middleware_class.Groups;
+import ScheduleManagement.AndroidApp.activity_controllers.middleware_class.Organization;
+import ScheduleManagement.AndroidApp.activity_controllers.middleware_class.Schedule;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -18,6 +18,7 @@ import okhttp3.Response;
     public class httpAppClient {
     private  OkHttpClient client;
 
+    // TODO: крашится и выдаёт ошибку кода
     private String _serverSocket = "192.168.0.11:8000";
 
     public httpAppClient(){
