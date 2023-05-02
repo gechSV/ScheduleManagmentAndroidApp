@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,7 +20,9 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Objects;
 
 import ScheduleManagement.AndroidApp.EventSchedule;
@@ -48,7 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private CardView _CV_cardFullInform, _CV_menuFullInform, _CV_closeFullInform, _CV_FullInformNameBackground;
 
-    TextView _TV_FullInformName;
+    TextView _TV_FullInformName, _TV_FullInformType, _TV_FullInformHost, _TV_FullInformLocation,
+            _TV_FullInformStartTime, _TV_FullInformEndTime, _TV_FullInformTimeDuration;
 
     // _eventScheduleList - объект содержащий список событий
     private EventScheduleList _eventScheduleList_1;
@@ -141,6 +146,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         _CV_FullInformNameBackground.setBackgroundResource(R.drawable.style_for_card_time_lime);
 
         _TV_FullInformName = (TextView)findViewById(R.id.FullInformName);
+        _TV_FullInformType = (TextView)findViewById(R.id.FullInformType);
+        _TV_FullInformHost = (TextView)findViewById(R.id.FullInformHost);
+        _TV_FullInformLocation = (TextView)findViewById(R.id.FullInformLocation);
+        _TV_FullInformStartTime = (TextView)findViewById(R.id.FullInformStartTime);
+        _TV_FullInformEndTime = (TextView)findViewById(R.id.FullInformEndTime);
+        _TV_FullInformTimeDuration = (TextView)findViewById(R.id.FullInformTimeDuration);
 
         _viewPager2Adapter_1 = new ViewPager2Adapter(this, _eventScheduleList_1, 1);
         _viewPager2Adapter_2 = new ViewPager2Adapter(this, _eventScheduleList_1, 2);
@@ -503,23 +514,84 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case(R.id.backGrayBlur):
                 if(_LL_backGrayBlur.getVisibility() == View.VISIBLE){
-                    _LL_backGrayBlur.setVisibility(View.GONE);
-                    _CV_menuFullInform.setVisibility(View.GONE);
-                    _CV_cardFullInform.setVisibility(View.GONE);
+                    CloseInformTable();
                 }
                 break;
             case(R.id.closeFullInform):
-                _LL_backGrayBlur.setVisibility(View.GONE);
-                _CV_menuFullInform.setVisibility(View.GONE);
-                _CV_cardFullInform.setVisibility(View.GONE);
+                CloseInformTable();
                 break;
             default:
                 break;
         }
     }
 
+    private void CloseInformTable(){
+        Animation animationAlphaRev = AnimationUtils.loadAnimation(this,
+                R.anim.animation_background_time_choice_reverse);
+        Animation animationTranslationRev = AnimationUtils.loadAnimation(this,
+                R.anim.animation_emergence_time_choice_con_reverse);
+
+        _LL_backGrayBlur.startAnimation(animationAlphaRev);
+        _CV_menuFullInform.startAnimation(animationTranslationRev);
+        _CV_cardFullInform.startAnimation(animationTranslationRev);
+
+        _LL_backGrayBlur.setVisibility(View.GONE);
+        _CV_menuFullInform.setVisibility(View.GONE);
+        _CV_cardFullInform.setVisibility(View.GONE);
+
+    }
+
     public void ShowInformTable(int id){
+
         _TV_FullInformName.setText(_eventScheduleList_1.GetEventsDayById(id).GetNameEvent());
+
+        String type = _eventScheduleList_1.GetEventsDayById(id).GetTypeEvent();
+        if ((type != null) && (type != "")){
+            _TV_FullInformType.setText("Type of event: " + type);
+            _TV_FullInformType.setVisibility(View.VISIBLE);
+        }
+        else{
+            _TV_FullInformType.setVisibility(View.GONE);
+        }
+
+        String host = _eventScheduleList_1.GetEventsDayById(id).GetEventHost();
+        if((host != null) && (host != "")){
+            _TV_FullInformHost.setText("Host of the event: " + host);
+            _TV_FullInformHost.setVisibility(View.VISIBLE);
+        }
+        else{
+            _TV_FullInformHost.setVisibility(View.GONE);
+        }
+
+        String location = _eventScheduleList_1.GetEventsDayById(id).GetLocationEvent();
+        if((location != null) && (location != "")){
+            _TV_FullInformLocation.setText("Location: " + location);
+            _TV_FullInformLocation.setVisibility(View.VISIBLE);
+        }
+        else{
+            _TV_FullInformLocation.setVisibility(View.GONE);
+        }
+
+        _TV_FullInformStartTime.setText(_eventScheduleList_1.GetEventsDayById(id)
+                .GetStartTimeEvent().replace(':', '꞉'));
+
+        _TV_FullInformEndTime.setText(_eventScheduleList_1.GetEventsDayById(id)
+                .GetEndTimeEvent().replace(':', '꞉'));
+
+        int startHH = _eventScheduleList_1.GetEventsDayById(id).GetTimeEventStart().get(Calendar.HOUR_OF_DAY);
+        int startMM = _eventScheduleList_1.GetEventsDayById(id).GetTimeEventStart().get(Calendar.MINUTE);
+        int endHH = _eventScheduleList_1.GetEventsDayById(id).GetTimeEventEnd().get(Calendar.HOUR_OF_DAY);
+        int endMM = _eventScheduleList_1.GetEventsDayById(id).GetTimeEventEnd().get(Calendar.MINUTE);
+
+        Calendar duration = _eventScheduleList_1.GetEventsDayById(id).GetTimeEventEnd();
+        duration.add(Calendar.MINUTE, -startMM);
+        duration.add(Calendar.HOUR_OF_DAY, -startHH);
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+
+        _TV_FullInformTimeDuration.setText("Time duration: " + simpleDateFormat.format(duration.getTime())
+                .replace(':', '꞉'));
+
 
         // Установка цвета карточки. По умолчанию (если не выбран цвет) - серый
         switch (_eventScheduleList_1.GetEventsDayById(id).GetColorForEvent()){
@@ -557,6 +629,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 _CV_FullInformNameBackground.setBackgroundResource(R.drawable.style_for_card_time_gray);
                 break;
         }
+
+        Animation animationAlpha = AnimationUtils.loadAnimation(this, R.anim.animation_background_time_choice);
+        Animation animationTranslation = AnimationUtils.loadAnimation(this, R.anim.animation_emergence_time_choice_con);
+
+
+        _LL_backGrayBlur.startAnimation(animationAlpha);
+        _CV_menuFullInform.startAnimation(animationTranslation);
+        _CV_cardFullInform.startAnimation(animationTranslation);
 
         _LL_backGrayBlur.setVisibility(View.VISIBLE);
         _CV_menuFullInform.setVisibility(View.VISIBLE);

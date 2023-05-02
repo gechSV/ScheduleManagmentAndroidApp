@@ -173,10 +173,11 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardFullInform"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:visibility="visible">
+            android:visibility="visible"
+            android:clickable="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -209,6 +210,7 @@
                                 android:layout_height="wrap_content"
                                 android:textSize="24dp"
                                 android:text=""
+                                android:textColor="#455A64"
                                 android:layout_marginTop="8dp"
                                 android:layout_marginStart="8dp"
                                 android:layout_marginEnd="8dp"
@@ -216,7 +218,80 @@
 
                         </androidx.cardview.widget.CardView>
 
+                        <TextView
+                            android:id="@+id/FullInformType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="18dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="8dp" />
 
+                        <TextView
+                            android:id="@+id/FullInformHost"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="18dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="8dp" />
+
+                        <TextView
+                            android:id="@+id/FullInformLocation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="18dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="8dp" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="18dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginEnd="8dp"
+                                android:text="Time: " />
+
+                            <TextView
+                                android:id="@+id/FullInformStartTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="00:00"
+                                android:textSize="18dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" - "
+                                android:textSize="18dp"/>
+
+                            <TextView
+                                android:id="@+id/FullInformEndTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="00:00"
+                                android:textSize="18dp"/>
+
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/FullInformTimeDuration"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="18dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="16dp"
+                            android:text="Time duration: "/>
 
                     </LinearLayout>
 
@@ -234,7 +309,8 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
-            android:visibility="visible">
+            android:visibility="visible"
+            android:clickable="true">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/closeFullInform"
