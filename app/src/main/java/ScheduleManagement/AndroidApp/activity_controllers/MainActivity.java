@@ -25,6 +25,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 
+import ScheduleManagement.AndroidApp.CalendarConstructor;
 import ScheduleManagement.AndroidApp.EventSchedule;
 import ScheduleManagement.AndroidApp.EventScheduleList;
 import ScheduleManagement.AndroidApp.FileIO;
@@ -583,7 +584,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int endHH = _eventScheduleList_1.GetEventsDayById(id).GetTimeEventEnd().get(Calendar.HOUR_OF_DAY);
         int endMM = _eventScheduleList_1.GetEventsDayById(id).GetTimeEventEnd().get(Calendar.MINUTE);
 
-        Calendar duration = _eventScheduleList_1.GetEventsDayById(id).GetTimeEventEnd();
+        Calendar duration = CalendarConstructor.GetNewCalendar();
+        duration.set(Calendar.HOUR_OF_DAY, endHH);
+        duration.set(Calendar.MINUTE, endMM);
         duration.add(Calendar.MINUTE, -startMM);
         duration.add(Calendar.HOUR_OF_DAY, -startHH);
 

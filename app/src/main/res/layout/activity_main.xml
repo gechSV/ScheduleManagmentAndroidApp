@@ -162,7 +162,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:visibility="visible"
+        android:visibility="gone"
         android:clickable="true">
 
         <Space
@@ -176,7 +176,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:visibility="visible"
+            android:visibility="gone"
             android:clickable="true">
 
             <LinearLayout
@@ -309,7 +309,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
-            android:visibility="visible"
+            android:visibility="gone"
             android:clickable="true">
 
             <androidx.cardview.widget.CardView

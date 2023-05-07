@@ -13,6 +13,8 @@ public class Schedule {
     private String faculty;
     private String Location;
 
+    private String Group;
+
     public void setWeekDayNumber(int weekDayNumber) {
         this.WeekDayNumber = weekDayNumber;
     }
@@ -65,6 +67,10 @@ public class Schedule {
         return this.Location;
     }
 
+    public void setGroup(String name){ this.Group = name; }
+    public String getGroup() {
+        return this.Group;
+    }
     public EventSchedule toEventSchedule(TimeForNumberList timeList){
         EventSchedule newEvent = new EventSchedule();
 
@@ -79,6 +85,23 @@ public class Schedule {
         newEvent.SetTimeEventEnd(timeList.GetEndTimeById(this.EventNumber - 1));
         return newEvent;
     }
+
+    public EventSchedule toEventScheduleForTeacher(TimeForNumberList timeList){
+        EventSchedule newEvent = new EventSchedule();
+
+        newEvent.setWeekId(WeekType);
+        newEvent.SetWeekDayPeek(WeekDayNumber - 1);
+        newEvent.SetColorForEvent(7);
+        newEvent.SetNameEvent(this.Name);
+        newEvent.SetTypeEvent(this.Type + " (" + this.Group + ')');
+        newEvent.SetHostEvent(this.Host);
+        newEvent.SetLocationEvent(this.Location);
+        newEvent.SetTimeEventStart(timeList.GetStartTimeById(this.EventNumber - 1));
+        newEvent.SetTimeEventEnd(timeList.GetEndTimeById(this.EventNumber - 1));
+        newEvent.setGroupName(this.Group);
+        return newEvent;
+    }
+
     @Override
     public String toString(){
         return

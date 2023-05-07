@@ -81,11 +81,11 @@ import okhttp3.Response;
          * @param OrgName наименование организации
          * @return Groups[]
          */
-    public Groups[] GetGroupByNameOrganizations(String OrgName){
+    public Groups[] GetGroupByNameOrganizations(String OrgName, String ScheduleType){
         String _jsonGroupName;
 
         Request request = new Request.Builder()
-                .url(String.format("http://%s/api/getScheduleNameListByOrganizatonName/%s", _serverSocket, OrgName))
+                .url(String.format("http://%s/api/getScheduleNameListByOrganizatonName/%s/%s", _serverSocket, OrgName, ScheduleType))
                 .build();
 
         CallbackFuture future = new CallbackFuture();

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity_controllers.ActivitySetting">
+    tools:context=".activity_controllers.activity_choosing_teacher_schedule">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/action_con"
@@ -34,13 +34,10 @@
 
     </androidx.cardview.widget.CardView>
 
-
     <ScrollView
-        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="65dp"
-        android:gravity="center_vertical"
+        android:layout_marginTop="66dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,44 +45,50 @@
         app:layout_constraintTop_toBottomOf="@+id/action_con">
 
         <LinearLayout
+            android:id="@+id/button_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/open_choosing_schedule"
-                style="@style/setting_button"
-                android:text="@string/find_a_schedule_in_setting_activity" />
-
-            <Button
-                android:id="@+id/open_choosing_schedule_teachers"
-                style="@style/setting_button"
-                android:text="Find the schedule of teachers" />
-
-            <Button
-                android:id="@+id/open_time_interval"
-                style="@style/setting_button"
-                android:text="Time intervals" />
-
-            <Button
-                android:id="@+id/testButton3"
-                style="@style/setting_button"
-                android:text="Test" />
-
         </LinearLayout>
-
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/connectErrorBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="?attr/icon_no_connect"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/connection_error_message"
+            android:textSize="19sp"
+            android:gravity="center"/>
+
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/Widget.AppCompat.ProgressBar"
-        android:indeterminateTint="@color/deep_orange_300"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="invisible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

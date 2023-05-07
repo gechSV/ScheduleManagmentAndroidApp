@@ -16,6 +16,8 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
     private String _typeEvent; // Тип события (лекция, практика, собрание, концерт и т.д.)
     private String _EventLocation; // Место проведения мероприятия (аудитория, улица, корпус)
     private String _EventHost; // Имя руководителя мероприятия
+
+    private  String _GroupName; // Нужно в основном для индификации событий расписания преподавателей
     private Calendar _timeEventStart; // Время начала мероприятия
     private Calendar _timeEventEnd; // Время окончания мероприятия
     // Массив флагов для хранения выбранного дня недели
@@ -317,5 +319,13 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
     }
     public int getScheduleType(){
         return this._scheduleType;
+    }
+
+    public String getGroupName() {
+        return _GroupName;
+    }
+
+    public void setGroupName(String _GroupName) {
+        this._GroupName = _GroupName;
     }
 }

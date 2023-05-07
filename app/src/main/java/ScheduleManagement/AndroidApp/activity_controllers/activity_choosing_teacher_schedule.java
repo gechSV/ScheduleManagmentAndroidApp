@@ -12,37 +12,36 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import java.util.Collection;
 import java.util.Collections;
 
 import ScheduleManagement.AndroidApp.EventSchedule;
 import ScheduleManagement.AndroidApp.EventScheduleList;
 import ScheduleManagement.AndroidApp.FileIO;
+import ScheduleManagement.AndroidApp.R;
 import ScheduleManagement.AndroidApp.TimeForNumberList;
 import ScheduleManagement.AndroidApp.activity_controllers.middleware_class.Groups;
 import ScheduleManagement.AndroidApp.activity_controllers.middleware_class.Organization;
-import ScheduleManagement.AndroidApp.R;
-import ScheduleManagement.AndroidApp.httpAppClient;
 import ScheduleManagement.AndroidApp.activity_controllers.middleware_class.Schedule;
+import ScheduleManagement.AndroidApp.httpAppClient;
 
-public class ActivityChoosingSchedule extends AppCompatActivity implements View.OnClickListener{
+public class activity_choosing_teacher_schedule extends AppCompatActivity implements View.OnClickListener{
+
     private httpAppClient _httpAppClient;
     private CardView _CV_ActionCon;
     private CardView _buttonBack;
     private LinearLayout _LL_ConnectErrorBox;
     private LinearLayout _LL_ButtonBox;
     private ProgressBar _PB_progress;
-
     private Organization[] organization;
     private Groups[] groups;
-
     private Schedule[] _Schedule;
     int idButton = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choosing_schedule);
+        setContentView(R.layout.activity_choosing_teacher_schedule);
 
         _CV_ActionCon = (CardView)findViewById(R.id.action_con);
         _CV_ActionCon.setBackgroundResource(R.drawable.menu_background);
@@ -67,7 +66,6 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
 
         this.buttonOrganizationBuild(organization);
     }
-
 
     @Override
     public void onClick(View v) {
@@ -132,7 +130,7 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
                 @Override
                 public void run() {
                     try {
-                         _Schedule = _httpAppClient.getScheduleByName(groupName, password);
+                        _Schedule = _httpAppClient.getScheduleByName(groupName, password);
                     }
                     catch (Exception err){
                         Log.d("MesLog", err.getMessage());
@@ -168,7 +166,7 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
             btn1.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
                     _PB_progress.setVisibility(ProgressBar.VISIBLE);
-                    if(!GetGroupName(btn1.getText().toString(), "Расписание групп")){
+                    if(!GetGroupName(btn1.getText().toString(), "Расписание преподавателей")){
                         _PB_progress.setVisibility(ProgressBar.INVISIBLE);
                         return;
                     }
@@ -196,7 +194,7 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
             btn1.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
                     _PB_progress.setVisibility(ProgressBar.VISIBLE);
-                    
+
                     _LL_ConnectErrorBox.setVisibility(View.INVISIBLE);
                     if(!GetSchedule(btn1.getText().toString(), "zabgu") || _Schedule == null){
                         _LL_ButtonBox.setVisibility(View.INVISIBLE);
@@ -204,16 +202,16 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
                         return;
                     }
                     EventScheduleList eventList = FileIO.ReadScheduleEventListInFile
-                            ("Event_Schedule_List_1.bin", ActivityChoosingSchedule.this);
+                            ("Event_Schedule_List_1.bin", activity_choosing_teacher_schedule.this);
                     TimeForNumberList timeList = FileIO.ReadTimeForNumberList("TimeListForZabGU.bin",
-                            ActivityChoosingSchedule.this);
+                            activity_choosing_teacher_schedule.this);
 
                     eventList.RemoveEventsByScheduleType(1);
 
 
 
                     for(Schedule schedule: _Schedule){
-                        EventSchedule event = schedule.toEventSchedule(timeList);
+                        EventSchedule event = schedule.toEventScheduleForTeacher(timeList);
                         event.setScheduleType(1);
                         eventList.AppendEvent(event);
                     }
@@ -222,16 +220,15 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
                     Collections.sort(eventList.GetEventsDayList());
 
                     FileIO.WriteScheduleEventListInFile(eventList.GetEventsDayList(),
-                            "Event_Schedule_List_1.bin", ActivityChoosingSchedule.this);
+                            "Event_Schedule_List_1.bin", activity_choosing_teacher_schedule.this);
 
                     MainActivity.getInstance().ReloadViewPager_1();
                     MainActivity.getInstance().ReloadViewPager_2();
 
                     _PB_progress.setVisibility(ProgressBar.INVISIBLE);
-                    Toast.makeText(ActivityChoosingSchedule.this, "Schedule added successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity_choosing_teacher_schedule.this, "Schedule added successfully", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
 }
-
