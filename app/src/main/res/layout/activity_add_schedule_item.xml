@@ -73,7 +73,8 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:backgroundTint="@color/deep_orange_100"/>
 
     </LinearLayout>
 
@@ -203,7 +204,8 @@
                     android:layout_marginEnd="4dp"
                     android:ems="10"
                     android:hint="@string/PlainTextPlaceholderEventType"
-                    android:inputType="textPersonName"/>
+                    android:inputType="textPersonName"
+                    android:backgroundTint="@color/deep_orange_100"/>
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
@@ -230,7 +232,8 @@
                     android:layout_marginEnd="4dp"
                     android:ems="10"
                     android:hint="@string/PlainTextPlaceholderEventLocation"
-                    android:inputType="textPersonName"/>
+                    android:inputType="textPersonName"
+                    android:backgroundTint="@color/deep_orange_100"/>
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
@@ -256,7 +259,8 @@
                     android:layout_marginEnd="4dp"
                     android:ems="10"
                     android:hint="@string/PlainTextPlaceholderNameOfTheEventHost"
-                    android:inputType="textPersonName"/>
+                    android:inputType="textPersonName"
+                    android:backgroundTint="@color/deep_orange_100"/>
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
@@ -404,6 +408,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tv_typeOfWeek"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="type of week"
@@ -416,7 +421,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:layout_gravity="center">
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp">
 
                     <Button
                         android:id="@+id/button_up_week"

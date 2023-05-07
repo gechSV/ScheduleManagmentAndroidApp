@@ -20,4 +20,5 @@
     <attr name="text_button_week_color_active" format="color"/>
     <attr name="background_action_con" format="color"/>
     <attr name="close_vector" format="reference"/>
+    <attr name="search_vector" format="reference"/>
 </resources>

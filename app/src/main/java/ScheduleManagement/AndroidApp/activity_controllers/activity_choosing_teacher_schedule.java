@@ -7,12 +7,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 
 import ScheduleManagement.AndroidApp.EventSchedule;
 import ScheduleManagement.AndroidApp.EventScheduleList;
@@ -28,7 +33,8 @@ public class activity_choosing_teacher_schedule extends AppCompatActivity implem
 
     private httpAppClient _httpAppClient;
     private CardView _CV_ActionCon;
-    private CardView _buttonBack;
+    private CardView _buttonBack, _buttonSearchTeacher;
+    private EditText _ET_SearchGroup;
     private LinearLayout _LL_ConnectErrorBox;
     private LinearLayout _LL_ButtonBox;
     private ProgressBar _PB_progress;
@@ -55,6 +61,12 @@ public class activity_choosing_teacher_schedule extends AppCompatActivity implem
         _PB_progress = (ProgressBar)findViewById(R.id.progressBar);
         _PB_progress.setVisibility(ProgressBar.INVISIBLE);
 
+        _buttonSearchTeacher = (CardView)findViewById(R.id.buttonSearchTeacher);
+        _buttonSearchTeacher.setBackgroundResource(R.drawable.style_for_button_setting);
+        _buttonSearchTeacher.setOnClickListener(this);
+
+        _ET_SearchGroup = (EditText)findViewById(R.id.etSearchTeacher);
+
         _httpAppClient = new httpAppClient();
 
         ActivitySetting.getInstance().HideProgressBar();
@@ -72,6 +84,22 @@ public class activity_choosing_teacher_schedule extends AppCompatActivity implem
         switch (v.getId()) {
             case (R.id.backButton):
                 this.finish();
+                break;
+            case(R.id.buttonSearchTeacher):
+                String searchGr = _ET_SearchGroup.getText().toString().toLowerCase(Locale.ROOT);
+                ArrayList<Groups> ALSearchGR = new ArrayList<>();
+
+                for(int i = 0; i < groups.length; i++){
+                    if(groups[i].getName().toLowerCase().contains(searchGr)){
+                        ALSearchGR.add(groups[i]);
+                    }
+                }
+
+                Groups[] SearchGR = new Groups[ALSearchGR.size()];
+                ALSearchGR.toArray(SearchGR);
+
+                this.buttonGroupBuild(SearchGR);
+
                 break;
         }
     }
@@ -173,12 +201,23 @@ public class activity_choosing_teacher_schedule extends AppCompatActivity implem
                     _PB_progress.setVisibility(ProgressBar.INVISIBLE);
                     _LL_ButtonBox.removeAllViews();
                     buttonGroupBuild(groups);
+
+                    Animation animationMove = AnimationUtils.loadAnimation(activity_choosing_teacher_schedule.this,
+                            R.anim.animation_open_search_panel);
+
+                    _ET_SearchGroup.startAnimation(animationMove);
+                    _buttonSearchTeacher.startAnimation(animationMove);
+
+                    _ET_SearchGroup.setVisibility(View.VISIBLE);
+                    _buttonSearchTeacher.setVisibility(View.VISIBLE);
                 }
             });
         }
     }
 
     private void buttonGroupBuild(Groups[] gr){
+        _LL_ButtonBox.removeAllViews();
+
         for (int i = 0; i < gr.length; i++){
             Button btn = (Button) LayoutInflater
                     .from(this)

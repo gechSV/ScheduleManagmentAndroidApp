@@ -93,6 +93,8 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
     private CardView _CV_ActionCon, _CV_ChoiceTimePattern, _CV_MenuChoiceTimePattern,
                         _CV_CloseChoiceTime;
 
+    private TextView _TV_typeOfWeek;
+
     // запоминает выбранный цвет
     private int _saveColor;
 
@@ -103,7 +105,6 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
     boolean[] _weekClick;
 
     private EventSchedule _eventSchedule_1[];
-    private EventSchedule _eventSchedule_2[];
 
     EventSchedule eventScheduleForEdit;
 
@@ -215,6 +216,8 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         _CV_CloseChoiceTime.setBackgroundResource(R.drawable.style_for_button_setting);
         _CV_CloseChoiceTime.setOnClickListener(this);
         _CV_CloseChoiceTime.setClickable(true);
+
+        _TV_typeOfWeek = (TextView)findViewById(R.id.tv_typeOfWeek);
 
         // Добавляем кнопки к прослушиванию для метода onClick()
         _buttonChoiceColorLime.setOnClickListener(this);
@@ -397,20 +400,23 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
                 _buttonEndTime.setText(eventScheduleForEdit.GetEndTimeEvent());
 
                 if(weekType == 1){
-                    _weekTypeFlag[0] = true;
+//                    _weekTypeFlag[0] = true;
                     _BT_upWeek.performClick();
                 }
                 if(weekType == 2){
-                    _weekTypeFlag[1] = true;
+//                    _weekTypeFlag[1] = true;
                     _BT_downWeek.performClick();
                 }
                 _LL_WeekTypeCon.setVisibility(View.GONE);
+                _TV_typeOfWeek.setVisibility(View.GONE);
             }
             else{
                 if(weekType == 1){
+//                    _weekTypeFlag[0] = true;
                     _BT_upWeek.performClick();
                 }
                 if(weekType == 2){
+//                    _weekTypeFlag[1] = true;
                     _BT_downWeek.performClick();
                 }
             }
@@ -833,7 +839,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
                 _eventSchedule_1 = new EventSchedule[checkWeekChoice];
             }
             if (_weekTypeFlag[1]) {
-                _eventSchedule_2 = new EventSchedule[checkWeekChoice];
+                _eventSchedule_1 = new EventSchedule[checkWeekChoice];
             }
         }
 
@@ -846,8 +852,8 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
                     _eventSchedule_1[weekClickCount].SetWeekDayPeek(i);
                 }
                 if (_weekTypeFlag[1]){
-                    _eventSchedule_2[weekClickCount] = new EventSchedule();
-                    _eventSchedule_2[weekClickCount].SetWeekDayPeek(i);
+                    _eventSchedule_1[weekClickCount] = new EventSchedule();
+                    _eventSchedule_1[weekClickCount].SetWeekDayPeek(i);
                 }
                 weekClickCount++;
             }
@@ -896,7 +902,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
         }
 
         if(_weekTypeFlag[1]){
-            for(EventSchedule event: _eventSchedule_2){
+            for(EventSchedule event: _eventSchedule_1){
                 event.setWeekId(2);
                 event.setScheduleType(0);
                 // Event name
@@ -953,7 +959,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             }
 
             if(_weekTypeFlag[1]){
-                for(EventSchedule event: _eventSchedule_2)
+                for(EventSchedule event: _eventSchedule_1)
                     eventScheduleListInFile.AppendEvent(event);
             }
 

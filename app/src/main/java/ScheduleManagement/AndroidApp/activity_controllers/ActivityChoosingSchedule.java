@@ -7,13 +7,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import java.security.acl.Group;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Locale;
 
 import ScheduleManagement.AndroidApp.EventSchedule;
 import ScheduleManagement.AndroidApp.EventScheduleList;
@@ -28,11 +34,11 @@ import ScheduleManagement.AndroidApp.activity_controllers.middleware_class.Sched
 public class ActivityChoosingSchedule extends AppCompatActivity implements View.OnClickListener{
     private httpAppClient _httpAppClient;
     private CardView _CV_ActionCon;
-    private CardView _buttonBack;
+    private CardView _buttonBack, _buttonSearchGroup;
     private LinearLayout _LL_ConnectErrorBox;
     private LinearLayout _LL_ButtonBox;
     private ProgressBar _PB_progress;
-
+    private EditText _ET_SearchGroup;
     private Organization[] organization;
     private Groups[] groups;
 
@@ -51,10 +57,16 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
         _buttonBack.setBackgroundResource(R.drawable.style_for_button_setting);
         _buttonBack.setOnClickListener(this);
 
+        _buttonSearchGroup = (CardView)findViewById(R.id.buttonSearchGroup);
+        _buttonSearchGroup.setBackgroundResource(R.drawable.style_for_button_setting);
+        _buttonSearchGroup.setOnClickListener(this);
+
         _LL_ConnectErrorBox = (LinearLayout)findViewById(R.id.connectErrorBox);
         _LL_ButtonBox = (LinearLayout)findViewById(R.id.button_list);
         _PB_progress = (ProgressBar)findViewById(R.id.progressBar);
         _PB_progress.setVisibility(ProgressBar.INVISIBLE);
+
+        _ET_SearchGroup = (EditText)findViewById(R.id.etSearchGroup);
 
         _httpAppClient = new httpAppClient();
 
@@ -74,6 +86,22 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
         switch (v.getId()) {
             case (R.id.backButton):
                 this.finish();
+                break;
+            case(R.id.buttonSearchGroup):
+                String searchGr = _ET_SearchGroup.getText().toString().toLowerCase(Locale.ROOT);
+                ArrayList<Groups> ALSearchGR = new ArrayList<>();
+                
+                for(int i = 0; i < groups.length; i++){
+                    if(groups[i].getName().toLowerCase().contains(searchGr)){
+                        ALSearchGR.add(groups[i]);
+                    }
+                }
+                
+                Groups[] SearchGR = new Groups[ALSearchGR.size()];
+                ALSearchGR.toArray(SearchGR);
+
+                this.buttonGroupBuild(SearchGR);
+
                 break;
         }
     }
@@ -175,12 +203,22 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
                     _PB_progress.setVisibility(ProgressBar.INVISIBLE);
                     _LL_ButtonBox.removeAllViews();
                     buttonGroupBuild(groups);
+
+                    Animation animationMove = AnimationUtils.loadAnimation(ActivityChoosingSchedule.this,
+                            R.anim.animation_open_search_panel);
+
+                    _ET_SearchGroup.startAnimation(animationMove);
+                    _buttonSearchGroup.startAnimation(animationMove);
+
+                    _ET_SearchGroup.setVisibility(View.VISIBLE);
+                    _buttonSearchGroup.setVisibility(View.VISIBLE);
                 }
             });
         }
     }
 
     private void buttonGroupBuild(Groups[] gr){
+        _LL_ButtonBox.removeAllViews();
         for (int i = 0; i < gr.length; i++){
             Button btn = (Button) LayoutInflater
                     .from(this)

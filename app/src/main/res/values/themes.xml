@@ -37,5 +37,6 @@
         <item name="week_day_button_color_inactive">@color/deep_orange_50</item>
         <item name="background_action_con">@color/white</item>
         <item name="close_vector">@drawable/baseline_close_24</item>
+        <item name="search_vector">@drawable/baseline_search_24_orange</item>
     </style>
 </resources>
