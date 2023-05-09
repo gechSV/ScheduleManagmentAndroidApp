@@ -21,4 +21,5 @@
     <attr name="background_action_con" format="color"/>
     <attr name="close_vector" format="reference"/>
     <attr name="search_vector" format="reference"/>
+    <attr name="download_vector" format="reference"/>
 </resources>

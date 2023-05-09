@@ -138,8 +138,33 @@ public class EventScheduleList implements Serializable {
                 returnEvent.add(event);
             }
         }
-
         return returnEvent;
+    }
+
+    /**
+     * Возвращает список событий по индексу дня недели
+     * @param weekDayId - 0-пн, 1-вт, 2-ср, 3-чт, 4-пт, 5-сб, 6-вт
+     * @return Список событий
+     */
+    public boolean GetEventByDayWeekAndWeekType(int weekDayId, int weekDayType){
+
+        ArrayList<EventSchedule> returnEvent = new ArrayList<>();
+        boolean[] weekDay;
+
+        for(EventSchedule event : _eventScheduleList){
+            weekDay = event.GetWeekDayPeek();
+            if(weekDay[weekDayId]){
+                returnEvent.add(event);
+            }
+        }
+
+        for(EventSchedule event: returnEvent){
+            if(event.getWeekId() == weekDayType){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

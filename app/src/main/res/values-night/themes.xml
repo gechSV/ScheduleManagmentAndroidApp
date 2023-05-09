@@ -34,5 +34,6 @@
         <item name="background_action_con">#303030</item>
         <item name="close_vector">@drawable/baseline_close_24_white</item>
         <item name="search_vector">@drawable/baseline_search_24_white</item>
+        <item name="download_vector">@drawable/baseline_arrow_downward_24_white</item>
     </style>
 </resources>
