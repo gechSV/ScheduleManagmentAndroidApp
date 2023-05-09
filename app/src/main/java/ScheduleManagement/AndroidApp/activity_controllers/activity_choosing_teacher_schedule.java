@@ -314,6 +314,9 @@ public class activity_choosing_teacher_schedule extends AppCompatActivity implem
         eventList.SetColorForIdenticalEvents();
         Collections.sort(eventList.GetEventsDayList());
 
+        _LL_ScheduleDemonstrationUp.removeAllViews();
+        _LL_ScheduleDemonstratioDown.removeAllViews();
+
         this.buildDemonstrationCards(eventList, cardId, _LL_ScheduleDemonstrationUp, 1);
         this.buildDemonstrationCards(eventList, cardId, _LL_ScheduleDemonstratioDown, 2);
 

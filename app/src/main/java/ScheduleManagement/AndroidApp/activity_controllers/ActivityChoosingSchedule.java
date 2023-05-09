@@ -313,6 +313,9 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
         eventList.SetColorForIdenticalEvents();
         Collections.sort(eventList.GetEventsDayList());
 
+        _LL_ScheduleDemonstrationUp.removeAllViews();
+        _LL_ScheduleDemonstratioDown.removeAllViews();
+
         this.buildDemonstrationCards(eventList, cardId, _LL_ScheduleDemonstrationUp, 1);
         this.buildDemonstrationCards(eventList, cardId, _LL_ScheduleDemonstratioDown, 2);
 
@@ -331,9 +334,6 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
 
     private void buildDemonstrationCards(EventScheduleList eventList, int cardId,
                                          LinearLayout ScheduleDemonstration, int typeWeek){
-
-        _LL_ScheduleDemonstrationUp.removeAllViews();
-        _LL_ScheduleDemonstratioDown.removeAllViews();
 
         for (int i = 0; i < 7; i++){
 
