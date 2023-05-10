@@ -22,4 +22,6 @@
     <attr name="close_vector" format="reference"/>
     <attr name="search_vector" format="reference"/>
     <attr name="download_vector" format="reference"/>
+    <attr name="add_note_vector" format="reference"/>
+    <attr name="add_schedule_vector" format="reference"/>
 </resources>

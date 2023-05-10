@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ScheduleManagement">
         <activity
+            android:name=".ActivityAddNote"
+            android:exported="false" />
+        <activity
             android:name=".activity_controllers.activity_choosing_teacher_schedule"
             android:exported="false" />
         <activity

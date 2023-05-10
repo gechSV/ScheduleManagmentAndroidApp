@@ -275,4 +275,13 @@ public class EventScheduleList implements Serializable {
         }
 
     }
+
+    public int getColorEventByName(String name){
+        for(EventSchedule event: _eventScheduleList){
+            if(Objects.equals(event.GetNameEvent(), name)){
+                return event.GetColorForEvent();
+            }
+        }
+        return -1;
+    }
 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,8 +10,8 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginBottom="76dp">
+        android:layout_marginBottom="76dp"
+        android:orientation="vertical">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -131,7 +130,7 @@
                     android:layout_weight="1" />
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/add_schedule_event"
+                    android:id="@+id/open_add_actions"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_margin="8dp"
@@ -142,7 +141,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center"
-                        android:src="?attr/baseline_add_30"/>
+                        android:src="?attr/baseline_add_30" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -156,14 +155,14 @@
         android:id="@+id/backGrayBlur"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="#aa555555"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"
-        android:clickable="true">
+        app:layout_constraintTop_toTopOf="parent">
 
         <Space
             android:layout_width="wrap_content"
@@ -176,8 +175,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:visibility="gone"
-            android:clickable="true">
+            android:clickable="true"
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -199,8 +198,8 @@
                             android:id="@+id/FullInformNameBackground"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
                             android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
                             android:layout_marginBottom="8dp">
 
@@ -208,13 +207,13 @@
                                 android:id="@+id/FullInformName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:textSize="24dp"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginBottom="8dp"
                                 android:text=""
                                 android:textColor="#455A64"
-                                android:layout_marginTop="8dp"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginEnd="8dp"
-                                android:layout_marginBottom="8dp"/>
+                                android:textSize="24dp" />
 
                         </androidx.cardview.widget.CardView>
 
@@ -222,28 +221,28 @@
                             android:id="@+id/FullInformType"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="18dp"
                             android:layout_marginStart="16dp"
                             android:layout_marginEnd="8dp"
-                            android:layout_marginBottom="8dp" />
+                            android:layout_marginBottom="8dp"
+                            android:textSize="18dp" />
 
                         <TextView
                             android:id="@+id/FullInformHost"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="18dp"
                             android:layout_marginStart="16dp"
                             android:layout_marginEnd="8dp"
-                            android:layout_marginBottom="8dp" />
+                            android:layout_marginBottom="8dp"
+                            android:textSize="18dp" />
 
                         <TextView
                             android:id="@+id/FullInformLocation"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="18dp"
                             android:layout_marginStart="16dp"
                             android:layout_marginEnd="8dp"
-                            android:layout_marginBottom="8dp" />
+                            android:layout_marginBottom="8dp"
+                            android:textSize="18dp" />
 
 
                         <LinearLayout
@@ -254,30 +253,30 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="18dp"
                                 android:layout_marginStart="16dp"
                                 android:layout_marginEnd="8dp"
-                                android:text="Time: " />
+                                android:text="Time: "
+                                android:textSize="18dp" />
 
                             <TextView
                                 android:id="@+id/FullInformStartTime"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="00:00"
-                                android:textSize="18dp"/>
+                                android:textSize="18dp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=" - "
-                                android:textSize="18dp"/>
+                                android:textSize="18dp" />
 
                             <TextView
                                 android:id="@+id/FullInformEndTime"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="00:00"
-                                android:textSize="18dp"/>
+                                android:textSize="18dp" />
 
 
                         </LinearLayout>
@@ -286,12 +285,12 @@
                             android:id="@+id/FullInformTimeDuration"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="18dp"
-                            android:layout_marginTop="8dp"
                             android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
                             android:layout_marginBottom="16dp"
-                            android:text="Time duration: "/>
+                            android:text="Time duration: "
+                            android:textSize="18dp" />
 
                     </LinearLayout>
 
@@ -307,25 +306,25 @@
             android:layout_width="match_parent"
             android:layout_height="66dp"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
-            android:visibility="gone"
-            android:clickable="true">
+            android:layout_marginEnd="8dp"
+            android:clickable="true"
+            android:visibility="visible">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/closeFullInform"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_gravity="end"
                 android:layout_margin="8dp"
                 android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:layout_gravity="end">
+                android:foreground="?android:attr/selectableItemBackground">
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center"
-                    android:src="?attr/close_vector"/>
+                    android:src="?attr/close_vector" />
             </androidx.cardview.widget.CardView>
 
         </androidx.cardview.widget.CardView>
@@ -334,6 +333,116 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout">
+
+        <LinearLayout
+            android:id="@+id/ll_add_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/add_note"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="8dp"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Add note" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+                        android:src="?attr/add_note_vector" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_add_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/add_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="8dp"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="Add schedule" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+                        android:src="?attr/add_schedule_vector" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
 
     </LinearLayout>
 

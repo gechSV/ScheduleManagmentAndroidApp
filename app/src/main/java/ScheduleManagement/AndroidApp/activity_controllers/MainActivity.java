@@ -22,9 +22,9 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.Objects;
 
+import ScheduleManagement.AndroidApp.ActivityAddNote;
 import ScheduleManagement.AndroidApp.CalendarConstructor;
 import ScheduleManagement.AndroidApp.EventSchedule;
 import ScheduleManagement.AndroidApp.EventScheduleList;
@@ -36,9 +36,8 @@ import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     // _IntentAddEvent - окно добавления события
-    private Intent _IntentAddEvent;
-    private Intent _IntentSetting;
-    private CardView _BT_AddEvent;
+    private Intent _IntentAddEvent, _IntentSetting, _IntentAddNote;
+    private CardView _BT_openAddActions;
     private  Boolean _isAllFabVisible;
     // _viewPager2 - что бы странички листались
     private ViewPager2 _viewPager_1;
@@ -49,9 +48,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TabLayout headerForPage_2;
     private CardView menuCon;
 
-    private LinearLayout _LL_backGrayBlur;
+    private LinearLayout _LL_backGrayBlur, _LL_add_note, _LL_add_schedule;
 
-    private CardView _CV_cardFullInform, _CV_menuFullInform, _CV_closeFullInform, _CV_FullInformNameBackground;
+    private CardView _CV_cardFullInform, _CV_menuFullInform, _CV_closeFullInform,
+            _CV_FullInformNameBackground, _CV_addNote, _CV_addSchedule;
 
     TextView _TV_FullInformName, _TV_FullInformType, _TV_FullInformHost, _TV_FullInformLocation,
             _TV_FullInformStartTime, _TV_FullInformEndTime, _TV_FullInformTimeDuration;
@@ -95,8 +95,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         menuCon.setBackgroundResource(R.drawable.menu_background);
 
         // Кнопки меню
-        _BT_AddEvent = findViewById(R.id.add_schedule_event);
-        _BT_AddEvent.setBackgroundResource(R.drawable.style_for_add_button_in_menu);
+        _BT_openAddActions = findViewById(R.id.open_add_actions);
+        _BT_openAddActions.setBackgroundResource(R.drawable.style_for_add_button_in_menu);
 
         _BT_upWeek = findViewById(R.id.button_up_week);
         _BT_downWeek = findViewById(R.id.button_down_week);
@@ -111,11 +111,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         _IntentAddEvent = new Intent(MainActivity.this, ActivityAddScheduleItem.class);
         _IntentAddEvent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
+        _IntentAddNote = new Intent(MainActivity.this, ActivityAddNote.class);
+        _IntentAddNote.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
         // Инициализация активити настроек
         _IntentSetting = new Intent(MainActivity.this, ActivitySetting.class);
 
         // onClick для кнопки открытия активити для добавления события
-        _BT_AddEvent.setOnClickListener(this);
+        _BT_openAddActions.setOnClickListener(this);
         _BT_upWeek.setOnClickListener(this);
         _BT_downWeek.setOnClickListener(this);
         _BTC_setting.setOnClickListener(this);
@@ -146,6 +149,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         _CV_FullInformNameBackground = (CardView)findViewById(R.id.FullInformNameBackground);
         _CV_FullInformNameBackground.setBackgroundResource(R.drawable.style_for_card_time_lime);
 
+        _CV_addNote = (CardView)findViewById(R.id.add_note);
+        _CV_addNote.setOnClickListener(this);
+        _CV_addNote.setBackgroundResource(R.drawable.style_for_button_setting);
+
+        _CV_addSchedule = (CardView)findViewById(R.id.add_schedule);
+        _CV_addSchedule.setOnClickListener(this);
+        _CV_addSchedule.setBackgroundResource(R.drawable.style_for_button_setting);
+
         _TV_FullInformName = (TextView)findViewById(R.id.FullInformName);
         _TV_FullInformType = (TextView)findViewById(R.id.FullInformType);
         _TV_FullInformHost = (TextView)findViewById(R.id.FullInformHost);
@@ -153,6 +164,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         _TV_FullInformStartTime = (TextView)findViewById(R.id.FullInformStartTime);
         _TV_FullInformEndTime = (TextView)findViewById(R.id.FullInformEndTime);
         _TV_FullInformTimeDuration = (TextView)findViewById(R.id.FullInformTimeDuration);
+
+        _LL_add_note = (LinearLayout)findViewById(R.id.ll_add_note);
+        _LL_add_schedule = (LinearLayout)findViewById(R.id.ll_add_schedule);
 
         _viewPager2Adapter_1 = new ViewPager2Adapter(this, _eventScheduleList_1, 1);
         _viewPager2Adapter_2 = new ViewPager2Adapter(this, _eventScheduleList_1, 2);
@@ -475,7 +489,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case (R.id.add_schedule_event):
+            case (R.id.open_add_actions):
+                this.openOrCloseActionAdd();
+                break;
+            case(R.id.button_up_week):
+                modifiButtonWeekFlag();
+                setActiveButtonWeekChoice(_weekFlag);
+                openViewPager(_weekFlag);
+                break;
+
+            case(R.id.button_down_week):
+                modifiButtonWeekFlag();
+                setActiveButtonWeekChoice(_weekFlag);
+                openViewPager(_weekFlag);
+                break;
+            case(R.id.button_setting):
+                startActivity(_IntentSetting);
+                break;
+            case(R.id.backGrayBlur):
+                if(_LL_backGrayBlur.getVisibility() == View.VISIBLE){
+                    CloseInformTable();
+                }
+                break;
+            case(R.id.closeFullInform):
+                CloseInformTable();
+                break;
+            case(R.id.add_schedule):
                 // Запуск активити для добавления события
                 Bundle bundleAdd = new Bundle();
                 if(_weekFlag == 1){
@@ -498,28 +537,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 _IntentAddEvent.putExtras(bundleAdd);
                 startActivity(_IntentAddEvent);
                 break;
-
-            case(R.id.button_up_week):
-                modifiButtonWeekFlag();
-                setActiveButtonWeekChoice(_weekFlag);
-                openViewPager(_weekFlag);
-                break;
-
-            case(R.id.button_down_week):
-                modifiButtonWeekFlag();
-                setActiveButtonWeekChoice(_weekFlag);
-                openViewPager(_weekFlag);
-                break;
-            case(R.id.button_setting):
-                startActivity(_IntentSetting);
-                break;
-            case(R.id.backGrayBlur):
-                if(_LL_backGrayBlur.getVisibility() == View.VISIBLE){
-                    CloseInformTable();
-                }
-                break;
-            case(R.id.closeFullInform):
-                CloseInformTable();
+            case(R.id.add_note):
+                startActivity(_IntentAddNote);
                 break;
             default:
                 break;
@@ -702,5 +721,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toasty.error(this, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT, true).show();
         }
         return false;
+    }
+
+    private void openOrCloseActionAdd(){
+        if((_LL_add_note.getVisibility() == View.GONE) && (_LL_add_schedule.getVisibility() == View.GONE)) {
+
+            Animation animation = AnimationUtils.loadAnimation(this,
+                    R.anim.open_action_add);
+
+            animation.setDuration(250);
+
+            _LL_add_schedule.startAnimation(animation);
+            _LL_add_note.startAnimation(animation);
+
+            _LL_add_schedule.setVisibility(View.VISIBLE);
+            _LL_add_note.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            Animation animation = AnimationUtils.loadAnimation(this,
+                    R.anim.close_action_add);
+
+            _LL_add_schedule.setAnimation(animation);
+            _LL_add_note.setAnimation(animation);
+
+            _LL_add_schedule.setVisibility(View.GONE);
+            _LL_add_note.setVisibility(View.GONE);
+        }
     }
 }
