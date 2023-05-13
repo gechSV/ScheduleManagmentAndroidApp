@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private CardView _CV_cardFullInform, _CV_menuFullInform, _CV_closeFullInform,
             _CV_FullInformNameBackground, _CV_addNote, _CV_addSchedule, _CV_menuNoteDemonstration,
-            _CV_noteDemonstration, _CV_closeNoteDemonstration, _CV_buttonOpenNoteDemo;
+            _CV_noteDemonstration, _CV_closeNoteDemonstration, _CV_buttonOpenNoteDemo, _CV_addNoteForEvent;
 
     TextView _TV_FullInformName, _TV_FullInformType, _TV_FullInformHost, _TV_FullInformLocation,
             _TV_FullInformStartTime, _TV_FullInformEndTime, _TV_FullInformTimeDuration;
@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CardView _BTC_setting;
 
     private TextView test;
+    String currentNoteName = "";
 
     private int currentNightMode;
 
@@ -201,6 +202,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         _CV_buttonOpenNoteDemo = (CardView)findViewById(R.id.button_open_note_demo);
         _CV_buttonOpenNoteDemo.setOnClickListener(this);
         _CV_buttonOpenNoteDemo.setBackgroundResource(R.drawable.style_for_button_setting);
+
+        _CV_addNoteForEvent = (CardView)findViewById(R.id.add_note_for_event);
+        _CV_addNoteForEvent.setOnClickListener(this);
+        _CV_addNoteForEvent.setBackgroundResource(R.drawable.style_for_button_setting);
 
         _IV_IconNotNotes =(ImageView)findViewById(R.id.IconNotNotes);
         _IV_IconNotNotes.setVisibility(View.GONE);
@@ -578,6 +583,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case(R.id.add_note):
                 Bundle bundleAddNoEdit = new Bundle();
                 bundleAddNoEdit.putBoolean("editFlag", false);
+                bundleAddNoEdit.putString("currentNoteName", null);
                 _IntentAddNote.putExtras(bundleAddNoEdit);
                 startActivity(_IntentAddNote);
                 this.openOrCloseActionAdd();
@@ -592,6 +598,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 _LL_noteDemoContainer.removeAllViews();
                 BuildNoteDemonstration("", _LL_noteDemoContainer);
                 ShowNoteDemonstratio();
+                break;
+            case (R.id.add_note_for_event):
+                Bundle bundleAddForEvent = new Bundle();
+                bundleAddForEvent.putBoolean("editFlag", false);
+                bundleAddForEvent.putString("currentNoteName", currentNoteName);
+                _IntentAddNote.putExtras(bundleAddForEvent);
+                startActivity(_IntentAddNote);
+                this.openOrCloseActionAdd();
+
                 break;
             default:
                 break;
@@ -782,6 +797,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Bundle bundleAdd = new Bundle();
                     bundleAdd.putBoolean("editFlag", true);
                     bundleAdd.putInt("nodeId", noteId);
+                    bundleAdd.putString("currentNoteName", null);
                     _IntentAddNote.putExtras(bundleAdd);
                     startActivity(_IntentAddNote);
                 }
@@ -828,6 +844,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void ShowInformTable(int id){
 
         _TV_FullInformName.setText(_eventScheduleList_1.GetEventsDayById(id).GetNameEvent());
+        currentNoteName = _eventScheduleList_1.GetEventsDayById(id).GetNameEvent();
 
         String type = _eventScheduleList_1.GetEventsDayById(id).GetTypeEvent();
         if ((type != null) && (type != "")){

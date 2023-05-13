@@ -63,8 +63,7 @@
             android:id="@+id/note_name"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginHorizontal="4dp"
             android:ems="10"
             android:hint="Note Name"
             android:inputType="textPersonName"
@@ -87,6 +86,17 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <EditText
+                    android:id="@+id/note_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:textColor="@color/text_color"
+                    android:layout_marginHorizontal="4dp"
+                    android:hint="Text of the note"
+                    android:textSize="16sp"
+                    android:backgroundTint="@color/deep_orange_100"/>
+
                 <org.apmem.tools.layouts.FlowLayout
                     android:id="@+id/ll_schedule_name_button"
                     android:layout_width="match_parent"
@@ -95,16 +105,6 @@
                     android:layout_margin="4dp">
 
                 </org.apmem.tools.layouts.FlowLayout>
-
-                <EditText
-                    android:id="@+id/note_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
-                    android:textColor="@color/text_color"
-                    android:hint="Text of the note"
-                    android:textSize="16sp"
-                    android:backgroundTint="@color/deep_orange_100"/>
 
             </LinearLayout>
 

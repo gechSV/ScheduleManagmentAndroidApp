@@ -35,7 +35,7 @@ public class ActivityAddNote extends AppCompatActivity implements View.OnClickLi
     private ArrayList<CardView> buttonList = new ArrayList<>();
     private ArrayList<ImageView> imgList = new ArrayList<>();// Для сброса чекбоксов
     private ArrayList<String>  textButtonList = new ArrayList<>();
-    private String currentEventName = null;
+    private String currentEventName = "";
     private int currentColorId = -1;
 
     ColorStateList colorStateListRed = ColorStateList.valueOf(0xFFFF9494);
@@ -69,6 +69,7 @@ public class ActivityAddNote extends AppCompatActivity implements View.OnClickLi
 
         Bundle bundle = getIntent().getExtras();
         editFlag = bundle.getBoolean("editFlag");
+        String currentNoteName = bundle.getString("currentNoteName");
 
         if(editFlag){
             noteId = bundle.getInt("nodeId");
@@ -81,6 +82,14 @@ public class ActivityAddNote extends AppCompatActivity implements View.OnClickLi
 
             for(int i = 0; i < buttonList.size(); i++){
                 if(textButtonList.get(i).equals(note.getEventName())){
+                    buttonList.get(i).performClick();
+                }
+            }
+        }
+
+        if(currentNoteName != null){
+            for(int i = 0; i < buttonList.size(); i++){
+                if(textButtonList.get(i).equals(currentNoteName)){
                     buttonList.get(i).performClick();
                 }
             }
@@ -194,7 +203,7 @@ public class ActivityAddNote extends AppCompatActivity implements View.OnClickLi
                     img.setVisibility(View.GONE);
                 }
                 imgOnClick.setVisibility(View.VISIBLE);
-                currentEventName = null;
+                currentEventName = "";
             }
         });
     }
@@ -255,6 +264,7 @@ public class ActivityAddNote extends AppCompatActivity implements View.OnClickLi
         }
         else{
             _ET_note_text.setBackgroundTintList(colorStateListRed);
+            return;
         }
 
         newNote.setEventName(currentEventName);
