@@ -7,6 +7,7 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,10 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apmem.tools.layouts.FlowLayout;
+import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
+import ScheduleManagement.AndroidApp.activity_controllers.MainActivity;
 import es.dmoral.toasty.Toasty;
 
 public class ActivityAddNote extends AppCompatActivity implements View.OnClickListener {
@@ -29,12 +32,17 @@ public class ActivityAddNote extends AppCompatActivity implements View.OnClickLi
     private final String FILE_NAME_EVENT_LIST_1 = "Event_Schedule_List_1.bin";
     private final String FILE_NAME_NOTE_LIST = "Node_List.bin";
 
+    private ArrayList<CardView> buttonList = new ArrayList<>();
     private ArrayList<ImageView> imgList = new ArrayList<>();// Для сброса чекбоксов
+    private ArrayList<String>  textButtonList = new ArrayList<>();
     private String currentEventName = null;
     private int currentColorId = -1;
 
     ColorStateList colorStateListRed = ColorStateList.valueOf(0xFFFF9494);
     ColorStateList colorStateListOrange = ColorStateList.valueOf(0xFFFFCCBC);
+
+    private boolean editFlag = false;
+    private int noteId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +66,25 @@ public class ActivityAddNote extends AppCompatActivity implements View.OnClickLi
         _ET_note_text = (EditText)findViewById(R.id.note_text);
 
         this.buttonScheduleNameBuild();
+
+        Bundle bundle = getIntent().getExtras();
+        editFlag = bundle.getBoolean("editFlag");
+
+        if(editFlag){
+            noteId = bundle.getInt("nodeId");
+
+            NoteList noteList = FileIO.ReadNoteListInFile(FILE_NAME_NOTE_LIST, this);
+            Note note = noteList.getNoteById(noteId);
+
+            _ET_noteName.setText(note.getName());
+            _ET_note_text.setText(note.getText());
+
+            for(int i = 0; i < buttonList.size(); i++){
+                if(textButtonList.get(i).equals(note.getEventName())){
+                    buttonList.get(i).performClick();
+                }
+            }
+        }
     }
 
     @Override
@@ -114,10 +141,12 @@ public class ActivityAddNote extends AppCompatActivity implements View.OnClickLi
             checkImage.setId(imgId);
 
             CardView btnOnClick = (CardView)findViewById(btnId);
+            TextView textButtonOnClick = (TextView)findViewById(txtBtn);
             ImageView imgOnClick = (ImageView)findViewById(imgId);
 
             imgList.add(imgOnClick);
-
+            buttonList.add(btnOnClick);
+            textButtonList.add(name);
             btnOnClick.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -175,25 +204,25 @@ public class ActivityAddNote extends AppCompatActivity implements View.OnClickLi
 
         switch (idColor){
             case 1:
-                return R.drawable.color_button_10dp_lime;
+                return R.drawable.color_button_12dp_lime;
             case 2:
-                return R.drawable.color_button_10dp_green;
+                return R.drawable.color_button_12dp_green;
             case 3:
-                return R.drawable.color_button_10dp_blue;
+                return R.drawable.color_button_12dp_blue;
             case 4:
-                return R.drawable.color_button_10dp_purple;
+                return R.drawable.color_button_12dp_purple;
             case 5:
-                return R.drawable.color_button_10dp_pink;
+                return R.drawable.color_button_12dp_pink;
             case 6:
-                return R.drawable.color_button_10dp_red;
+                return R.drawable.color_button_12dp_red;
             case 7:
-                return R.drawable.color_button_10dp_orange;
+                return R.drawable.color_button_12dp_orange;
             case 8:
-                return R.drawable.color_button_10dp_gray;
+                return R.drawable.color_button_12dp_gray;
             case 9:
-                return R.drawable.color_button_10dp_teal;
+                return R.drawable.color_button_12dp_teal;
             case 10:
-                return R.drawable.color_button_10dp_brown;
+                return R.drawable.color_button_12dp_brown;
             default:
                 return R.drawable.style_for_hintbutton;
         }
@@ -210,6 +239,7 @@ public class ActivityAddNote extends AppCompatActivity implements View.OnClickLi
     }
 
     private void SaveNote(){
+
         _ET_noteName.setBackgroundTintList(colorStateListOrange);
 
         NoteList noteList = FileIO.ReadNodeListFromFile(FILE_NAME_NOTE_LIST, this);
@@ -230,10 +260,26 @@ public class ActivityAddNote extends AppCompatActivity implements View.OnClickLi
         newNote.setEventName(currentEventName);
         newNote.setColorId(currentColorId);
 
-        assert noteList != null;
-        noteList.addNote(newNote);
+        if(editFlag){
+            for(Note note: noteList.getNoteList()){
+                if(note.getId() == noteId){
+                    note.setName(name);
+                    note.setText(text);
+                    note.setEventName(currentEventName);
+                    note.setColorId(currentColorId);
+                    FileIO.WriteNoteListInFile(noteList.getNoteList(), FILE_NAME_NOTE_LIST, this);
+                    MainActivity.getInstance().reloadNoteDemo();
+                }
+            }
+        }
+        else{
+            assert noteList != null;
+            noteList.addNote(newNote);
+            FileIO.WriteNoteListInFile(noteList.getNoteList(), FILE_NAME_NOTE_LIST, this);
+        }
 
-        FileIO.WriteNoteListInFile(noteList.getNoteList(), FILE_NAME_NOTE_LIST, this);
+        this.finish();
+
     }
 
 

@@ -3,15 +3,20 @@ package ScheduleManagement.AndroidApp.activity_controllers;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +34,8 @@ import ScheduleManagement.AndroidApp.CalendarConstructor;
 import ScheduleManagement.AndroidApp.EventSchedule;
 import ScheduleManagement.AndroidApp.EventScheduleList;
 import ScheduleManagement.AndroidApp.FileIO;
+import ScheduleManagement.AndroidApp.Note;
+import ScheduleManagement.AndroidApp.NoteList;
 import ScheduleManagement.AndroidApp.R;
 import ScheduleManagement.AndroidApp.TimeForNumberList;
 import ScheduleManagement.AndroidApp.ViewPager2Adapter;
@@ -48,13 +55,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TabLayout headerForPage_2;
     private CardView menuCon;
 
-    private LinearLayout _LL_backGrayBlur, _LL_add_note, _LL_add_schedule;
+    private LinearLayout _LL_backGrayBlur, _LL_add_note, _LL_add_schedule,
+            _LL_backGrBlurForNote, _LL_noteDemoContainer, _LL_full_inform_note_con;
 
     private CardView _CV_cardFullInform, _CV_menuFullInform, _CV_closeFullInform,
-            _CV_FullInformNameBackground, _CV_addNote, _CV_addSchedule;
+            _CV_FullInformNameBackground, _CV_addNote, _CV_addSchedule, _CV_menuNoteDemonstration,
+            _CV_noteDemonstration, _CV_closeNoteDemonstration, _CV_buttonOpenNoteDemo;
 
     TextView _TV_FullInformName, _TV_FullInformType, _TV_FullInformHost, _TV_FullInformLocation,
             _TV_FullInformStartTime, _TV_FullInformEndTime, _TV_FullInformTimeDuration;
+
+    private ImageView _IV_IconNotNotes;
 
     // _eventScheduleList - объект содержащий список событий
     private EventScheduleList _eventScheduleList_1;
@@ -63,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private final String FILE_NAME_EVENT_LIST_1 = "Event_Schedule_List_1.bin";
     private final String FILE_NAME_TIME_LIST = "TimeList.bin";
     private final String FILE_NAME_TIME_LIST_ZABGU = "TimeListForZabGU.bin";
+    private final String FILE_NAME_NOTE_LIST = "Node_List.bin";
     // Поле открывающее доступ к функциям этого класса из сторонних классов (Метод getInstance())
     private static MainActivity instance;
 
@@ -167,6 +179,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         _LL_add_note = (LinearLayout)findViewById(R.id.ll_add_note);
         _LL_add_schedule = (LinearLayout)findViewById(R.id.ll_add_schedule);
+
+        _LL_backGrBlurForNote = (LinearLayout)findViewById(R.id.backGrayBlurForNoteDemonstration);
+        _LL_backGrBlurForNote.setClickable(true);
+        _LL_backGrBlurForNote.setOnClickListener(this);
+
+        _LL_noteDemoContainer = (LinearLayout)findViewById(R.id.note_demo_container);
+
+        _LL_full_inform_note_con = (LinearLayout)findViewById(R.id.full_inform_note_con);
+
+        _CV_noteDemonstration = (CardView)findViewById(R.id.cardNoteDemonstration);
+        _CV_noteDemonstration.setBackgroundResource(R.drawable.action_screen_menu);
+
+        _CV_closeNoteDemonstration = (CardView)findViewById(R.id.closeNoteDemonstration);
+        _CV_closeNoteDemonstration.setOnClickListener(this);
+        _CV_closeNoteDemonstration.setBackgroundResource(R.drawable.style_for_button_setting);
+
+        _CV_menuNoteDemonstration = (CardView)findViewById(R.id.menuNoteDemonstration);
+        _CV_menuNoteDemonstration.setBackgroundResource(R.drawable.action_screen_menu);
+
+        _CV_buttonOpenNoteDemo = (CardView)findViewById(R.id.button_open_note_demo);
+        _CV_buttonOpenNoteDemo.setOnClickListener(this);
+        _CV_buttonOpenNoteDemo.setBackgroundResource(R.drawable.style_for_button_setting);
+
+        _IV_IconNotNotes =(ImageView)findViewById(R.id.IconNotNotes);
+        _IV_IconNotNotes.setVisibility(View.GONE);
 
         _viewPager2Adapter_1 = new ViewPager2Adapter(this, _eventScheduleList_1, 1);
         _viewPager2Adapter_2 = new ViewPager2Adapter(this, _eventScheduleList_1, 2);
@@ -536,16 +573,243 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 bundleAdd.putInt("weekType", _weekFlag);
                 _IntentAddEvent.putExtras(bundleAdd);
                 startActivity(_IntentAddEvent);
+                this.openOrCloseActionAdd();
                 break;
             case(R.id.add_note):
+                Bundle bundleAddNoEdit = new Bundle();
+                bundleAddNoEdit.putBoolean("editFlag", false);
+                _IntentAddNote.putExtras(bundleAddNoEdit);
                 startActivity(_IntentAddNote);
+                this.openOrCloseActionAdd();
+                break;
+            case(R.id.closeNoteDemonstration):
+                CloseNoteDemonstration();
+                break;
+            case(R.id.backGrayBlurForNoteDemonstration):
+                CloseNoteDemonstration();
+                break;
+            case(R.id.button_open_note_demo):
+                _LL_noteDemoContainer.removeAllViews();
+                BuildNoteDemonstration("", _LL_noteDemoContainer);
+                ShowNoteDemonstratio();
                 break;
             default:
                 break;
         }
     }
 
+    private int getBackgroundResourceById(int colorId){
+        switch (colorId){
+            case 1:
+                return R.drawable.color_button_12dp_lime;
+            case 2:
+                return R.drawable.color_button_12dp_green;
+            case 3:
+                return R.drawable.color_button_12dp_blue;
+            case 4:
+                return R.drawable.color_button_12dp_purple;
+            case 5:
+                return R.drawable.color_button_12dp_pink;
+            case 6:
+                return R.drawable.color_button_12dp_red;
+            case 7:
+                return R.drawable.color_button_12dp_orange;
+            case 8:
+                return R.drawable.color_button_12dp_gray;
+            case 9:
+                return R.drawable.color_button_12dp_teal;
+            case 10:
+                return R.drawable.color_button_12dp_brown;
+            default:
+                return R.drawable.style_for_hintbutton;
+        }
+    }
+
+    private void ShowNoteDemonstratio(){
+        Animation animationAlpha = AnimationUtils.loadAnimation(this, R.anim.animation_background_time_choice);
+        Animation animationTranslation = AnimationUtils.loadAnimation(this, R.anim.animation_emergence_time_choice_con);
+
+
+        _LL_backGrBlurForNote.startAnimation(animationAlpha);
+        _CV_menuNoteDemonstration.startAnimation(animationTranslation);
+        _CV_noteDemonstration.startAnimation(animationTranslation);
+
+        _LL_backGrBlurForNote.setVisibility(View.VISIBLE);
+        _CV_menuNoteDemonstration.setVisibility(View.VISIBLE);
+        _CV_noteDemonstration.setVisibility(View.VISIBLE);
+    }
+
+    public void BuildNoteDemonstration(String categoryName, LinearLayout conteiner){
+        _LL_noteDemoContainer.removeAllViews();
+        NoteList noteList = FileIO.ReadNodeListFromFile(FILE_NAME_NOTE_LIST, this);
+
+        if(noteList.getNoteList().size() == 0){
+            _IV_IconNotNotes.setVisibility(View.VISIBLE);
+            return;
+        }
+        else {
+            _IV_IconNotNotes.setVisibility(View.GONE);
+        }
+
+        for(Note note: noteList.getNoteList()){
+            if(!note.getEventName().contains(categoryName)){
+                continue;
+            }
+
+            LinearLayout llPattern = (LinearLayout) LayoutInflater
+                    .from(this)
+                    .inflate(R.layout.note_demonstration_item_pattern, null);
+
+            CardView colorCard = (CardView)llPattern.findViewById(R.id.color_card);
+            colorCard.setBackgroundResource(getBackgroundResourceById(note.getColorId()));
+
+            TextView noteName = (TextView)llPattern.findViewById(R.id.note_name);
+            if(note.getName().length() > 0){
+                noteName.setVisibility(View.VISIBLE);
+                noteName.setText(note.getName());
+            }
+            else{
+                noteName.setVisibility(View.GONE);
+            }
+
+            TextView noteCategory = (TextView)llPattern.findViewById(R.id.note_category);
+            if((note.getEventName() != null) && (note.getEventName().length() > 0)){
+                noteCategory.setVisibility(View.VISIBLE);
+                noteCategory.setText(note.getEventName());
+            }
+            else{
+                noteCategory.setText("No Category");
+            }
+
+            TextView noteText = (TextView)llPattern.findViewById(R.id.note_text);
+            noteText.setText(note.getText());
+
+            CardView deleteBtn = (CardView)llPattern.findViewById(R.id.delete_note);
+            deleteBtn.setBackgroundResource(R.drawable.delete_card_for_note_2dp);
+
+            CardView editBtn = (CardView)llPattern.findViewById(R.id.edit_note);
+            editBtn.setBackgroundResource(R.drawable.edit_card_for_note_2dp);
+
+            LinearLayout button_action_con = (LinearLayout) llPattern.findViewById(R.id.button_action_con);
+
+            conteiner.addView(llPattern);
+
+
+            final int colorCardId = View.generateViewId();
+            final int delId = View.generateViewId(), editId = View.generateViewId();
+            final int llConId = View.generateViewId();
+            final int noteId = note.getId();
+
+            colorCard.setId(colorCardId);
+            deleteBtn.setId(delId);
+            editBtn.setId(editId);
+            button_action_con.setId(llConId);
+
+            CardView colorCardOnClick = (CardView)findViewById(colorCardId);
+            CardView deldOnClick = (CardView)findViewById(delId);
+            deldOnClick.setClickable(true);
+            CardView editOnClick = (CardView)findViewById(editId);
+            editOnClick.setClickable(true);
+            LinearLayout llConOnClick = (LinearLayout)findViewById(llConId);
+
+            colorCardOnClick.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(llConOnClick.getVisibility() == View.GONE){
+                        Animation animation = AnimationUtils.loadAnimation(
+                                MainActivity.this, R.anim.open_action_button_for_note_show);
+
+                        llConOnClick.startAnimation(animation);
+
+                        llConOnClick.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        Animation animation = AnimationUtils.loadAnimation(
+                                MainActivity.this, R.anim.close_action_button_for_note_show);
+
+                        llConOnClick.startAnimation(animation);
+
+                        llConOnClick.setVisibility(View.GONE);
+                    }
+                }
+            });
+
+            deldOnClick.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Настройка диалогового окна, предназначенного для подтверждения удаления
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this,
+                            R.style.AlertDialogCustom);
+                    builder.setMessage(R.string.confirmation_of_deletion);
+                    builder.setCancelable(false);
+
+                    // Кнопка ОТМЕНИТЬ
+                    builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    // Кнопка УДАЛИТЬ
+                    builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            try {
+                                FileIO.DeleteNoteInFileById(FILE_NAME_NOTE_LIST, MainActivity.this, noteId);
+                                BuildNoteDemonstration("", _LL_noteDemoContainer);
+                            }
+                            catch (Error err)
+                            {
+                                Toasty.error(MainActivity.this, err.getMessage(), Toast.LENGTH_SHORT, true).show();
+                            }
+
+                        }
+                    });
+
+                    AlertDialog alert = builder.create();
+                    alert.show();
+
+                    // Настройка внешнего вида кнопок
+                    Button negativeButton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+                    Button pButton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+
+                    pButton.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.deep_orange_300));
+                }
+            });
+
+            editBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundleAdd = new Bundle();
+                    bundleAdd.putBoolean("editFlag", true);
+                    bundleAdd.putInt("nodeId", noteId);
+                    _IntentAddNote.putExtras(bundleAdd);
+                    startActivity(_IntentAddNote);
+                }
+            });
+        }
+    }
+
+    public void reloadNoteDemo(){
+        BuildNoteDemonstration("", _LL_noteDemoContainer);
+    }
+
+    private void CloseNoteDemonstration(){
+        Animation animationAlphaRev = AnimationUtils.loadAnimation(this,
+                R.anim.animation_background_time_choice_reverse);
+        Animation animationTranslationRev = AnimationUtils.loadAnimation(this,
+                R.anim.animation_emergence_time_choice_con_reverse);
+
+        _LL_backGrBlurForNote.startAnimation(animationAlphaRev);
+        _CV_menuNoteDemonstration.startAnimation(animationTranslationRev);
+        _CV_noteDemonstration.startAnimation(animationTranslationRev);
+
+        _LL_backGrBlurForNote.setVisibility(View.GONE);
+        _CV_menuNoteDemonstration.setVisibility(View.GONE);
+        _CV_noteDemonstration.setVisibility(View.GONE);
+    }
+
     private void CloseInformTable(){
+
         Animation animationAlphaRev = AnimationUtils.loadAnimation(this,
                 R.anim.animation_background_time_choice_reverse);
         Animation animationTranslationRev = AnimationUtils.loadAnimation(this,
@@ -652,6 +916,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
 
+        _LL_full_inform_note_con.removeAllViews();
+        this.BuildNoteDemonstration(_eventScheduleList_1.GetEventsDayById(id).GetNameEvent(),
+                _LL_full_inform_note_con);
+
         Animation animationAlpha = AnimationUtils.loadAnimation(this, R.anim.animation_background_time_choice);
         Animation animationTranslation = AnimationUtils.loadAnimation(this, R.anim.animation_emergence_time_choice_con);
 
@@ -663,6 +931,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         _LL_backGrayBlur.setVisibility(View.VISIBLE);
         _CV_menuFullInform.setVisibility(View.VISIBLE);
         _CV_cardFullInform.setVisibility(View.VISIBLE);
+
+
     }
 
     /**
@@ -749,4 +1019,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             _LL_add_note.setVisibility(View.GONE);
         }
     }
+
 }

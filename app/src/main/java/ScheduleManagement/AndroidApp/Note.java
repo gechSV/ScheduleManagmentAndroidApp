@@ -4,15 +4,13 @@ import java.io.Serializable;
 
 public class Note implements Serializable {
     private static final long serialVersionUID = 8824668725271032228L;
-    private int _id;
+    private int _id = -1;
     private String _name;
     private String _text; // содержание (текст) заметки
     private String _eventName; // Название события к которому относится заметка
     private int _colorId;
 
-    public Note(){
-        this._id = -1;
-    };
+    public Note(){};
 
     public void setId(int _id) {
         this._id = _id;

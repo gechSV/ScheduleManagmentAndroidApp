@@ -14,6 +14,7 @@ public class NoteList implements Serializable {
     public NoteList(ArrayList<Note> list){
         if(list != null){
             this._noteList = list;
+            SetAllId();
         }
     }
 
@@ -39,7 +40,7 @@ public class NoteList implements Serializable {
 
     public void addNote(Note newNote){
         if(newNote != null){
-            newNote.setId(this.GetLastId());
+            newNote.setId(this.GetLastId() + 1);
             this._noteList.add(newNote);
         }
     }
@@ -60,4 +61,26 @@ public class NoteList implements Serializable {
     public ArrayList<Note> getNoteList(){
         return this._noteList;
     }
+
+    /**
+     * Удалить событие по индексу
+     * @param index индекс события
+     */
+    public void  RemoveNoteByIndex(int index){
+        this._noteList.remove(index);
+    }
+
+    /**
+     * Удалить заметку по id
+     * @param id id события
+     */
+    public void  RemoveNoteById(int id){
+        for(int i = 0; i <= this._noteList.size();  i++) {
+            if (this._noteList.get(i).getId() == id) {
+                this.RemoveNoteByIndex(i);
+                return;
+            }
+        }
+    }
+
 }

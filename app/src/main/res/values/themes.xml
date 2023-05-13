@@ -41,5 +41,6 @@
         <item name="download_vector">@drawable/baseline_arrow_downward_24_orange</item>
         <item name="add_schedule_vector">@drawable/baseline_add_task_24_orange</item>
         <item name="add_note_vector">@drawable/baseline_note_add_24_orange</item>
+        <item name="note_vector">@drawable/baseline_notes_24_orange</item>
     </style>
 </resources>

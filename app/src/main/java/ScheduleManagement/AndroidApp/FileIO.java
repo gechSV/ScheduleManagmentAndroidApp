@@ -271,4 +271,18 @@ public class FileIO {
         return null;
     }
 
+    /**
+     * Удаление элемента списка хранящегося в файле
+     * @param fileName имя файла
+     * @param context контекст
+     * @param id индекс удаляемого элемента
+     */
+    public  static void DeleteNoteInFileById(String fileName, Context context, int id){
+        if(id >= 0){
+            NoteList list = FileIO.ReadNodeListFromFile(fileName, context);
+            list.RemoveNoteById(id);
+            FileIO.WriteNoteListInFile(list.getNoteList(), fileName, context);
+        }
+    }
+
 }

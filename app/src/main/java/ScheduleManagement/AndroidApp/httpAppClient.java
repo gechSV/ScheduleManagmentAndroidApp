@@ -19,7 +19,7 @@ import okhttp3.Response;
     private  OkHttpClient client;
 
     // TODO: крашится и выдаёт ошибку кода
-    private String _serverSocket = "192.168.0.11:8000";
+    private String _serverSocket = "186e-95-189-75-41.ngrok-free.app";
 
     public httpAppClient(){
         this.client = new OkHttpClient();

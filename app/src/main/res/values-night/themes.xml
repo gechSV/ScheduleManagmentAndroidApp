@@ -31,11 +31,12 @@
         <item name="hint_button_color">@color/black</item>
         <item name="week_day_button_color_active">@color/deep_orange_300</item>
         <item name="week_day_button_color_inactive">@color/black</item>
-        <item name="background_action_con">#303030</item>
+        <item name="background_action_con">#191919</item>
         <item name="close_vector">@drawable/baseline_close_24_white</item>
         <item name="search_vector">@drawable/baseline_search_24_white</item>
         <item name="download_vector">@drawable/baseline_arrow_downward_24_white</item>
         <item name="add_schedule_vector">@drawable/baseline_add_task_24_white</item>
         <item name="add_note_vector">@drawable/baseline_note_add_24_white</item>
+        <item name="note_vector">@drawable/baseline_notes_24_white</item>
     </style>
 </resources>

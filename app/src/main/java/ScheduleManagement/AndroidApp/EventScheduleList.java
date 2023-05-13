@@ -257,21 +257,20 @@ public class EventScheduleList implements Serializable {
             }
         }
 
-        int color = 1;
-        for(String name: nameList){
-            for(EventSchedule event: _eventScheduleList){
-
-                if(Objects.equals(name, event.GetNameEvent())){
-                    event.SetColorForEvent(color);
-                }
-
-            }
-
+        int color = 0;
+        for(String name: nameListSet){
             color++;
 
             if(color > 10){
                 color=1;
             }
+
+            for(EventSchedule event: _eventScheduleList){
+                if(Objects.equals(name, event.GetNameEvent())){
+                    event.SetColorForEvent(color);
+                }
+            }
+
         }
 
     }
