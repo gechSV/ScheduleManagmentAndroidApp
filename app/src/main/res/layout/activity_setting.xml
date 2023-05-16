@@ -68,9 +68,9 @@
                 android:text="Time intervals" />
 
             <Button
-                android:id="@+id/testButton3"
+                android:id="@+id/application_settings"
                 style="@style/setting_button"
-                android:text="Test" />
+                android:text="Application settings" />
 
         </LinearLayout>
 

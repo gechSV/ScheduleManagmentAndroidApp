@@ -3,6 +3,8 @@
     package="ScheduleManagement.AndroidApp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"
+        android:maxSdkVersion="32" />
 
     <application
         android:allowBackup="true"
@@ -12,8 +14,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ScheduleManagement">
+
+        <receiver
+            android:name=".NotificationReceiver"
+            android:enabled="true" />
+
         <activity
-            android:name=".ActivityAddNote"
+            android:name=".activity_controllers.ActivityApplicationSettings"
+            android:exported="false" />
+        <activity
+            android:name=".activity_controllers.ActivityAddNote"
             android:exported="false" />
         <activity
             android:name=".activity_controllers.activity_choosing_teacher_schedule"
@@ -40,5 +50,6 @@
             </intent-filter>
         </activity>
     </application>
+
 
 </manifest>

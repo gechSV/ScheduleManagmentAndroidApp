@@ -26,9 +26,9 @@ import ScheduleManagement.AndroidApp.EventScheduleList;
 import ScheduleManagement.AndroidApp.FileIO;
 import ScheduleManagement.AndroidApp.R;
 import ScheduleManagement.AndroidApp.TimeForNumberList;
-import ScheduleManagement.AndroidApp.activity_controllers.middleware_class.Groups;
-import ScheduleManagement.AndroidApp.activity_controllers.middleware_class.Organization;
-import ScheduleManagement.AndroidApp.activity_controllers.middleware_class.Schedule;
+import ScheduleManagement.AndroidApp.middleware_class.Groups;
+import ScheduleManagement.AndroidApp.middleware_class.Organization;
+import ScheduleManagement.AndroidApp.middleware_class.Schedule;
 import ScheduleManagement.AndroidApp.httpAppClient;
 
 public class activity_choosing_teacher_schedule extends AppCompatActivity implements View.OnClickListener{
@@ -72,7 +72,7 @@ public class activity_choosing_teacher_schedule extends AppCompatActivity implem
 
         _ET_SearchGroup = (EditText)findViewById(R.id.etSearchTeacher);
 
-        _httpAppClient = new httpAppClient();
+        _httpAppClient = new httpAppClient(this);
 
         ActivitySetting.getInstance().HideProgressBar();
 

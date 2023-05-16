@@ -5,12 +5,14 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Properties;
 
 import es.dmoral.toasty.Toasty;
 
@@ -284,5 +286,84 @@ public class FileIO {
             FileIO.WriteNoteListInFile(list.getNoteList(), fileName, context);
         }
     }
+
+    public static String getUrlAddress( String fileName, Context context){
+        try{
+            // Проверка существования файла содержащего список событий
+            File file = new File(context.getFilesDir(), fileName);
+            if (file.exists()){
+
+                FileInputStream fis = context.openFileInput(fileName);
+                ObjectInputStream is = new ObjectInputStream(fis);
+                String url = (String)is.readObject();
+                is.close();
+                fis.close();
+
+                return url;
+            }
+            else{
+                FileOutputStream fos = context.openFileOutput(fileName, context.MODE_PRIVATE);
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                oos.writeObject("127.0.0.1:8000");
+                oos.close();
+                fos.close();
+                return "127.0.0.1:8000";
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void setUrlAddress(String url, String fileName, Context context){
+        try {
+            FileOutputStream fos = context.openFileOutput(fileName, context.MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(url);
+            oos.close();
+            fos.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean getTypeWeekFlag( String fileName, Context context){
+        try{
+            // Проверка существования файла содержащего список событий
+            File file = new File(context.getFilesDir(), fileName);
+            if (file.exists()){
+
+                FileInputStream fis = context.openFileInput(fileName);
+                ObjectInputStream is = new ObjectInputStream(fis);
+                boolean flag = (boolean)is.readObject();
+                is.close();
+                fis.close();
+
+                return flag;
+            }
+            else{
+                FileOutputStream fos = context.openFileOutput(fileName, context.MODE_PRIVATE);
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                oos.writeObject(true);
+                oos.close();
+                fos.close();
+                return true;
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void setTypeWeekFlag(boolean flag, String fileName, Context context){
+        try {
+            FileOutputStream fos = context.openFileOutput(fileName, context.MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(flag);
+            oos.close();
+            fos.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package ScheduleManagement.AndroidApp;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -7,9 +8,9 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-import ScheduleManagement.AndroidApp.activity_controllers.middleware_class.Groups;
-import ScheduleManagement.AndroidApp.activity_controllers.middleware_class.Organization;
-import ScheduleManagement.AndroidApp.activity_controllers.middleware_class.Schedule;
+import ScheduleManagement.AndroidApp.middleware_class.Groups;
+import ScheduleManagement.AndroidApp.middleware_class.Organization;
+import ScheduleManagement.AndroidApp.middleware_class.Schedule;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -21,7 +22,8 @@ import okhttp3.Response;
     // TODO: крашится и выдаёт ошибку кода
     private String _serverSocket = "186e-95-189-75-41.ngrok-free.app";
 
-    public httpAppClient(){
+    public httpAppClient(Context context){
+        _serverSocket = FileIO.getUrlAddress("urlAddress.bin", context);
         this.client = new OkHttpClient();
     }
 

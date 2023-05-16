@@ -8,20 +8,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import ScheduleManagement.AndroidApp.FileIO;
 import ScheduleManagement.AndroidApp.R;
 import ScheduleManagement.AndroidApp.httpAppClient;
 
 public class ActivitySetting extends AppCompatActivity implements View.OnClickListener{
 
     private static ActivitySetting instance;
-    private Intent _IntentChoosingSchedule, _IntentTimeIntervals, _IntentChoosingTeacherSchedule;
+    private Intent _IntentChoosingSchedule, _IntentTimeIntervals, _IntentChoosingTeacherSchedule,
+                    _IntentApplicationSetting;
     private CardView _CV_ActionCon;
     private CardView _buttonBack;
-    private Button TestButton;
-    private Button _BT_openChoosingSchedule, _BT_openChoosingScheduleTeachers;
-    private Button _BT_openTimeIntervals;
-
+    private Button _BT_openChoosingSchedule, _BT_openChoosingScheduleTeachers, _BT_openTimeIntervals,
+                    _BT_applicationSettings;
     private ProgressBar _PB_progress;
     private httpAppClient _httpAppClient;
 
@@ -40,6 +41,9 @@ public class ActivitySetting extends AppCompatActivity implements View.OnClickLi
 
         _IntentChoosingTeacherSchedule = new Intent(ActivitySetting.this, activity_choosing_teacher_schedule.class);
         _IntentChoosingTeacherSchedule.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        _IntentApplicationSetting = new Intent(ActivitySetting.this, ActivityApplicationSettings.class);
+        _IntentApplicationSetting.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         _CV_ActionCon = (CardView)findViewById(R.id.action_con);
         _CV_ActionCon.setBackgroundResource(R.drawable.menu_background);
@@ -60,7 +64,13 @@ public class ActivitySetting extends AppCompatActivity implements View.OnClickLi
         _PB_progress = (ProgressBar)findViewById(R.id.progressBar);
         _PB_progress.setVisibility(ProgressBar.INVISIBLE);
 
-        _httpAppClient = new httpAppClient();
+        _BT_applicationSettings = (Button)findViewById(R.id.application_settings);
+        _BT_applicationSettings.setOnClickListener(this);
+
+        _httpAppClient = new httpAppClient(this);
+
+        String url = FileIO.getUrlAddress("urlAddress.bin", this);
+        Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
     }
 
     public static ActivitySetting getInstance() {
@@ -87,6 +97,9 @@ public class ActivitySetting extends AppCompatActivity implements View.OnClickLi
                 break;
             case (R.id.open_time_interval):
                 startActivity(_IntentTimeIntervals);
+                break;
+            case(R.id.application_settings):
+                startActivity(_IntentApplicationSetting);
                 break;
         }
     }

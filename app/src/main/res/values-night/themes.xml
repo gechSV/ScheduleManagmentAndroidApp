@@ -38,5 +38,6 @@
         <item name="add_schedule_vector">@drawable/baseline_add_task_24_white</item>
         <item name="add_note_vector">@drawable/baseline_note_add_24_white</item>
         <item name="note_vector">@drawable/baseline_notes_24_white</item>
+        <item name="save_file_vector">@drawable/baseline_save_24_white</item>
     </style>
 </resources>

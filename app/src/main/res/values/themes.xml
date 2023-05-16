@@ -13,7 +13,6 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-
         <!-- Customize your theme here. -->
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:textColor">@color/text_color</item>
@@ -42,5 +41,6 @@
         <item name="add_schedule_vector">@drawable/baseline_add_task_24_orange</item>
         <item name="add_note_vector">@drawable/baseline_note_add_24_orange</item>
         <item name="note_vector">@drawable/baseline_notes_24_orange</item>
+        <item name="save_file_vector">@drawable/baseline_save_24_orange</item>
     </style>
 </resources>

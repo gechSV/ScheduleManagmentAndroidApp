@@ -1,4 +1,4 @@
-package ScheduleManagement.AndroidApp;
+package ScheduleManagement.AndroidApp.activity_controllers;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -7,7 +7,6 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,12 +14,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apmem.tools.layouts.FlowLayout;
-import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-import ScheduleManagement.AndroidApp.activity_controllers.MainActivity;
+import ScheduleManagement.AndroidApp.EventSchedule;
+import ScheduleManagement.AndroidApp.EventScheduleList;
+import ScheduleManagement.AndroidApp.FileIO;
+import ScheduleManagement.AndroidApp.HintBuilder;
+import ScheduleManagement.AndroidApp.Note;
+import ScheduleManagement.AndroidApp.NoteList;
+import ScheduleManagement.AndroidApp.R;
 import es.dmoral.toasty.Toasty;
 
 public class ActivityAddNote extends AppCompatActivity implements View.OnClickListener {

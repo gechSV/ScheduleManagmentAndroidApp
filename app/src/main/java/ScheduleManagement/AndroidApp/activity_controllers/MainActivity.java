@@ -29,13 +29,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Objects;
 
-import ScheduleManagement.AndroidApp.ActivityAddNote;
 import ScheduleManagement.AndroidApp.CalendarConstructor;
 import ScheduleManagement.AndroidApp.EventSchedule;
 import ScheduleManagement.AndroidApp.EventScheduleList;
 import ScheduleManagement.AndroidApp.FileIO;
 import ScheduleManagement.AndroidApp.Note;
 import ScheduleManagement.AndroidApp.NoteList;
+import ScheduleManagement.AndroidApp.NotificationReceiver;
 import ScheduleManagement.AndroidApp.R;
 import ScheduleManagement.AndroidApp.TimeForNumberList;
 import ScheduleManagement.AndroidApp.ViewPager2Adapter;
@@ -339,8 +339,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             FileIO.WriteTimeForNumberList(newTime.GetTimeForNumberList(), FILE_NAME_TIME_LIST, this);
             // Запись в файл шаблонов для скачиваемого расписания вузов
             FileIO.WriteTimeForNumberList(newTime.GetTimeForNumberList(), FILE_NAME_TIME_LIST_ZABGU, this);
+
+
         }
         FileIO.SetRunAppFlag(true, "firstRun.bin", this);
+
+//        Calendar dateNow = Calendar.getInstance();
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+////        simpleDateFormat.format(dateNow.getTime())
+//        Toast.makeText(this, dateNow.get(Calendar.WEEK_OF_YEAR) + "" , Toast.LENGTH_SHORT).show();
+
+        boolean weekFlag = FileIO.getTypeWeekFlag("TypeWeekFlag.bin", this);
+        Calendar dateNow = Calendar.getInstance();
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+//        Toast.makeText(this, dateNow.get(Calendar.WEEK_OF_YEAR) + "" , Toast.LENGTH_SHORT).show();
+        boolean even = dateNow.get(Calendar.WEEK_OF_YEAR) % 2 == 0;
+
+        if(even){
+            if(weekFlag){
+                setActiveButtonWeekChoice(2);
+                _weekFlag = 2;
+            }
+            else{
+                setActiveButtonWeekChoice(1);
+                _weekFlag = 1;
+            }
+        }
+        else{
+            if(!weekFlag){
+                setActiveButtonWeekChoice(1);
+                _weekFlag = 1;
+            }
+            else{
+                setActiveButtonWeekChoice(2);
+                _weekFlag = 2;
+            }
+        }
+
+//        NotificationClass notification = new NotificationClass(MainActivity.this);
+//        notification.newNotification(MainActivity.this);
+//        Calendar when = Calendar.getInstance();
+//        when.add(Calendar.SECOND, 10);
+//
+//        NotificationReceiver.scheduleNotification(this, when.getTimeInMillis(), "", "");
     }
 
     public void OnClickEditEvent(int id){

@@ -1,0 +1,152 @@
+package ScheduleManagement.AndroidApp.activity_controllers;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.Calendar;
+
+import ScheduleManagement.AndroidApp.FileIO;
+import ScheduleManagement.AndroidApp.R;
+
+public class ActivityApplicationSettings extends AppCompatActivity implements View.OnClickListener {
+
+    private CardView _CV_ActionCon, _buttonBack, _CV_button_save_server_address;
+    private Button _BT_downWeek, _BT_upWeek;
+    private EditText _ET_new_url;
+    private int currentNightMode;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_application_settings);
+
+        _CV_ActionCon = (CardView)findViewById(R.id.action_con);
+        _CV_ActionCon.setBackgroundResource(R.drawable.menu_background);
+
+        _CV_button_save_server_address = (CardView)findViewById(R.id.button_save_server_address);
+        _CV_button_save_server_address.setBackgroundResource(R.drawable.style_for_button_setting);
+        _CV_button_save_server_address.setOnClickListener(this);
+
+        _ET_new_url = (EditText)findViewById(R.id.new_url);
+        _ET_new_url.setHint(FileIO.getUrlAddress("urlAddress.bin", this));
+
+        _buttonBack = (CardView)findViewById(R.id.backButton);
+        _buttonBack.setBackgroundResource(R.drawable.style_for_button_setting);
+        _buttonBack.setOnClickListener(this);
+
+        _BT_upWeek = findViewById(R.id.button_up_week);
+        _BT_upWeek.setOnClickListener(this);
+        _BT_downWeek = findViewById(R.id.button_down_week);
+        _BT_downWeek.setOnClickListener(this);
+
+        currentNightMode = getResources().getConfiguration().uiMode
+                & Configuration.UI_MODE_NIGHT_MASK;
+
+        boolean weekFlag = FileIO.getTypeWeekFlag("TypeWeekFlag.bin", this);
+        Calendar dateNow = Calendar.getInstance();
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+//        Toast.makeText(this, dateNow.get(Calendar.WEEK_OF_YEAR) + "" , Toast.LENGTH_SHORT).show();
+        boolean even = dateNow.get(Calendar.WEEK_OF_YEAR) % 2 == 0;
+
+        if(even){
+            if(weekFlag){
+                setActiveButtonWeekChoice(2, false);
+            }
+            else{
+                setActiveButtonWeekChoice(1, false);
+            }
+        }
+        else{
+            if(!weekFlag){
+                setActiveButtonWeekChoice(1, false);
+            }
+            else{
+                setActiveButtonWeekChoice(2, false);
+            }
+        }
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()) {
+            case (R.id.backButton):
+                this.finish();
+                break;
+            case(R.id.button_save_server_address):
+                String newUrl = _ET_new_url.getText().toString();
+                if(newUrl.length() > 0){
+                    FileIO.setUrlAddress(newUrl, "urlAddress.bin", this);
+                    Toast.makeText(this, "The server address has been updated",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(this, "The address field cannot be empty",
+                            Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case(R.id.button_up_week):
+                setActiveButtonWeekChoice(1, true);
+                break;
+            case(R.id.button_down_week):
+                setActiveButtonWeekChoice(2, true);
+                break;
+        }
+    }
+
+    /**
+     * Метод нужен для измеенения внешнего вида кнопок выбора недели
+     * @param weekFlag 1- первая неделя; 2- вторая неделя
+     */
+    private void setActiveButtonWeekChoice(int weekFlag, boolean reloadFile){
+        if (weekFlag == 1){
+
+            _BT_upWeek.setBackgroundResource(R.drawable.style_for_button_up_week_active);
+            _BT_downWeek.setBackgroundResource(R.drawable.style_for_button_down_week_inactive);
+
+            switch (currentNightMode){
+                case Configuration.UI_MODE_NIGHT_NO:
+                    _BT_upWeek.setTextColor(getResources().getColor(R.color.deep_orange_300));
+                    _BT_downWeek.setTextColor(getResources().getColor(R.color.defoultTextColor));
+                case  Configuration.UI_MODE_NIGHT_YES:
+                    break;
+            }
+        }
+        else if(weekFlag == 2) {
+
+            _BT_upWeek.setBackgroundResource(R.drawable.style_for_button_up_inactive);
+            _BT_downWeek.setBackgroundResource(R.drawable.style_for_button_down_week_active);
+
+            switch (currentNightMode){
+                case Configuration.UI_MODE_NIGHT_NO:
+                    _BT_upWeek.setTextColor(getResources().getColor(R.color.defoultTextColor));
+                    _BT_downWeek.setTextColor(getResources().getColor(R.color.deep_orange_300));
+                    break;
+            }
+        }
+
+        if(reloadFile){
+            Calendar dateNow = Calendar.getInstance();
+            boolean flag = dateNow.get(Calendar.WEEK_OF_YEAR) % 2 == 0;
+
+            if(flag && weekFlag == 2){
+                FileIO.setTypeWeekFlag(true, "TypeWeekFlag.bin", this);
+            }
+            else if(!flag && weekFlag == 1)
+            {
+                FileIO.setTypeWeekFlag(true, "TypeWeekFlag.bin", this);
+            }
+            else{
+                FileIO.setTypeWeekFlag(false, "TypeWeekFlag.bin", this);
+            }
+        }
+
+    }
+}
