@@ -183,7 +183,7 @@ public class ActivityAddNote extends AppCompatActivity implements View.OnClickLi
         TextView textButton = (TextView)llPattern.findViewById(R.id.text_button);
         ImageView checkImage = (ImageView)llPattern.findViewById(R.id.check_image);
 
-        textButton.setText("No category");
+        textButton.setText(R.string.No_category);
         btnPattern.setBackgroundResource(R.drawable.style_for_hintbutton);
         checkImage.setVisibility(View.VISIBLE);
 

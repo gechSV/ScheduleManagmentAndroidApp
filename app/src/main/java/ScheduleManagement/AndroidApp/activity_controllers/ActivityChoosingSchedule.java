@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
@@ -75,11 +76,6 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
 
         ActivitySetting.getInstance().HideProgressBar();
 
-        if((!this.getOrganizationName()) || organization == null) {
-            _LL_ConnectErrorBox.setVisibility(View.VISIBLE);
-            return;
-        }
-
         _LL_backGrayBlur = (LinearLayout)findViewById(R.id.backGrayBlur);
         _LL_backGrayBlur.setOnClickListener(this);
 
@@ -99,6 +95,14 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
         _CV_addSchedule = (CardView)findViewById(R.id.addSchedule);
         _CV_addSchedule.setBackgroundResource(R.drawable.style_for_button_setting);
         _CV_addSchedule.setOnClickListener(this);
+
+        boolean flag = this.getOrganizationName();
+
+        if(organization == null) {
+            _LL_ConnectErrorBox.setVisibility(View.VISIBLE);
+            return;
+        }
+
         this.buttonOrganizationBuild(organization);
     }
 
@@ -175,6 +179,7 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
             return true;
         }
         catch(RuntimeException | InterruptedException err){
+            _LL_ConnectErrorBox.setVisibility(View.VISIBLE);
             return false;
         }
     }
@@ -346,25 +351,25 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
 
                 switch (i+1){
                     case(1):
-                        weekday.setText("Monday");
+                        weekday.setText(R.string.Monday);
                         break;
                     case(2):
-                        weekday.setText("Tuesday");
+                        weekday.setText(R.string.Tuesday);
                         break;
                     case(3):
-                        weekday.setText("Wednesday");
+                        weekday.setText(R.string.Wednesday);
                         break;
                     case(4):
-                        weekday.setText("Thursday");
+                        weekday.setText(R.string.Thursday);
                         break;
                     case(5):
-                        weekday.setText("Friday");
+                        weekday.setText(R.string.Friday);
                         break;
                     case(6):
-                        weekday.setText("Saturday");
+                        weekday.setText(R.string.Saturday);
                         break;
                     case(7):
-                        weekday.setText("Sunday");
+                        weekday.setText(R.string.Sunday);
                         break;
                 }
 
@@ -472,7 +477,7 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
         MainActivity.getInstance().ReloadViewPager_2();
 
         _PB_progress.setVisibility(ProgressBar.INVISIBLE);
-        Toast.makeText(ActivityChoosingSchedule.this, "Schedule added successfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(ActivityChoosingSchedule.this, R.string.Schedule_added_successfully, Toast.LENGTH_SHORT).show();
     }
 }
 

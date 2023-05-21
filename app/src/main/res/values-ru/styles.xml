@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ButtonChoiceColor">
+
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_margin">6dp</item>
+    </style>
+    
+    <style name="ButtonPickTime">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:layout_marginStart">5dp</item>
+        <item name="android:layout_marginEnd">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="ButtonPickWeekDay">
+        <item name="android:textColor">?attr/text_button_week_color_inactive</item>
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="TimePickerTheme" parent="@style/ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="title">false</item>
+<!--        <item name="android:textColorPrimary">?attr/</item>-->
+        <item name="android:textColorSecondary">@color/deep_orange_300</item>
+        <item name="android:timePickerMode">clock</item>
+        <item name="background">@drawable/time_picker_layout</item>
+        <item name="colorAccent">?attr/color_picker_accent</item>\
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="AlertDialogCustom" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="android:windowBackground">@drawable/style_for_dialog_alert</item>
+    </style>
+
+    <style name="setting_button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:background">@drawable/background_for_setting_item</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="time_setting_button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:background">@drawable/background_for_setting_item</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+
+
+
+
+</resources>

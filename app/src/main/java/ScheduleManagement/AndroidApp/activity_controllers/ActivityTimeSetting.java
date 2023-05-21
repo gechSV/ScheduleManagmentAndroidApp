@@ -237,7 +237,7 @@ public class ActivityTimeSetting extends AppCompatActivity implements View.OnCli
                     // Настройка диалогового окна, предназначенного для подтверждения удаления
                     AlertDialog.Builder builder = new AlertDialog.Builder(ActivityTimeSetting.this,
                             R.style.AlertDialogCustom);
-                    builder.setMessage("do you really want to remove the time pattern?");
+                    builder.setMessage(R.string.do_you_really_want_to_remove_the_time_pattern);
                     builder.setCancelable(false);
 
                     // Кнопка ОТМЕНИТЬ

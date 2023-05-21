@@ -60,17 +60,17 @@
             <Button
                 android:id="@+id/open_choosing_schedule_teachers"
                 style="@style/setting_button"
-                android:text="Find the schedule of teachers" />
+                android:text="@string/find_the_schedule_of_teachers" />
 
             <Button
                 android:id="@+id/open_time_interval"
                 style="@style/setting_button"
-                android:text="Time intervals" />
+                android:text="@string/time_intervals" />
 
             <Button
                 android:id="@+id/application_settings"
                 style="@style/setting_button"
-                android:text="Application settings" />
+                android:text="@string/application_settings" />
 
         </LinearLayout>
 

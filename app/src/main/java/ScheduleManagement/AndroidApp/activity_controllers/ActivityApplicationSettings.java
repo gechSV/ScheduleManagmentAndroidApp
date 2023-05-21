@@ -84,11 +84,11 @@ public class ActivityApplicationSettings extends AppCompatActivity implements Vi
                 String newUrl = _ET_new_url.getText().toString();
                 if(newUrl.length() > 0){
                     FileIO.setUrlAddress(newUrl, "urlAddress.bin", this);
-                    Toast.makeText(this, "The server address has been updated",
+                    Toast.makeText(this, R.string.The_server_address_has_been_updated,
                             Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(this, "The address field cannot be empty",
+                    Toast.makeText(this, R.string.The_address_field_cannot_be_empty,
                             Toast.LENGTH_SHORT).show();
                 }
                 break;

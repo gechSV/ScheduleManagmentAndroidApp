@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="background_color_for_event_card" format="color" />
+    <attr name="background_for_menu" format="color"/>
+    <attr name="background_for_tabs_pager" format="color"/>
+    <attr name="tabs_text_color" format="color"/>
+    <attr name="button_color" format="color"/>
+    <attr name="baseline_add_30" format="reference"/>
+    <attr name="inactive_button_week" format="color"/>
+    <attr name="back_vector" format="reference"/>
+    <attr name="save_vector" format="reference"/>
+    <attr name="text_button_week_color_inactive" format="color"/>
+    <attr name="color_picker_accent" format="color"/>
+    <attr name="icon_check_list" format="reference"/>
+    <attr name="icon_no_connect" format="reference"/>
+    <attr name="setting_icon" format="reference"/>
+    <attr name="hint_button_color" format="color"/>
+    <attr name="week_day_button_color_active" format="color"/>
+    <attr name="week_day_button_color_inactive" format="color"/>
+    <attr name="text_button_week_color_active" format="color"/>
+    <attr name="background_action_con" format="color"/>
+    <attr name="close_vector" format="reference"/>
+    <attr name="search_vector" format="reference"/>
+    <attr name="download_vector" format="reference"/>
+    <attr name="add_note_vector" format="reference"/>
+    <attr name="add_schedule_vector" format="reference"/>
+    <attr name="note_vector" format="reference"/>
+    <attr name="save_file_vector" format="reference"/>
+</resources>

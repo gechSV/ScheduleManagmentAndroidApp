@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">ScheduleManagement</string>
+    <string name="PlainTextPlaceholderEventName">Название события</string>
+    <string name="PlainTextPlaceholderEventType">Тип события</string>
+    <string name="PlainTextPlaceholderEventLocation">Местоположение</string>
+    <string name="PlainTextPlaceholderNameOfTheEventHost">Имя руководителя</string>
+    <string name="PlainTextPlaceholderChoiceTime">0:00</string>
+    <string name="SaveGood">Событие сохранено</string>
+    <string name="WriteNameError">You need to fill in the name of the event :3</string>
+
+    <string name="Mon"> пн </string>
+    <string name="Tue"> вт </string>
+    <string name="Wed"> ср </string>
+    <string name="Thu"> чт </string>
+    <string name="Fri"> пт </string>
+    <string name="Sat"> сб </string>
+    <string name="Sun"> вс </string>
+
+    <string name="Monday"> Понедельник </string>
+    <string name="Tuesday"> Вторник </string>
+    <string name="Wednesday"> Среда </string>
+    <string name="Thursday"> Четверг </string>
+    <string name="Friday"> Пятница </string>
+    <string name="Saturday"> Суббота </string>
+    <string name="Sunday"> Воскресенье </string>
+
+    <string name="save">Сохранить</string>
+    <string name="add_event">Добавить Событие</string>
+    <string name="error_choice_week_day">Выберите день недели</string>
+    <string name="decline">Отмена</string>
+    <string name="confirmation_of_deletion">Вы действительно хотите удалить это событие?</string>
+    <string name="cancel">Отмена</string>
+    <string name="delete">Удалить</string>
+    <string name="connection_error_message">Ошибка соединения. Проверьте свое подключение к Интернету.</string>
+    <string name="find_a_schedule_in_setting_activity">Найти расписание группы</string>
+    <string name="find_the_schedule_of_teachers">Найти расписание преподавателя</string>
+    <string name="time_intervals">Шаблоны времени</string>
+    <string name="application_settings">Настройки приложения</string>
+    <string name="set_current_week_type">Установить текщий тип недели:</string>
+    <string name="set_server_address">Установить адресс сервера:</string>
+    <string name="note_name">Название Заметки</string>
+    <string name="text_of_the_note">Текст Заметки</string>
+    <string name="start_at">начало в:</string>
+    <string name="end_at">окончание в:</string>
+    <string name="time_pattern">шаблон времени</string>
+    <string name="day_of_the_week">день недели</string>
+    <string name="type_of_week">тип недели</string>
+    <string name="search">Поиск</string>
+    <string name="time">Время:</string>
+    <string name="time_duration">Продолжительность:</string>
+    <string name="add_note">Добавить заметку</string>
+    <string name="add_schedule">Добавить событие</string>
+    <string name="Schedule_added_successfully">Расписание успешно добавлено</string>
+    <string name="No_category">Без категории</string>
+    <string name="Save">Сохранить</string>
+        <string name="The_server_address_has_been_updated">Адрес сервера обновлен</string>
+    <string name="The_address_field_cannot_be_empty">Поле адреса не может быть пустым</string>
+    <string name="do_you_really_want_to_remove_the_time_pattern">Вы действительно хотите удалить шаблон времени?</string>
+    <string name="Type_of_event">Тип мероприятия:  </string>
+    <string name="Host_of_the_event">Имя руководителя:  </string>
+    <string name="Location">Местоположение:  </string>
+    <string name="Time_duration">Продолжительность:  </string>
+    <string name="upper_week">Верхняя неделя</string>
+    <string name="lower_week">Нижняя неделя</string>
+</resources>

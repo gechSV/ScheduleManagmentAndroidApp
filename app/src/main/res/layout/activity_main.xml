@@ -274,7 +274,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
                                 android:layout_marginEnd="8dp"
-                                android:text="Time: "
+                                android:text="@string/time"
                                 android:textSize="18dp" />
 
                             <TextView
@@ -308,7 +308,7 @@
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
                             android:layout_marginBottom="4dp"
-                            android:text="Time duration: "
+                            android:text="@string/time_duration"
                             android:textSize="18dp" />
 
                         <LinearLayout
@@ -438,7 +438,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="Add note" />
+                        android:text="@string/add_note" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -489,7 +489,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        android:text="Add schedule" />
+                        android:text="@string/add_schedule" />
 
                     <ImageView
                         android:layout_width="wrap_content"

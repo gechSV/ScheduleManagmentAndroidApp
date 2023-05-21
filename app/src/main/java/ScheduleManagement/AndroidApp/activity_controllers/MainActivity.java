@@ -734,7 +734,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 noteCategory.setText(note.getEventName());
             }
             else{
-                noteCategory.setText("No Category");
+                noteCategory.setText(R.string.No_category);
             }
 
             TextView noteText = (TextView)llPattern.findViewById(R.id.note_text);
@@ -889,7 +889,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         String type = _eventScheduleList_1.GetEventsDayById(id).GetTypeEvent();
         if ((type != null) && (type != "")){
-            _TV_FullInformType.setText("Type of event: " + type);
+            _TV_FullInformType.setText(getString(R.string.Type_of_event) + type);
             _TV_FullInformType.setVisibility(View.VISIBLE);
         }
         else{
@@ -898,7 +898,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         String host = _eventScheduleList_1.GetEventsDayById(id).GetEventHost();
         if((host != null) && (host != "")){
-            _TV_FullInformHost.setText("Host of the event: " + host);
+            _TV_FullInformHost.setText(getString(R.string.Host_of_the_event) + host);
             _TV_FullInformHost.setVisibility(View.VISIBLE);
         }
         else{
@@ -907,7 +907,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         String location = _eventScheduleList_1.GetEventsDayById(id).GetLocationEvent();
         if((location != null) && (location != "")){
-            _TV_FullInformLocation.setText("Location: " + location);
+            _TV_FullInformLocation.setText(getString(R.string.Location) + location);
             _TV_FullInformLocation.setVisibility(View.VISIBLE);
         }
         else{
@@ -933,7 +933,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
 
-        _TV_FullInformTimeDuration.setText("Time duration: " + simpleDateFormat.format(duration.getTime())
+        _TV_FullInformTimeDuration.setText(getString(R.string.Time_duration) + simpleDateFormat.format(duration.getTime())
                 .replace(':', '꞉'));
 
 

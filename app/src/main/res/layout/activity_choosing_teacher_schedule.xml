@@ -49,7 +49,7 @@
                     android:layout_weight="1"
                     android:layout_gravity="center"
                     android:backgroundTint="@color/deep_orange_100"
-                    android:hint="Search"
+                    android:hint="@string/search"
                     android:visibility="gone"/>
 
                 <androidx.cardview.widget.CardView
@@ -74,6 +74,39 @@
 
         </androidx.cardview.widget.CardView>
 
+        <LinearLayout
+            android:id="@+id/connectErrorBox"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="?attr/icon_no_connect" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/connection_error_message"
+                android:textSize="19sp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -91,33 +124,6 @@
 
             </LinearLayout>
         </ScrollView>
-
-        <LinearLayout
-            android:id="@+id/connectErrorBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="gone">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="?attr/icon_no_connect"
-                android:layout_gravity="center"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/connection_error_message"
-                android:textSize="19sp"
-                android:gravity="center"/>
-
-        </LinearLayout>
 
     </LinearLayout>
 
@@ -175,7 +181,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:textSize="28dp"
-                        android:text="Upper week"
+                        android:text="@string/upper_week"
                         android:gravity="center"/>
 
                     <LinearLayout
@@ -190,7 +196,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:textSize="28dp"
-                        android:text="Lower week"
+                        android:text="@string/lower_week"
                         android:gravity="center"/>
 
                     <LinearLayout

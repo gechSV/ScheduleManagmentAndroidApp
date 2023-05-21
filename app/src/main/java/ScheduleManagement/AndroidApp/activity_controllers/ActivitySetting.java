@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import java.util.concurrent.ExecutionException;
+
 import ScheduleManagement.AndroidApp.FileIO;
 import ScheduleManagement.AndroidApp.R;
 import ScheduleManagement.AndroidApp.httpAppClient;
@@ -71,6 +73,12 @@ public class ActivitySetting extends AppCompatActivity implements View.OnClickLi
 
         String url = FileIO.getUrlAddress("urlAddress.bin", this);
         Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
+
+//        try {
+//            _httpAppClient.addSchedule("asa", "sa");
+//        } catch (ExecutionException | InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     public static ActivitySetting getInstance() {

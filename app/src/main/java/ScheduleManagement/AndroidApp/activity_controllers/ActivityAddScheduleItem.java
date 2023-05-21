@@ -966,7 +966,7 @@ public class ActivityAddScheduleItem extends AppCompatActivity implements View.O
             eventScheduleListInFile.SortEventList();
 
             FileIO.WriteScheduleEventListInFile(eventScheduleListInFile.GetEventsDayList(), FILE_NAME, this);
-            Toasty.success(this, "Save", Toast.LENGTH_SHORT, true).show();
+            Toasty.success(this, R.string.Save, Toast.LENGTH_SHORT, true).show();
             setResult(Activity.RESULT_OK);
             finish();
         }

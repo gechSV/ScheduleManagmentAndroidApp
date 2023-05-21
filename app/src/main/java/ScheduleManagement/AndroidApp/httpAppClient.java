@@ -12,8 +12,10 @@ import ScheduleManagement.AndroidApp.middleware_class.Groups;
 import ScheduleManagement.AndroidApp.middleware_class.Organization;
 import ScheduleManagement.AndroidApp.middleware_class.Schedule;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
     public class httpAppClient {
@@ -39,7 +41,7 @@ import okhttp3.Response;
          * Получить список организаций
          * @return Organization[]
          */
-    public Organization[] GetOrganizationNameByTypeName(){
+    public Organization[] GetOrganizationNameByTypeName() throws ExecutionException, InterruptedException, IOException {
         Request request = new Request.Builder()
                 .url(String.format("http://%s/api/getAllOrganizationByOrgType/Высшее учебное заведение", _serverSocket))
                 .build();
@@ -48,33 +50,18 @@ import okhttp3.Response;
 
         client.newCall(request).enqueue(future);
 
-        try {
             Response response = future.get();
             int code = response.code();
 
-            switch (code){
-                case 200:
-                    Gson gson = new Gson();
-                    String _jsonOrgName = response.body().string();
-                    // Конвертируем json в массив java
-                    Organization[] organization = gson.fromJson(_jsonOrgName, Organization[].class);
-                    return organization;
-                default:
-                    throw new RuntimeException("Сервер недоступен");
-            }
-        }
-        catch (ExecutionException e) {
-            Log.d("MesLog1", e.getMessage());
-            // выполняется если сервер недоступен
-            throw new RuntimeException(e);
-        }
-        catch (InterruptedException e) {
-            Log.d("MesLog2", e.getMessage());
-            throw new RuntimeException(e);
-        }
-        catch (IOException e) {
-            Log.d("MesLog3", e.getMessage());
-            throw new RuntimeException(e);
+        switch (code){
+            case 200:
+                Gson gson = new Gson();
+                String _jsonOrgName = response.body().string();
+                // Конвертируем json в массив java
+                Organization[] organization = gson.fromJson(_jsonOrgName, Organization[].class);
+                return organization;
+            default:
+                throw new RuntimeException("Сервер недоступен");
         }
     }
 
@@ -124,7 +111,7 @@ import okhttp3.Response;
         }
     }
 
-    public Schedule[] getScheduleByName(String groupName, String password){
+    public Schedule[] getScheduleByName(String groupName, String password) throws ExecutionException, InterruptedException, IOException {
         Request request = new Request.Builder()
                 .url(String.format("http://%s/api/getScheduleByGroupName/%s", _serverSocket, groupName))
                 .addHeader("password", password)
@@ -134,30 +121,45 @@ import okhttp3.Response;
 
         client.newCall(request).enqueue(future);
 
-        try {
-            Response response = future.get();
-            int code = response.code();
+        Response response = future.get();
+        int code = response.code();
 
-            switch (code){
-                case 200:
-                    Gson gson = new Gson();
-                    String _jsonSchedule = response.body().string();
-                    Schedule[] schedule = gson.fromJson(_jsonSchedule, Schedule[].class);
-                    return schedule;
-                default:
-                    throw new RuntimeException("Ошибка сервера");
-            }
+        switch (code){
+            case 200:
+                Gson gson = new Gson();
+                String _jsonSchedule = response.body().string();
+                Schedule[] schedule = gson.fromJson(_jsonSchedule, Schedule[].class);
+                return schedule;
+            default:
+                throw new RuntimeException("Ошибка сервера");
         }
-        catch (ExecutionException e) {
-            Log.d("MesLog1", e.getMessage());
-            // выполняется если сервер недоступен
-            throw new RuntimeException(e);
-        }
-        catch (InterruptedException e) {
-            Log.d("MesLog2", e.getMessage());
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
     }
+
+    public boolean addSchedule(String scheduleName, String password) throws ExecutionException, InterruptedException {
+
+        RequestBody formBody = new FormBody.Builder()
+                .add("message", "Your message")
+                .build();
+
+        Request request = new Request.Builder()
+                .url(String.format("http://%s/api/addSchedule/", _serverSocket))
+                .addHeader("password", password)
+                .post(formBody)
+                .build();
+
+        CallbackFuture future = new CallbackFuture();
+
+        client.newCall(request).enqueue(future);
+
+        Response response = future.get();
+        int code = response.code();
+
+        switch (code){
+            case 200:
+                return true;
+            default:
+                return false;
+        }
+    };
 }

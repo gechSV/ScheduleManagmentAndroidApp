@@ -65,7 +65,7 @@
             android:layout_height="60dp"
             android:layout_marginHorizontal="4dp"
             android:ems="10"
-            android:hint="Note Name"
+            android:hint="@string/note_name"
             android:inputType="textPersonName"
             android:textColorHighlight="@color/deep_orange_300"
             android:textColorLink="@color/deep_orange_300"
@@ -93,7 +93,7 @@
                     android:inputType="textMultiLine"
                     android:textColor="@color/text_color"
                     android:layout_marginHorizontal="4dp"
-                    android:hint="Text of the note"
+                    android:hint="@string/text_of_the_note"
                     android:textSize="16sp"
                     android:backgroundTint="@color/deep_orange_100"/>
 
