@@ -301,7 +301,7 @@ public class activity_choosing_teacher_schedule extends AppCompatActivity implem
     private void showScheduleDemonstration(Button btn1){
         int cardId = 0;
 
-        _LL_ConnectErrorBox.setVisibility(View.INVISIBLE);
+        _LL_ConnectErrorBox.setVisibility(View.GONE);
         if(!GetSchedule(btn1.getText().toString(), "zabgu") || _Schedule == null){
             _LL_ButtonBox.setVisibility(View.INVISIBLE);
             _LL_ConnectErrorBox.setVisibility(View.VISIBLE);

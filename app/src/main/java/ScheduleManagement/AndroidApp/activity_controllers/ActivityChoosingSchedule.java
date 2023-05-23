@@ -125,7 +125,7 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
                 
                 Groups[] SearchGR = new Groups[ALSearchGR.size()];
                 ALSearchGR.toArray(SearchGR);
-
+                _LL_ButtonBox.removeAllViews();
                 this.buttonGroupBuild(SearchGR);
 
                 break;
@@ -272,7 +272,6 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
     }
 
     private void buttonGroupBuild(Groups[] gr){
-        _LL_ButtonBox.removeAllViews();
         for (int i = 0; i < gr.length; i++){
             Button btn = (Button) LayoutInflater
                     .from(this)
@@ -297,7 +296,7 @@ public class ActivityChoosingSchedule extends AppCompatActivity implements View.
     private void showScheduleDemonstration(Button btn1){
         int cardId = 0;
 
-        _LL_ConnectErrorBox.setVisibility(View.INVISIBLE);
+        _LL_ConnectErrorBox.setVisibility(View.GONE);
         if(!GetSchedule(btn1.getText().toString(), "zabgu") || _Schedule == null){
             _LL_ButtonBox.setVisibility(View.INVISIBLE);
             _LL_ConnectErrorBox.setVisibility(View.VISIBLE);
