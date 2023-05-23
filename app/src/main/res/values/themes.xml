@@ -43,4 +43,13 @@
         <item name="note_vector">@drawable/baseline_notes_24_orange</item>
         <item name="save_file_vector">@drawable/baseline_save_24_orange</item>
     </style>
+
+    <style name="Theme.ScheduleManagement.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.ScheduleManagement.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.ScheduleManagement.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

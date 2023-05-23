@@ -1,5 +1,7 @@
 package ScheduleManagement.AndroidApp.middleware_class;
 
+import java.util.ArrayList;
+
 import ScheduleManagement.AndroidApp.EventSchedule;
 import ScheduleManagement.AndroidApp.TimeForNumberList;
 
@@ -12,8 +14,30 @@ public class Schedule {
     private String Host;
     private String faculty;
     private String Location;
-
     private String Group;
+    private long TimeStart = 0;
+    private long TimeEnd = 0;
+
+    public Schedule(){}
+
+    static public ArrayList<Schedule> EventScheduleListToSchedule(ArrayList<EventSchedule> schedule){
+        ArrayList<Schedule> newSchedule = new ArrayList<>();
+        for(EventSchedule eventInArray: schedule){
+            Schedule newEvent = new Schedule();
+            newEvent.setWeekDayNumber(eventInArray.GetWeekDayPeekId());
+            newEvent.setWeekType(eventInArray.getWeekId());
+            newEvent.setTimeStart(eventInArray.GetTimeEventStartMs());
+            newEvent.setTimeEnd(eventInArray.GetTimeEventEndMs());
+            newEvent.setName(eventInArray.GetNameEvent());
+            newEvent.setType(eventInArray.GetTypeEvent());
+            newEvent.setHost(eventInArray.GetEventHost());
+            newEvent.setLocation(eventInArray.GetLocationEvent());
+
+            newSchedule.add(newEvent);
+        }
+
+        return newSchedule;
+    }
 
     public void setWeekDayNumber(int weekDayNumber) {
         this.WeekDayNumber = weekDayNumber;
@@ -102,6 +126,52 @@ public class Schedule {
         return newEvent;
     }
 
+    public EventSchedule toUsersSchedule(){
+        EventSchedule newEvent = new EventSchedule();
+
+        newEvent.setWeekId(WeekType);
+        newEvent.SetWeekDayPeek(WeekDayNumber - 1);
+        newEvent.SetColorForEvent(7);
+
+        if(this.getName() != null){
+            newEvent.SetNameEvent(this.Name);
+        }
+        else{
+            newEvent.SetNameEvent("");
+        }
+
+        if(this.getType() != null){
+            newEvent.SetTypeEvent(this.Type);
+        }
+        else{
+            newEvent.SetTypeEvent("");
+        }
+
+        if(this.getHost() != null){
+            newEvent.SetHostEvent(this.Host);
+        }
+        else{
+            newEvent.SetHostEvent("");
+        }
+
+        if(this.getLocation() != null){
+            newEvent.SetLocationEvent(this.Location);
+        }
+        else{
+            newEvent.SetLocationEvent("");
+        }
+
+        if(this.getGroup() != null){
+            newEvent.setGroupName(this.Group);
+        }
+        else{
+            newEvent.setGroupName("");
+        }
+
+        newEvent.SetTimeEventEnd(this.TimeEnd);
+        return newEvent;
+    }
+
     @Override
     public String toString(){
         return
@@ -115,4 +185,19 @@ public class Schedule {
                         "[Location=" + Location + "]\n";
     }
 
+    public long getTimeStart() {
+        return TimeStart;
+    }
+
+    public void setTimeStart(long timeStart) {
+        TimeStart = timeStart;
+    }
+
+    public long getTimeEnd() {
+        return TimeEnd;
+    }
+
+    public void setTimeEnd(long timeEnd) {
+        TimeEnd = timeEnd;
+    }
 }

@@ -62,4 +62,10 @@
     <string name="Time_duration">Продолжительность:  </string>
     <string name="upper_week">Верхняя неделя</string>
     <string name="lower_week">Нижняя неделя</string>
+    <string name="share_a_schedule">Поделиться расписанием</string>
+    <string name="name">Название</string>
+    <string name="password">Пароль</string>
+    <string name="server_connect_err">Отсутствует соединение с сервером.</string>
+    <string name="ok_add_apdate">Расписание добавлено/обновлено в облако</string>
+    <string name="find_a_user_schedule">Найти пользовательское расписание</string>
 </resources>

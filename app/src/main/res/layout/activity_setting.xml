@@ -63,6 +63,16 @@
                 android:text="@string/find_the_schedule_of_teachers" />
 
             <Button
+                android:id="@+id/share_a_schedule"
+                style="@style/setting_button"
+                android:text="@string/share_a_schedule" />
+
+            <Button
+                android:id="@+id/download_users_schedule"
+                style="@style/setting_button"
+                android:text="@string/find_a_user_schedule" />
+
+            <Button
                 android:id="@+id/open_time_interval"
                 style="@style/setting_button"
                 android:text="@string/time_intervals" />

@@ -5,6 +5,7 @@ import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import java.util.concurrent.ExecutionException;
 
+import ScheduleManagement.AndroidApp.ActivityDownloadUsersSchedule;
 import ScheduleManagement.AndroidApp.FileIO;
 import ScheduleManagement.AndroidApp.R;
 import ScheduleManagement.AndroidApp.httpAppClient;
@@ -20,11 +22,11 @@ public class ActivitySetting extends AppCompatActivity implements View.OnClickLi
 
     private static ActivitySetting instance;
     private Intent _IntentChoosingSchedule, _IntentTimeIntervals, _IntentChoosingTeacherSchedule,
-                    _IntentApplicationSetting;
+                    _IntentApplicationSetting, _IntentShareScedule, _IntentDownloadUserSchedule;
     private CardView _CV_ActionCon;
     private CardView _buttonBack;
     private Button _BT_openChoosingSchedule, _BT_openChoosingScheduleTeachers, _BT_openTimeIntervals,
-                    _BT_applicationSettings;
+                    _BT_applicationSettings, _BT_shareASchedule, _BT_download_users_schedule;
     private ProgressBar _PB_progress;
     private httpAppClient _httpAppClient;
 
@@ -46,6 +48,12 @@ public class ActivitySetting extends AppCompatActivity implements View.OnClickLi
 
         _IntentApplicationSetting = new Intent(ActivitySetting.this, ActivityApplicationSettings.class);
         _IntentApplicationSetting.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        _IntentShareScedule = new Intent(ActivitySetting.this, ActivityShareSchedule.class);
+        _IntentShareScedule.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        _IntentDownloadUserSchedule = new Intent(ActivitySetting.this, ActivityDownloadUsersSchedule.class);
+        _IntentDownloadUserSchedule.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         _CV_ActionCon = (CardView)findViewById(R.id.action_con);
         _CV_ActionCon.setBackgroundResource(R.drawable.menu_background);
@@ -69,16 +77,17 @@ public class ActivitySetting extends AppCompatActivity implements View.OnClickLi
         _BT_applicationSettings = (Button)findViewById(R.id.application_settings);
         _BT_applicationSettings.setOnClickListener(this);
 
+        _BT_download_users_schedule = (Button)findViewById(R.id.download_users_schedule);
+        _BT_download_users_schedule.setOnClickListener(this);
+
+        _BT_shareASchedule = (Button)findViewById(R.id.share_a_schedule);
+        _BT_shareASchedule.setOnClickListener(this);
+
         _httpAppClient = new httpAppClient(this);
 
         String url = FileIO.getUrlAddress("urlAddress.bin", this);
         Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
 
-//        try {
-//            _httpAppClient.addSchedule("asa", "sa");
-//        } catch (ExecutionException | InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
     }
 
     public static ActivitySetting getInstance() {
@@ -108,6 +117,12 @@ public class ActivitySetting extends AppCompatActivity implements View.OnClickLi
                 break;
             case(R.id.application_settings):
                 startActivity(_IntentApplicationSetting);
+                break;
+            case(R.id.share_a_schedule):
+                startActivity(_IntentShareScedule);
+                break;
+            case(R.id.download_users_schedule):
+                startActivity(_IntentDownloadUserSchedule);
                 break;
         }
     }

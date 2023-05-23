@@ -6,6 +6,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import ScheduleManagement.AndroidApp.middleware_class.Groups;
@@ -20,6 +21,7 @@ import okhttp3.Response;
 
     public class httpAppClient {
     private  OkHttpClient client;
+    private final String FILE_NAME_EVENT_LIST = "Event_Schedule_List_1.bin";
 
     // TODO: крашится и выдаёт ошибку кода
     private String _serverSocket = "186e-95-189-75-41.ngrok-free.app";
@@ -111,6 +113,7 @@ import okhttp3.Response;
         }
     }
 
+
     public Schedule[] getScheduleByName(String groupName, String password) throws ExecutionException, InterruptedException, IOException {
         Request request = new Request.Builder()
                 .url(String.format("http://%s/api/getScheduleByGroupName/%s", _serverSocket, groupName))
@@ -133,18 +136,47 @@ import okhttp3.Response;
             default:
                 throw new RuntimeException("Ошибка сервера");
         }
-
     }
 
-    public boolean addSchedule(String scheduleName, String password) throws ExecutionException, InterruptedException {
+        public Schedule[] getUserScheduleByName(String groupName) throws ExecutionException, InterruptedException, IOException {
+            Request request = new Request.Builder()
+                    .url(String.format("http://%s/api/getUserSchedule/%s", _serverSocket, groupName))
+                    .build();
+
+            CallbackFuture future = new CallbackFuture();
+
+            client.newCall(request).enqueue(future);
+
+            Response response = future.get();
+            int code = response.code();
+
+            switch (code){
+                case 200:
+                    Gson gson = new Gson();
+                    String _jsonSchedule = response.body().string();
+                    Schedule[] schedule = gson.fromJson(_jsonSchedule, Schedule[].class);
+                    return schedule;
+                default:
+                    throw new RuntimeException("Ошибка сервера");
+            }
+        }
+
+    public boolean addSchedule(String scheduleName, String password, Context context)
+            throws ExecutionException, InterruptedException {
+        EventScheduleList eventScheduleList = FileIO.ReadScheduleEventListInFile(FILE_NAME_EVENT_LIST, context);
+        ArrayList<Schedule> scheduleList = Schedule.EventScheduleListToSchedule(eventScheduleList.GetEventsDayList());
+
+        Gson gson = new Gson();
+        String jsonSchedule = gson.toJson(scheduleList);
 
         RequestBody formBody = new FormBody.Builder()
-                .add("message", "Your message")
+                .add("ScheduleName", scheduleName)
+                .add("Password", password)
+                .add("Schedule", jsonSchedule)
                 .build();
 
         Request request = new Request.Builder()
                 .url(String.format("http://%s/api/addSchedule/", _serverSocket))
-                .addHeader("password", password)
                 .post(formBody)
                 .build();
 

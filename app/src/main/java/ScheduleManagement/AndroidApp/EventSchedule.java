@@ -156,6 +156,14 @@ public class EventSchedule implements Comparable<EventSchedule>, Serializable {
         }
     }
 
+    public void SetTimeEventStart(long time) {
+        _timeEventStart.setTimeInMillis(time);
+    }
+
+    public void SetTimeEventEnd(long time) {
+        _timeEventEnd.setTimeInMillis(time);
+    }
+
 //    /**
 //     * Установка времени начала события
 //     * @param h Часы

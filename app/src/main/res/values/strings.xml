@@ -62,4 +62,19 @@
     <string name="Time_duration">Time duration: </string>
     <string name="upper_week">Upper week</string>
     <string name="lower_week">Lower week</string>
+    <string name="share_a_schedule">Share a schedule</string>
+    <string name="title_activity_share_schedule">ActivityShareSchedule</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="name">Name</string>
+    <string name="password">Password</string>
+    <string name="server_connect_err">There is no connection to the server.</string>
+    <string name="ok_add_apdate">Schedule added/updated to the cloud</string>
+    <string name="find_a_user_schedule">Find a user schedule</string>
 </resources>
