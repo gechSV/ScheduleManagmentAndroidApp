@@ -89,13 +89,22 @@ public class FileIO {
      */
     public static EventScheduleList ReadScheduleEventListInFile(String fileName, Context context){
         try{
-            FileInputStream fis = context.openFileInput(fileName);
-            ObjectInputStream is = new ObjectInputStream(fis);
-            ArrayList<EventSchedule> EventList = (ArrayList<EventSchedule>)is.readObject();
-            EventScheduleList eventScheduleList = new EventScheduleList(EventList);
-            is.close();
-            fis.close();
-            return eventScheduleList;
+            // Проверка существования файла содержащего список событий
+            File file = new File(context.getFilesDir(), fileName);
+            if (file.exists()){
+                    FileInputStream fis = context.openFileInput(fileName);
+                    ObjectInputStream is = new ObjectInputStream(fis);
+                    ArrayList<EventSchedule> EventList = (ArrayList<EventSchedule>)is.readObject();
+                    EventScheduleList eventScheduleList = new EventScheduleList(EventList);
+                    is.close();
+                    fis.close();
+                    return eventScheduleList;
+            }
+            else{
+                EventScheduleList newScheduleList = new EventScheduleList();
+                FileIO.WriteScheduleEventListInFile(newScheduleList.GetEventsDayList(), fileName, context);
+                return newScheduleList;
+            }
         }
         catch (IOException | ClassNotFoundException ex){
             throw new Error(ex.getMessage());

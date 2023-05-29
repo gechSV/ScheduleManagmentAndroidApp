@@ -159,10 +159,10 @@ public class TimeForNumberList implements Serializable {
         // 7 пара
         Calendar timeSt7 = CalendarConstructor.GetNewCalendar();
         Calendar timeEnd7 = CalendarConstructor.GetNewCalendar();
-        timeSt6.set(Calendar.HOUR_OF_DAY, 19);
-        timeSt6.set(Calendar.MINUTE, 15);
-        timeEnd6.set(Calendar.HOUR_OF_DAY, 20);
-        timeEnd6.set(Calendar.MINUTE, 50);
+        timeSt7.set(Calendar.HOUR_OF_DAY, 19);
+        timeSt7.set(Calendar.MINUTE, 15);
+        timeEnd7.set(Calendar.HOUR_OF_DAY, 20);
+        timeEnd7.set(Calendar.MINUTE, 50);
         this._timeForNumberList.add(new TimeForNumber(timeSt7, timeEnd7, 1));
     }
 }

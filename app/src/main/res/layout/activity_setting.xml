@@ -78,6 +78,11 @@
                 android:text="@string/time_intervals" />
 
             <Button
+                android:id="@+id/open_schedule_constructor"
+                style="@style/setting_button"
+                android:text="@string/schedule_constructor" />
+
+            <Button
                 android:id="@+id/application_settings"
                 style="@style/setting_button"
                 android:text="@string/application_settings" />

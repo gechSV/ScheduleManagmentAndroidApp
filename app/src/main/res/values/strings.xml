@@ -77,4 +77,6 @@
     <string name="server_connect_err">There is no connection to the server.</string>
     <string name="ok_add_apdate">Schedule added/updated to the cloud</string>
     <string name="find_a_user_schedule">Find a user schedule</string>
+    <string name="AddEvent">Add Event</string>
+    <string name="schedule_constructor">Schedule constructor</string>
 </resources>

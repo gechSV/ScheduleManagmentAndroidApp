@@ -68,4 +68,6 @@
     <string name="server_connect_err">Отсутствует соединение с сервером.</string>
     <string name="ok_add_apdate">Расписание добавлено/обновлено в облако</string>
     <string name="find_a_user_schedule">Найти пользовательское расписание</string>
+    <string name="AddEvent">Add Event</string>
+    <string name="schedule_constructor">Schedule constructor</string>
 </resources>

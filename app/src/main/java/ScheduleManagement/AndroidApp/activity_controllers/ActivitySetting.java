@@ -14,6 +14,7 @@ import android.widget.Toast;
 import java.util.concurrent.ExecutionException;
 
 import ScheduleManagement.AndroidApp.ActivityDownloadUsersSchedule;
+import ScheduleManagement.AndroidApp.ActivityScheduleConstructor;
 import ScheduleManagement.AndroidApp.FileIO;
 import ScheduleManagement.AndroidApp.R;
 import ScheduleManagement.AndroidApp.httpAppClient;
@@ -22,11 +23,12 @@ public class ActivitySetting extends AppCompatActivity implements View.OnClickLi
 
     private static ActivitySetting instance;
     private Intent _IntentChoosingSchedule, _IntentTimeIntervals, _IntentChoosingTeacherSchedule,
-                    _IntentApplicationSetting, _IntentShareScedule, _IntentDownloadUserSchedule;
+                    _IntentApplicationSetting, _IntentShareScedule, _IntentDownloadUserSchedule,
+                    _IntentScheduleConstructor;
     private CardView _CV_ActionCon;
     private CardView _buttonBack;
     private Button _BT_openChoosingSchedule, _BT_openChoosingScheduleTeachers, _BT_openTimeIntervals,
-                    _BT_applicationSettings, _BT_shareASchedule, _BT_download_users_schedule;
+                    _BT_applicationSettings, _BT_shareASchedule, _BT_download_users_schedule, _BT_open_schedule_constructor;
     private ProgressBar _PB_progress;
     private httpAppClient _httpAppClient;
 
@@ -55,6 +57,9 @@ public class ActivitySetting extends AppCompatActivity implements View.OnClickLi
         _IntentDownloadUserSchedule = new Intent(ActivitySetting.this, ActivityDownloadUsersSchedule.class);
         _IntentDownloadUserSchedule.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
+        _IntentScheduleConstructor = new Intent(ActivitySetting.this, ActivityScheduleConstructor.class);
+        _IntentScheduleConstructor.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
         _CV_ActionCon = (CardView)findViewById(R.id.action_con);
         _CV_ActionCon.setBackgroundResource(R.drawable.menu_background);
 
@@ -79,6 +84,9 @@ public class ActivitySetting extends AppCompatActivity implements View.OnClickLi
 
         _BT_download_users_schedule = (Button)findViewById(R.id.download_users_schedule);
         _BT_download_users_schedule.setOnClickListener(this);
+
+        _BT_open_schedule_constructor = (Button)findViewById(R.id.open_schedule_constructor);
+        _BT_open_schedule_constructor.setOnClickListener(this);
 
         _BT_shareASchedule = (Button)findViewById(R.id.share_a_schedule);
         _BT_shareASchedule.setOnClickListener(this);
@@ -123,6 +131,9 @@ public class ActivitySetting extends AppCompatActivity implements View.OnClickLi
                 break;
             case(R.id.download_users_schedule):
                 startActivity(_IntentDownloadUserSchedule);
+                break;
+            case(R.id.open_schedule_constructor):
+                startActivity(_IntentScheduleConstructor);
                 break;
         }
     }

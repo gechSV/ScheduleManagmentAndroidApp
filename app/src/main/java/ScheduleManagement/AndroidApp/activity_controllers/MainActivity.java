@@ -359,19 +359,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(weekFlag){
                 setActiveButtonWeekChoice(2);
                 _weekFlag = 2;
+                openViewPager(2);
             }
             else{
                 setActiveButtonWeekChoice(1);
                 _weekFlag = 1;
+                openViewPager(1);
             }
         }
         else{
             if(!weekFlag){
                 setActiveButtonWeekChoice(1);
+                openViewPager(1);
                 _weekFlag = 1;
             }
             else{
                 setActiveButtonWeekChoice(2);
+                openViewPager(2);
                 _weekFlag = 2;
             }
         }
