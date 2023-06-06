@@ -31,8 +31,7 @@
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:textColor="#455A64"/>
+                android:paddingRight="8dp"/>
 
         </LinearLayout>
 

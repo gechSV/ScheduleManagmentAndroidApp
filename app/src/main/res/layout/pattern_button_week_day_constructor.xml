@@ -28,12 +28,11 @@
                 android:id="@+id/text_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15dp"
+                android:textSize="18dp"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:textColor="#455A64"/>
+                android:paddingRight="8dp" />
 
         </LinearLayout>
 

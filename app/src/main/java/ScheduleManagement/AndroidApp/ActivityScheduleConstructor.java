@@ -29,7 +29,7 @@ public class ActivityScheduleConstructor extends AppCompatActivity implements Vi
             friday_up_week, friday_down_week, saturday_up_week, saturday_down_week, sunday_up_week,
             sunday_down_week;
     private CardView card_add_event, save_event, close_add_event, menu_add_event, backButton,
-                    save_schedule;
+                    save_schedule, action_con;
     private EditText pattern_name, pattern_host;
     private EventScheduleList schedulePatternList;
     private String FILE_NAME_FOR_PATTERN_CONSTRUCTOR = "PatternEventListForConstructor.bin";
@@ -80,10 +80,16 @@ public class ActivityScheduleConstructor extends AppCompatActivity implements Vi
         sunday_up_week= (LinearLayout)findViewById(R.id.sunday_up_week);
 
         backButton = (CardView)findViewById(R.id.backButton);
+        backButton.setBackgroundResource(R.drawable.style_for_button_setting);
         backButton.setOnClickListener(this);
 
         save_schedule = (CardView)findViewById(R.id.save_schedule);
+        save_schedule.setBackgroundResource(R.drawable.style_for_button_setting);
         save_schedule.setOnClickListener(this);
+
+        action_con = (CardView)findViewById(R.id.action_con);
+        action_con.setBackgroundResource(R.drawable.style_for_button_setting);
+        action_con.setBackgroundResource(R.drawable.menu_background);
 
         timeList = FileIO.ReadTimeForNumberList(FILE_NAME_TIME_LIST_ZABGU, this);
         schedulePatternList = FileIO.ReadScheduleEventListInFile(this.FILE_NAME_FOR_PATTERN_CONSTRUCTOR, this);
@@ -213,6 +219,7 @@ public class ActivityScheduleConstructor extends AppCompatActivity implements Vi
             ImageView checkImage = (ImageView)llPattern.findViewById(R.id.check_image);
 
             textButton.setText(event.GetNameEvent());
+            textButton.setTextColor(getColor(R.color.text_color));
             checkImage.setVisibility(View.GONE);
 
             container_for_button.addView(llPattern);
@@ -240,7 +247,6 @@ public class ActivityScheduleConstructor extends AppCompatActivity implements Vi
                         currentSchedulePattern = null;
                         onClickCheckImage.setVisibility(View.GONE);
                     }
-
                 }
             });
         }

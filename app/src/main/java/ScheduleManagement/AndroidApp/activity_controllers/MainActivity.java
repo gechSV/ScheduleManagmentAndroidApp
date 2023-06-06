@@ -6,10 +6,16 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,13 +35,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Objects;
 
+import ScheduleManagement.AndroidApp.AlarmReceiver;
 import ScheduleManagement.AndroidApp.CalendarConstructor;
 import ScheduleManagement.AndroidApp.EventSchedule;
 import ScheduleManagement.AndroidApp.EventScheduleList;
 import ScheduleManagement.AndroidApp.FileIO;
 import ScheduleManagement.AndroidApp.Note;
 import ScheduleManagement.AndroidApp.NoteList;
-import ScheduleManagement.AndroidApp.NotificationReceiver;
 import ScheduleManagement.AndroidApp.R;
 import ScheduleManagement.AndroidApp.TimeForNumberList;
 import ScheduleManagement.AndroidApp.ViewPager2Adapter;
@@ -94,6 +100,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String currentNoteName = "";
 
     private int currentNightMode;
+
+    private AlarmManager alarmManager;
+    private PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -339,8 +348,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             FileIO.WriteTimeForNumberList(newTime.GetTimeForNumberList(), FILE_NAME_TIME_LIST, this);
             // Запись в файл шаблонов для скачиваемого расписания вузов
             FileIO.WriteTimeForNumberList(newTime.GetTimeForNumberList(), FILE_NAME_TIME_LIST_ZABGU, this);
-
-
         }
         FileIO.SetRunAppFlag(true, "firstRun.bin", this);
 
@@ -380,12 +387,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
 
-//        NotificationClass notification = new NotificationClass(MainActivity.this);
-//        notification.newNotification(MainActivity.this);
-//        Calendar when = Calendar.getInstance();
-//        when.add(Calendar.SECOND, 10);
+        Calendar when = Calendar.getInstance();
+        when.add(Calendar.SECOND, 12);
+
+
+//        createNotificationChannel();
 //
-//        NotificationReceiver.scheduleNotification(this, when.getTimeInMillis(), "", "");
+//        setNotification(when);
+
+    }
+
+    private void setNotification(Calendar calendar) {
+        alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+
+        pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY, pendingIntent);
+
+        Toast.makeText(this, "Уведомление добавлено", Toast.LENGTH_SHORT).show();
+    }
+
+    private void createNotificationChannel() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            CharSequence name = "ScheduleManagerChannel";
+            String description = "Channel For Schedule Manager";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel("schedule_manager_notification", name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     public void OnClickEditEvent(int id){
