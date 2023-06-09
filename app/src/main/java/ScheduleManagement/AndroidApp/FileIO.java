@@ -40,6 +40,60 @@ public class FileIO {
         }
     }
 
+    public static void WriteString(String stringData, String fileName, Context context){
+        try{
+            FileOutputStream fos = context.openFileOutput(fileName, context.MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(stringData);
+            oos.close();
+            fos.close();
+        }
+        catch (IOException ex){
+            throw new Error(ex.getMessage());
+        }
+    }
+
+    public static String ReadString(String fileName, Context context){
+        try{
+            FileInputStream fis = context.openFileInput(fileName);
+            ObjectInputStream is = new ObjectInputStream(fis);
+            String data = (String) is.readObject();
+            is.close();
+            fis.close();
+            return data;
+        }
+        catch (IOException | ClassNotFoundException ex){
+            throw new Error(ex.getMessage());
+        }
+    }
+
+    static public String ReadStringFromFile(String fileName, Context context){
+        try {
+            // Проверка существования файла содержащего список событий
+            File file = new File(context.getFilesDir(), fileName);
+
+            // Проверка на существование файла
+            if(file.exists()){
+                // Файл существует (был создан ранее)
+
+                // Читаем список из файла и записываем в новый объект
+                return ReadString(fileName, context);
+            }
+            else
+            {
+                // Файл не существует (не был создан)
+                // Cоздаём новый пустой объект и записываем его в файл
+//                FileIO.WriteString(null, fileName, context);
+                return null;
+//                Toasty.error(this, "Не существ", Toast.LENGTH_SHORT, true).show();
+            }
+        }
+        catch (Error err){
+            Toasty.error(context, Objects.requireNonNull(err.getMessage()), Toast.LENGTH_SHORT,
+                    true).show();
+        }
+        return null;
+    }
 
     /**
      * Чтение объекта EventSchedule из файла

@@ -40,8 +40,10 @@
         <item name="download_vector">@drawable/baseline_arrow_downward_24_orange</item>
         <item name="add_schedule_vector">@drawable/baseline_add_task_24_orange</item>
         <item name="add_note_vector">@drawable/baseline_note_add_24_orange</item>
-        <item name="note_vector">@drawable/baseline_notes_24_orange</item>
+        <item name="note_vector">@drawable/baseline_sticky_note_24_orange</item>
         <item name="save_file_vector">@drawable/baseline_save_24_orange</item>
+        <item name="note_counter_vector">@drawable/baseline_sticky_note_2_24</item>
+        <item name="share_vector">@drawable/baseline_ios_share_24_orange</item>
     </style>
 
     <style name="Theme.ScheduleManagement.NoActionBar">

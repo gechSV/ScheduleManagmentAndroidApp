@@ -115,6 +115,7 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Vi
     // Класс для создания и заполнения макета для отображения на каждой странице ViewPager2
     public static class ViewHolder extends RecyclerView.ViewHolder {
         LinearLayout linearLayout;
+        private final String FILE_NAME_NOTE_LIST = "Node_List.bin";
         private int index;
         private int id;
         /**
@@ -156,8 +157,11 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Vi
                 CardView deleteCard = cardView.findViewById(R.id.delete_event);
                 LinearLayout LinerLayoutActionForCard = buffView[arrayCounter].findViewById(R.id.EditButton);
                 TextView idEvent = cardView.findViewById(R.id.idEvent);
+
                 final int _idEvent =  newEventList.get(index).GetId();
 
+
+                //  Нажатие на карточку
                 cardView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -346,6 +350,27 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Vi
             }
         }
 
+        private void setNoteCounter(String eventName, LinearLayout linerLayout, TextView textView, Context context){
+
+            NoteList noteList = FileIO.ReadNodeListFromFile(FILE_NAME_NOTE_LIST, context);
+            int count = 0;
+
+            assert noteList != null;
+            for(Note note: noteList.getNoteList()) {
+                if (note.getEventName() == null || !note.getEventName().equals(eventName)) {
+                    continue;
+                }
+                count++;
+            }
+
+            if(count <= 0){
+                return;
+            }
+
+            linerLayout.setVisibility(View.VISIBLE);
+            textView.setText(count + "");
+        }
+
         void SetTextData(EventSchedule event, CardView cardView){
 //            TypedValue typedValue = new TypedValue();
 //
@@ -361,8 +386,12 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Vi
             TextView textViewType = cardView.findViewById(R.id.event_type);
             TextView textViewHost = cardView.findViewById(R.id.event_host);
             TextView textViewLocation = cardView.findViewById(R.id.event_location);
+            LinearLayout note_counter = cardView.findViewById(R.id.note_counter);
+//                note_counter.setBackgroundResource(R.drawable.note_counter);
+            TextView text_note_counter = cardView.findViewById(R.id.text_note_counter);
+//                text_note_counter.setText("4");
 
-
+            this.setNoteCounter(event.GetNameEvent(), note_counter, text_note_counter, itemView.getContext());
 
             textViewStartTime.setText(event.GetStartTimeEvent().replace(':', '꞉'));
             textViewEndTime.setText(event.GetEndTimeEvent().replace(':', '꞉'));

@@ -26,4 +26,6 @@
     <attr name="add_schedule_vector" format="reference"/>
     <attr name="note_vector" format="reference"/>
     <attr name="save_file_vector" format="reference"/>
+    <attr name="note_counter_vector" format="reference"/>
+    <attr name="share_vector" format="reference"/>
 </resources>

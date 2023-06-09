@@ -3,6 +3,7 @@ package ScheduleManagement.AndroidApp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +31,7 @@ public class ActivityScheduleConstructor extends AppCompatActivity implements Vi
             sunday_down_week;
     private CardView card_add_event, save_event, close_add_event, menu_add_event, backButton,
                     save_schedule, action_con;
-    private EditText pattern_name, pattern_host;
+    private EditText pattern_name, pattern_host, pattern_type, pattern_location;
     private EventScheduleList schedulePatternList;
     private String FILE_NAME_FOR_PATTERN_CONSTRUCTOR = "PatternEventListForConstructor.bin";
     private final String FILE_NAME_EVENT_LIST_1 = "Event_Schedule_List_1.bin";
@@ -55,14 +56,22 @@ public class ActivityScheduleConstructor extends AppCompatActivity implements Vi
         container_add_event = (LinearLayout)findViewById(R.id.container_add_event);
 
         card_add_event = (CardView)findViewById(R.id.card_add_event);
+        card_add_event.setBackgroundResource(R.drawable.action_screen_menu);
         save_event= (CardView)findViewById(R.id.save_event);
         save_event.setOnClickListener(this);
+        save_event.setBackgroundResource(R.drawable.style_for_button_setting);
+
         close_add_event = (CardView)findViewById(R.id.close_add_event);
         close_add_event.setOnClickListener(this);
+        close_add_event.setBackgroundResource(R.drawable.style_for_button_setting);
+
         menu_add_event= (CardView)findViewById(R.id.menu_add_event);
+        menu_add_event.setBackgroundResource(R.drawable.action_screen_menu);
 
         pattern_name = (EditText)findViewById(R.id.pattern_name);
         pattern_host = (EditText)findViewById(R.id.pattern_host);
+        pattern_type = (EditText)findViewById(R.id.pattern_type);
+        pattern_location = (EditText)findViewById(R.id.pattern_location);
 
         monday_up_week = (LinearLayout)findViewById(R.id.monday_up_week);
         monday_down_week= (LinearLayout)findViewById(R.id.monday_down_week);
@@ -121,14 +130,14 @@ public class ActivityScheduleConstructor extends AppCompatActivity implements Vi
 
         LinearLayout llPattern = (LinearLayout) LayoutInflater
                 .from(this)
-                .inflate(R.layout.pattern_for_button_name_constructor, null);
+                .inflate(R.layout.pattern_for_button_add_constructor, null);
 
         CardView btnPattern =  (CardView)llPattern.findViewById(R.id.button);
         TextView textButton = (TextView)llPattern.findViewById(R.id.text_button);
         ImageView checkImage = (ImageView)llPattern.findViewById(R.id.check_image);
 
         textButton.setText(R.string.AddEvent);
-        checkImage.setVisibility(View.GONE);
+        checkImage.setVisibility(View.VISIBLE);
 
         container_for_button.addView(llPattern);
 
@@ -149,20 +158,29 @@ public class ActivityScheduleConstructor extends AppCompatActivity implements Vi
     private void addPatternEvent(){
         String name = pattern_name.getText().toString();
         String host = pattern_host.getText().toString();
+        String type = pattern_type.getText().toString();
+        String location = pattern_location.getText().toString();
+
+        EventSchedule newPattern = new EventSchedule();
 
         if (name.length() == 0){
             Toast.makeText(this, "name!", Toast.LENGTH_SHORT).show();
             return;
         }
+        newPattern.SetNameEvent(name);
 
-        if (host.length() == 0){
-            Toast.makeText(this, "host!", Toast.LENGTH_SHORT).show();
-            return;
+        if (host.length() != 0){
+            newPattern.SetHostEvent(host);
         }
 
-        EventSchedule newPattern = new EventSchedule();
-        newPattern.SetNameEvent(name);
-        newPattern.SetHostEvent(host);
+        if(type.length() != 0){
+          newPattern.SetTypeEvent(type);
+        }
+
+        if(location.length() != 0){
+            newPattern.SetLocationEvent(location);
+        }
+
         int color = schedulePatternList.GetEventsDayList().size() + 1;
         if (color > 10){
             color = color % 10;
@@ -249,6 +267,18 @@ public class ActivityScheduleConstructor extends AppCompatActivity implements Vi
                     }
                 }
             });
+
+            onClickBtn.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    schedulePatternList.GetEventsDayList().remove(curSchedulePat);
+                    FileIO.WriteScheduleEventListInFile(schedulePatternList.GetEventsDayList(),
+                            FILE_NAME_FOR_PATTERN_CONSTRUCTOR, ActivityScheduleConstructor.this);
+                    currentSchedulePattern = null;
+                    buildPatternButton();
+                    return true;
+                }
+            });
         }
     }
 
@@ -301,8 +331,22 @@ public class ActivityScheduleConstructor extends AppCompatActivity implements Vi
                     onClickBtn.setBackgroundResource(getBackgroundResourceById(currentSchedulePattern.GetColorForEvent()));
                     onClickText.setText(CurNum + " " + currentSchedulePattern.GetNameEvent());
                     EventSchedule newEvent = new EventSchedule();
-                    newEvent.SetNameEvent(currentSchedulePattern.GetNameEvent());
-                    newEvent.SetHostEvent(currentSchedulePattern.GetEventHost());
+                    if(currentSchedulePattern.GetNameEvent() != null){
+                        newEvent.SetNameEvent(currentSchedulePattern.GetNameEvent());
+                    }
+
+                    if(currentSchedulePattern.GetEventHost() != null){
+                        newEvent.SetHostEvent(currentSchedulePattern.GetEventHost());
+                    }
+
+                    if(currentSchedulePattern.GetTypeEvent() != null){
+                        newEvent.SetTypeEvent(currentSchedulePattern.GetTypeEvent());
+                    }
+
+                    if(currentSchedulePattern.GetLocationEvent() != null){
+                        newEvent.SetLocationEvent(currentSchedulePattern.GetLocationEvent());
+                    }
+
                     newEvent.SetColorForEvent(currentSchedulePattern.GetColorForEvent());
                     newEvent.SetId(idEvent);
                     newEvent.setWeekId(weekTypeFin);
@@ -313,6 +357,16 @@ public class ActivityScheduleConstructor extends AppCompatActivity implements Vi
                     newEvent.SetTimeEventEnd(end);
                     bufferEventScheduleList.set(idEvent, newEvent);
 
+                    int currentNightMode = ActivityScheduleConstructor.this.getResources()
+                            .getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+                    switch (currentNightMode) {
+                        case Configuration.UI_MODE_NIGHT_NO:
+                            // Night mode is not active on device
+                            break;
+                        case Configuration.UI_MODE_NIGHT_YES:
+                            onClickText.setTextColor(getColor(R.color.text_color));
+                            break;
+                    }
                 }
             });
 
@@ -322,6 +376,17 @@ public class ActivityScheduleConstructor extends AppCompatActivity implements Vi
                     onClickBtn.setBackgroundResource(getBackgroundResourceById(0));
                     onClickText.setText(defText);
                     bufferEventScheduleList.set(idEvent, null);
+
+                    int currentNightMode = ActivityScheduleConstructor.this.getResources()
+                            .getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+                    switch (currentNightMode) {
+                        case Configuration.UI_MODE_NIGHT_NO:
+                            // Night mode is not active on device
+                            break;
+                        case Configuration.UI_MODE_NIGHT_YES:
+                            onClickText.setTextColor(getColor(R.color.white));
+                            break;
+                    }
                     return true;
                 }
             });
@@ -340,6 +405,8 @@ public class ActivityScheduleConstructor extends AppCompatActivity implements Vi
             eventScheduleList.AppendEvent(event);
         }
 
+        eventScheduleList.SortEventList();
+
         FileIO.WriteScheduleEventListInFile(eventScheduleList.GetEventsDayList(),
                 FILE_NAME_EVENT_LIST_1, this);
 
@@ -353,6 +420,11 @@ public class ActivityScheduleConstructor extends AppCompatActivity implements Vi
         switch (v.getId()){
             case (R.id.save_event):
                 this.addPatternEvent();
+                pattern_name.setText("");
+                pattern_host.setText("");
+                pattern_type.setText("");
+                pattern_location.setText("");
+                backGrayBlur.setVisibility(View.GONE);
                 break;
             case (R.id.close_add_event):
                 backGrayBlur.setVisibility(View.GONE);

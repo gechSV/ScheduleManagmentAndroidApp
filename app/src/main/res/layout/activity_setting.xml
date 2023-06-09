@@ -52,10 +52,21 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/schedule"
+
+                android:layout_marginVertical="16dp"
+                android:layout_gravity="center"
+                android:textSize="18dp"
+                android:textStyle="bold"/>
+
             <Button
                 android:id="@+id/open_choosing_schedule"
                 style="@style/setting_button"
-                android:text="@string/find_a_schedule_in_setting_activity" />
+                android:text="@string/find_a_schedule_in_setting_activity"
+                android:background="@drawable/top_setting_button" />
 
             <Button
                 android:id="@+id/open_choosing_schedule_teachers"
@@ -63,19 +74,14 @@
                 android:text="@string/find_the_schedule_of_teachers" />
 
             <Button
-                android:id="@+id/share_a_schedule"
-                style="@style/setting_button"
-                android:text="@string/share_a_schedule" />
-
-            <Button
                 android:id="@+id/download_users_schedule"
                 style="@style/setting_button"
                 android:text="@string/find_a_user_schedule" />
 
             <Button
-                android:id="@+id/open_time_interval"
+                android:id="@+id/share_a_schedule"
                 style="@style/setting_button"
-                android:text="@string/time_intervals" />
+                android:text="@string/share_a_schedule" />
 
             <Button
                 android:id="@+id/open_schedule_constructor"
@@ -83,9 +89,24 @@
                 android:text="@string/schedule_constructor" />
 
             <Button
+                android:id="@+id/open_time_interval"
+                style="@style/setting_button"
+                android:text="@string/time_intervals" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/other_1"
+                android:layout_marginVertical="16dp"
+                android:layout_gravity="center"
+                android:textSize="18dp"
+                android:textStyle="bold"/>
+
+            <Button
                 android:id="@+id/application_settings"
                 style="@style/setting_button"
-                android:text="@string/application_settings" />
+                android:text="@string/application_settings"
+                android:background="@drawable/top_setting_button"/>
 
         </LinearLayout>
 

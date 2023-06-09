@@ -9,20 +9,25 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.concurrent.ExecutionException;
 
+import ScheduleManagement.AndroidApp.FileIO;
 import ScheduleManagement.AndroidApp.R;
 import ScheduleManagement.AndroidApp.httpAppClient;
 
 public class ActivityShareSchedule extends AppCompatActivity implements View.OnClickListener {
 
     CardView _CV_ActionCon, _buttonBack, _share;
-
+    private String FILE_NAME_SCHEDULE_SHARE = "Name_Share.bin", FILE_PASSWORD_SCHEDULE_SHARE = "Password_Share.bin";
     EditText _ET_schedule_name, _ET_schedule_password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_schedule);
+
+        String curName = FileIO.ReadStringFromFile(FILE_NAME_SCHEDULE_SHARE, this);
+        String curPas = FileIO.ReadStringFromFile(FILE_PASSWORD_SCHEDULE_SHARE, this);
 
         _CV_ActionCon = (CardView)findViewById(R.id.action_con);
         _CV_ActionCon.setBackgroundResource(R.drawable.menu_background);
@@ -37,6 +42,11 @@ public class ActivityShareSchedule extends AppCompatActivity implements View.OnC
 
         _ET_schedule_name = (EditText) findViewById(R.id.schedule_name);
         _ET_schedule_password = (EditText) findViewById(R.id.schedule_password);
+
+        if(curName != null && curPas != null){
+            _ET_schedule_name.setText(curName);
+            _ET_schedule_password.setText(curPas);
+        }
     }
 
     @Override
@@ -66,8 +76,12 @@ public class ActivityShareSchedule extends AppCompatActivity implements View.OnC
             return;
         }
 
+
         try {
             shareOrUpdateSchedule(name, password);
+            FileIO.WriteString(name, FILE_NAME_SCHEDULE_SHARE, this);
+            FileIO.WriteString(password, FILE_PASSWORD_SCHEDULE_SHARE, this);
+            Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
         }
         catch (Error error){
             Toast.makeText(ActivityShareSchedule.this, R.string.server_connect_err, Toast.LENGTH_SHORT).show();

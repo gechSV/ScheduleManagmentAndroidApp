@@ -102,12 +102,53 @@
 
                     <TextView
                         android:id="@+id/event_location"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="18dp"
                         android:maxLines="1"
                         android:ellipsize="end"
                         android:singleLine="true"/>
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <LinearLayout
+                        android:id="@+id/note_counter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        android:layout_margin="4dp"
+                        android:layout_gravity="end|top"
+                        android:visibility="gone"
+                        android:background="@drawable/transparent_background">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="?attr/note_counter_vector"
+                                android:layout_gravity="center"
+                                android:layout_marginEnd="4dp"/>
+
+                            <TextView
+                                android:id="@+id/text_note_counter"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textSize="16dp"
+                                android:text="2" />
+
+
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

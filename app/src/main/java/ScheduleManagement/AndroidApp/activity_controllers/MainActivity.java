@@ -402,6 +402,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent(this, AlarmReceiver.class);
 
         pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY, pendingIntent);
 
@@ -683,7 +684,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 bundleAddForEvent.putString("currentNoteName", currentNoteName);
                 _IntentAddNote.putExtras(bundleAddForEvent);
                 startActivity(_IntentAddNote);
-                this.openOrCloseActionAdd();
+                Animation animation = AnimationUtils.loadAnimation(this,
+                        R.anim.close_action_add);
+
+                _LL_add_schedule.setAnimation(animation);
+                _LL_add_note.setAnimation(animation);
+
+                _LL_add_schedule.setVisibility(View.GONE);
+                _LL_add_note.setVisibility(View.GONE);
 
                 break;
             default:
@@ -732,6 +740,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         _CV_noteDemonstration.setVisibility(View.VISIBLE);
     }
 
+    public void closeDemonstration(){
+        _LL_backGrayBlur.setVisibility(View.GONE);
+        _CV_menuFullInform.setVisibility(View.GONE);
+        _CV_cardFullInform.setVisibility(View.GONE);
+    }
+
     public void BuildNoteDemonstration(String categoryName, LinearLayout conteiner){
         _LL_noteDemoContainer.removeAllViews();
         NoteList noteList = FileIO.ReadNodeListFromFile(FILE_NAME_NOTE_LIST, this);
@@ -745,6 +759,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         for(Note note: noteList.getNoteList()){
+
             if(!note.getEventName().contains(categoryName)){
                 continue;
             }
@@ -786,7 +801,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             LinearLayout button_action_con = (LinearLayout) llPattern.findViewById(R.id.button_action_con);
 
             conteiner.addView(llPattern);
-
 
             final int colorCardId = View.generateViewId();
             final int delId = View.generateViewId(), editId = View.generateViewId();
@@ -1026,8 +1040,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         _LL_backGrayBlur.setVisibility(View.VISIBLE);
         _CV_menuFullInform.setVisibility(View.VISIBLE);
         _CV_cardFullInform.setVisibility(View.VISIBLE);
-
-
     }
 
     /**

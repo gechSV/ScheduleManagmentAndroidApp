@@ -2,7 +2,10 @@ package ScheduleManagement.AndroidApp.activity_controllers;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +15,9 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
+import ScheduleManagement.AndroidApp.EventScheduleList;
 import ScheduleManagement.AndroidApp.FileIO;
+import ScheduleManagement.AndroidApp.NoteList;
 import ScheduleManagement.AndroidApp.R;
 
 public class ActivityApplicationSettings extends AppCompatActivity implements View.OnClickListener {
@@ -20,7 +25,12 @@ public class ActivityApplicationSettings extends AppCompatActivity implements Vi
     private CardView _CV_ActionCon, _buttonBack, _CV_button_save_server_address;
     private Button _BT_downWeek, _BT_upWeek;
     private EditText _ET_new_url;
+    private Button clear_schedule, clear_note;
     private int currentNightMode;
+
+    private final String FILE_NAME_EVENT_LIST_1 = "Event_Schedule_List_1.bin";
+    private final String FILE_NAME_TIME_LIST = "TimeList.bin";
+    private final String FILE_NAME_NOTE_LIST = "Node_List.bin";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +55,12 @@ public class ActivityApplicationSettings extends AppCompatActivity implements Vi
         _BT_upWeek.setOnClickListener(this);
         _BT_downWeek = findViewById(R.id.button_down_week);
         _BT_downWeek.setOnClickListener(this);
+
+        clear_schedule = (Button)findViewById(R.id.clear_schedule);
+        clear_schedule.setOnClickListener(this);
+
+        clear_note = (Button)findViewById(R.id.clear_note);
+        clear_note.setOnClickListener(this);
 
         currentNightMode = getResources().getConfiguration().uiMode
                 & Configuration.UI_MODE_NIGHT_MASK;
@@ -98,7 +114,85 @@ public class ActivityApplicationSettings extends AppCompatActivity implements Vi
             case(R.id.button_down_week):
                 setActiveButtonWeekChoice(2, true);
                 break;
+            case(R.id.clear_schedule):
+                ClearSchedule();
+                break;
+            case(R.id.clear_note):
+                ClearNote();
+                break;
         }
+    }
+
+    private void ClearSchedule(){
+        // Настройка диалогового окна, предназначенного для подтверждения удаления
+        AlertDialog.Builder builder = new AlertDialog.Builder(ActivityApplicationSettings.this,
+                R.style.AlertDialogCustom);
+        builder.setMessage(R.string.scelule_clear_text);
+        builder.setCancelable(false);
+
+        // Кнопка ОТМЕНИТЬ
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        // Кнопка УДАЛИТЬ
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                EventScheduleList eventScheduleList = new EventScheduleList();
+                FileIO.WriteScheduleEventListInFile(eventScheduleList.GetEventsDayList(), FILE_NAME_EVENT_LIST_1, ActivityApplicationSettings.this);
+                // Вызываем метод MainActivity, который обновляет ViewPager
+                MainActivity.getInstance().ReloadViewPager_1();
+                MainActivity.getInstance().ReloadViewPager_2();
+                Toast.makeText(ActivityApplicationSettings.this, "Done", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
+        // Настройка внешнего вида кнопок
+        Button negativeButton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+        Button pButton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+
+        pButton.setTextColor(ContextCompat.getColor(ActivityApplicationSettings.this, R.color.deep_orange_300));
+    }
+
+    private void ClearNote(){
+        // Настройка диалогового окна, предназначенного для подтверждения удаления
+        AlertDialog.Builder builder = new AlertDialog.Builder(ActivityApplicationSettings.this,
+                R.style.AlertDialogCustom);
+        builder.setMessage(R.string.delete_note_list);
+        builder.setCancelable(false);
+
+        // Кнопка ОТМЕНИТЬ
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        // Кнопка УДАЛИТЬ
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                NoteList noteList = new NoteList();
+                FileIO.WriteNoteListInFile(noteList.getNoteList(), FILE_NAME_NOTE_LIST, ActivityApplicationSettings.this);
+                // Вызываем метод MainActivity, который обновляет ViewPager
+                MainActivity.getInstance().ReloadViewPager_1();
+                MainActivity.getInstance().ReloadViewPager_2();
+                Toast.makeText(ActivityApplicationSettings.this, "Done", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
+        // Настройка внешнего вида кнопок
+        Button negativeButton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+        Button pButton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+
+        pButton.setTextColor(ContextCompat.getColor(ActivityApplicationSettings.this, R.color.deep_orange_300));
     }
 
     /**

@@ -80,4 +80,11 @@
     <string name="AddEvent">Add Event</string>
     <string name="schedule_constructor">Schedule constructor</string>
     <string name="event_templates">Event templates</string>
+    <string name="schedule">Schedule</string>
+    <string name="other_1">Other</string>
+    <string name="lear_schedule">Сlear schedule</string>
+    <string name="lear_note">Сlear note</string>
+    <string name="scelule_clear_text">Do you really want to deduct the schedule?</string>
+    <string name="delete_note_list">Do you really want to deduct notes?</string>
+    <string name="share_a_new_schedule_or_update_an_existing_one">Share a new schedule or update an existing schedule</string>
 </resources>

@@ -292,6 +292,9 @@ public class ActivityAddNote extends AppCompatActivity implements View.OnClickLi
             FileIO.WriteNoteListInFile(noteList.getNoteList(), FILE_NAME_NOTE_LIST, this);
         }
 
+        MainActivity.getInstance().ReloadViewPager_1();
+        MainActivity.getInstance().ReloadViewPager_2();
+        MainActivity.getInstance().closeDemonstration();
         this.finish();
 
     }

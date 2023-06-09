@@ -178,6 +178,18 @@
 
                 </LinearLayout>
 
+                <Button
+                    android:id="@+id/clear_schedule"
+                    style="@style/setting_button"
+                    android:text="@string/lear_schedule"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/top_setting_button"/>
+
+                <Button
+                    android:id="@+id/clear_note"
+                    style="@style/setting_button"
+                    android:text="@string/lear_note"/>
+
             </LinearLayout>
 
         </LinearLayout>

@@ -93,8 +93,8 @@ public class ActivitySetting extends AppCompatActivity implements View.OnClickLi
 
         _httpAppClient = new httpAppClient(this);
 
-        String url = FileIO.getUrlAddress("urlAddress.bin", this);
-        Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
+//        String url = FileIO.getUrlAddress("urlAddress.bin", this);
+//        Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
 
     }
 
