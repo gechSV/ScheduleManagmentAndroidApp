@@ -56,8 +56,8 @@
     <string name="The_server_address_has_been_updated">Адрес сервера обновлен</string>
     <string name="The_address_field_cannot_be_empty">Поле адреса не может быть пустым</string>
     <string name="do_you_really_want_to_remove_the_time_pattern">Вы действительно хотите удалить шаблон времени?</string>
-    <string name="Type_of_event">Тип мероприятия:  </string>
-    <string name="Host_of_the_event">Имя руководителя:  </string>
+    <string name="Type_of_event">Тип:  </string>
+    <string name="Host_of_the_event">Руководитель:  </string>
     <string name="Location">Местоположение:  </string>
     <string name="Time_duration">Продолжительность:  </string>
     <string name="upper_week">Верхняя неделя</string>
@@ -78,4 +78,6 @@
     <string name="scelule_clear_text">Вы действительно хотите безвозвратно удалить расписание?</string>
     <string name="delete_note_list">Вы действительно хотите безвозвратно удалить все заметки?</string>
     <string name="share_a_new_schedule_or_update_an_existing_one">Поделиться новым расписанием или обновить существующее расписание</string>
+    <string name="name_note">Название:</string>
+    <string name="category_note">Категория:</string>
 </resources>

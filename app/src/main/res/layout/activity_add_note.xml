@@ -91,7 +91,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
-                    android:textColor="@color/text_color"
                     android:layout_marginHorizontal="4dp"
                     android:hint="@string/text_of_the_note"
                     android:textSize="16sp"

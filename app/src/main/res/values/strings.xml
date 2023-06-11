@@ -87,4 +87,6 @@
     <string name="scelule_clear_text">Do you really want to deduct the schedule?</string>
     <string name="delete_note_list">Do you really want to deduct notes?</string>
     <string name="share_a_new_schedule_or_update_an_existing_one">Share a new schedule or update an existing schedule</string>
+    <string name="name_note">Name: </string>
+    <string name="category_note">Category: </string>
 </resources>

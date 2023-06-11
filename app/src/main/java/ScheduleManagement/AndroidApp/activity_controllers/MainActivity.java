@@ -348,6 +348,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             FileIO.WriteTimeForNumberList(newTime.GetTimeForNumberList(), FILE_NAME_TIME_LIST, this);
             // Запись в файл шаблонов для скачиваемого расписания вузов
             FileIO.WriteTimeForNumberList(newTime.GetTimeForNumberList(), FILE_NAME_TIME_LIST_ZABGU, this);
+            FileIO.setUrlAddress("178.20.44.181:8080", "urlAddress.bin", this);
         }
         FileIO.SetRunAppFlag(true, "firstRun.bin", this);
 
@@ -774,7 +775,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             TextView noteName = (TextView)llPattern.findViewById(R.id.note_name);
             if(note.getName().length() > 0){
                 noteName.setVisibility(View.VISIBLE);
-                noteName.setText(note.getName());
+                noteName.setText(getString(R.string.name_note)  + " " +  note.getName());
             }
             else{
                 noteName.setVisibility(View.GONE);
@@ -783,10 +784,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             TextView noteCategory = (TextView)llPattern.findViewById(R.id.note_category);
             if((note.getEventName() != null) && (note.getEventName().length() > 0)){
                 noteCategory.setVisibility(View.VISIBLE);
-                noteCategory.setText(note.getEventName());
+                noteCategory.setText(getString(R.string.category_note) + " " + note.getEventName());
             }
             else{
-                noteCategory.setText(R.string.No_category);
+                noteCategory.setText(getString(R.string.category_note) + " " +R.string.No_category);
             }
 
             TextView noteText = (TextView)llPattern.findViewById(R.id.note_text);
@@ -940,7 +941,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         String type = _eventScheduleList_1.GetEventsDayById(id).GetTypeEvent();
         if ((type != null) && (type != "")){
-            _TV_FullInformType.setText(getString(R.string.Type_of_event) + type);
+            _TV_FullInformType.setText(getString(R.string.Type_of_event) + " " + type);
             _TV_FullInformType.setVisibility(View.VISIBLE);
         }
         else{
@@ -949,7 +950,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         String host = _eventScheduleList_1.GetEventsDayById(id).GetEventHost();
         if((host != null) && (host != "")){
-            _TV_FullInformHost.setText(getString(R.string.Host_of_the_event) + host);
+            _TV_FullInformHost.setText(getString(R.string.Host_of_the_event) + " " + host);
             _TV_FullInformHost.setVisibility(View.VISIBLE);
         }
         else{
@@ -958,7 +959,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         String location = _eventScheduleList_1.GetEventsDayById(id).GetLocationEvent();
         if((location != null) && (location != "")){
-            _TV_FullInformLocation.setText(getString(R.string.Location) + location);
+            _TV_FullInformLocation.setText(getString(R.string.Location) + " " + location);
             _TV_FullInformLocation.setVisibility(View.VISIBLE);
         }
         else{
@@ -984,7 +985,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
 
-        _TV_FullInformTimeDuration.setText(getString(R.string.Time_duration) + simpleDateFormat.format(duration.getTime())
+        _TV_FullInformTimeDuration.setText(getString(R.string.Time_duration) + " " + simpleDateFormat.format(duration.getTime())
                 .replace(':', '꞉'));
 
 
