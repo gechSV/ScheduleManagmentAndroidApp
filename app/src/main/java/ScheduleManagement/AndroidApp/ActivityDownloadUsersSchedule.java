@@ -309,26 +309,26 @@ public class ActivityDownloadUsersSchedule extends AppCompatActivity implements 
 
                 TextView weekday = weekDayCon.findViewById(R.id.text);
 
-                switch (i+1){
-                    case(1):
+                switch (i){
+                    case(0):
                         weekday.setText(R.string.Monday);
                         break;
-                    case(2):
+                    case(1):
                         weekday.setText(R.string.Tuesday);
                         break;
-                    case(3):
+                    case(2):
                         weekday.setText(R.string.Wednesday);
                         break;
-                    case(4):
+                    case(3):
                         weekday.setText(R.string.Thursday);
                         break;
-                    case(5):
+                    case(4):
                         weekday.setText(R.string.Friday);
                         break;
-                    case(6):
+                    case(5):
                         weekday.setText(R.string.Saturday);
                         break;
-                    case(7):
+                    case(6):
                         weekday.setText(R.string.Sunday);
                         break;
                 }

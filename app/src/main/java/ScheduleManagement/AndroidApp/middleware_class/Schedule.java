@@ -22,6 +22,7 @@ public class Schedule {
 
     static public ArrayList<Schedule> EventScheduleListToSchedule(ArrayList<EventSchedule> schedule){
         ArrayList<Schedule> newSchedule = new ArrayList<>();
+
         for(EventSchedule eventInArray: schedule){
             Schedule newEvent = new Schedule();
             newEvent.setWeekDayNumber(eventInArray.GetWeekDayPeekId());
@@ -130,7 +131,7 @@ public class Schedule {
         EventSchedule newEvent = new EventSchedule();
 
         newEvent.setWeekId(WeekType);
-        newEvent.SetWeekDayPeek(WeekDayNumber - 1);
+        newEvent.SetWeekDayPeek(WeekDayNumber);
         newEvent.SetColorForEvent(7);
 
         if(this.getName() != null){
@@ -168,6 +169,7 @@ public class Schedule {
             newEvent.setGroupName("");
         }
 
+        newEvent.SetTimeEventStart(this.TimeStart);
         newEvent.SetTimeEventEnd(this.TimeEnd);
         return newEvent;
     }
